@@ -1,0 +1,35 @@
+{
+    "name": "lorddashme/me-app",
+    "description": "Be productive and control your day by automating it.",
+    "keywords": [
+        "time-management",
+        "productivity" 
+    ],
+    "type": "project",
+    "license": "MIT",
+    "homepage": "https://github.com/lorddashme/me-app",
+    "authors": [
+        {
+            "name": "Joshua Clifford Reyes",
+            "email": "reyesjoshuaclifford@gmail.com",
+            "homepage": "https://lorddashme.github.io/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6 || >=7.0 || >=7.1 || >=7.2"
+    },
+    "require-dev": {
+        "mockery/mockery": "1.*",
+        "phpunit/phpunit": "5.* || 6.* || 7.*"
+    },
+    "autoload": {
+        "psr-4": { 
+            "LordDashMe\\MeApp\\": "src/" 
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LordDashMe\\MeApp\\Tests\\Mocks\\": "tests/Mocks"            
+        }
+    }
+}

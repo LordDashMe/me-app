@@ -1,0 +1,36 @@
+html, 
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navigationbar-container {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.navigationbar-container p {
+    margin: 10px;
+    color: #fff;
+}
+
+.content-container {
+    margin: 20px;
+}
+
+.content-container p {  
+    font-size: 1.0em;
+}
+
+.footerbar-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #000;  
+}
