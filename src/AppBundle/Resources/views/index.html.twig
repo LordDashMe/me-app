@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>{% block title %}{% endblock %}</title>
+{% include '@app_bundle_resources/header.html.twig' %}
+{% block stylesheets %}{% endblock %}
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}{% endblock %}
+{% include '@app_bundle_resources/footer.html.twig' %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

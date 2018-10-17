@@ -2,23 +2,27 @@
 
 namespace AppBundle\Controller;
 
+use AnotherBundle\Service\LuckyNumberGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LuckyController extends Controller
 {
-    /**
-     * @Route("/lucky/number")
-     */
-    public function numberAction()
-    {
-        $number = random_int(0, 100);
+    protected $luckyNumberGenerator;
 
+    public function __construct(LuckyNumberGenerator $luckyNumberGenerator)
+    {
+        $this->luckyNumberGenerator = $luckyNumberGenerator;    
+    }
+
+    public function showAction(Request $request)
+    {
         $data = [
-            'number' => $number
+            'number' => $this->luckyNumberGenerator->get()
         ];
 
-        return $this->render('lucky/index.html.twig', $data);
+        return $this->render('@app_bundle_resources/home/index.html.twig', $data);
     }
 }

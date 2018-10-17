@@ -1,3 +1,8 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+lucky_controller_show:
+    path: /lucky/show/{id}
+    defaults: { _controller: AppBundle:Lucky:show  }
+    methods: [GET, HEAD]
