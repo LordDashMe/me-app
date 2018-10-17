@@ -1,0 +1,61 @@
+/* 
+    SHOW CASE FOR CUSTOM BOOTSTRAP COMPONENTS
+    BY: JOSHUA CLIFFORD REYES    
+*/
+/* TEMPORARY CONTAINERS */
+html,
+body {
+    font-family: "Montserrat", sans-serif;
+}
+.show-case-container- {
+    padding: 20px;
+}
+.show-case-row- {
+    padding: 20px;
+    border: 1px dashed #cccc;
+}
+
+/* START OVERRIDE BOOTSTRAP DESIGN */
+
+/* START ALERTS */
+.alert {
+    border-radius: 0px !important;
+    border: 0px !important;
+}
+.alert-success {
+    background-image: none !important;
+    color: #ffffff !important;
+    background-color: #1f9b00 !important;
+}
+.alert-info {
+    background-image: none !important;
+    color: #ffffff !important;
+    background-color: #00899b !important;
+}
+.alert-warning {
+    background-image: none !important;
+    color: #ffffff !important;
+    background-color: #9b6a00 !important;
+}
+.alert-danger {
+    background-image: none !important;
+    color: #ffffff !important;
+    background-color: #9b0000 !important;
+}
+/* END ALERTS */
+
+/* START PANELS */
+.panel {
+    border-radius: 0px !important;
+}
+.panel-heading {
+    background-image: none !important;
+    background-color: #e6e6e6 !important;
+}
+.panel-footer {
+    background-image: none !important;
+    background-color: #e6e6e6 !important;
+}
+/* END PANELS */
+
+/* END OVERRIDE BOOTSTRAP DESIGN */
