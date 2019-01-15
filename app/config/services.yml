@@ -1,5 +1,5 @@
 imports:
-    - { resource: test-services.yml }
+    - { resource: me-app/services.yml }
 
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html

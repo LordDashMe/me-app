@@ -1,0 +1,9 @@
+user_login:
+    path: /user-login/
+    defaults: { _controller: UserManagement\Presentation\Controller\LoginController::indexAction }
+    methods: [GET, HEAD]
+
+user_create:
+    path: /user-login/create
+    defaults: { _controller: UserManagement\Presentation\Controller\LoginController::userCreateAction }
+    methods: [GET, HEAD]

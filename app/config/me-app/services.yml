@@ -1,0 +1,7 @@
+services:
+
+    UserManagement\:
+        autowire: true
+        public: true
+        resource: '../../../src/UserManagement/*'
+        tags: ['controller.service_arguments']
