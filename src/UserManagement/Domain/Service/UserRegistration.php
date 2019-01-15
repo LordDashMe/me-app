@@ -6,6 +6,7 @@ use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\Excetion\RegistrationFailedException;
 
 class UserRegistration
 {
@@ -33,7 +34,7 @@ class UserRegistration
         $password = new Password($password);
 
         if ($password->isInvalidFormat()) {
-            throw RegistrationFailedException::invalidPasswordFormat();
+            throw RegistrationFailedException::invalidPasswordFormatted();
         }
 
         $this->password = $password;
