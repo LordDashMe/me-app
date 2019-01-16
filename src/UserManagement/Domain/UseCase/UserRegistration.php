@@ -67,12 +67,13 @@ class UserRegistration
     private function validatePassword()
     {
         $password = new Password($this->userData['password']);
-        
+
         if (! $password->isValid()) {
             throw RegistrationFailedException::invalidPasswordFormat();
         }
         
         $matchPassword = new MatchPassword($password, $this->userData['confirm_password']);
+        
         if (! $matchPassword->isEqual()) {
             throw RegistrationFailedException::confirmationPasswordNotMatched();
         }
