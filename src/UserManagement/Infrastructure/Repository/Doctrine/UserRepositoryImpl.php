@@ -1,16 +1,17 @@
 <?php
 
-namespace UserManagement\Infrastructure\Repository;
+namespace UserManagement\Infrastructure\Repository\Doctrine;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\ValueObject\UserId;
+use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\Repository\UserRepository;
 
-class UserRepositoryImpl extends EntityRepository implements UserRepository
+class UserRepositoryImpl implements UserRepository
 {
     private $entityManager;
-
+    
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -22,28 +23,34 @@ class UserRepositoryImpl extends EntityRepository implements UserRepository
         $this->entityManager->flush();
     }
 
-    public function update($id, User $user)
+    public function update(UserId $id, User $user)
     {
 
     }
 
-    public function get($id)
+    public function get(UserId $id)
     {
 
     }
 
-    public function softDelete($id)
+    public function softDelete(UserId $id)
     {
 
     }
 
-    public function isApproved()
+    public function isApproved(Username $username)
     {
 
     }
 
-    public function isRegistered()
+    public function isRegistered(Username $username)
     {
+        $criteria = ['username' => $username->get()];
+
+        $repository = $this->entityManager->getRepository(User::class);
         
+        $item = $repository->findOneBy($criteria);
+
+        return (count($item) > 0);
     }
 }

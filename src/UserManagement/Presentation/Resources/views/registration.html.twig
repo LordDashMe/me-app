@@ -1,0 +1,72 @@
+{% extends '@app_bundle_resources/index.html.twig' %}
+
+{% block title %} Me App | User Registration {% endblock %}
+
+{% block body %}
+<div id="wrapper">
+    <div id="container">
+        <div class="login-wrapper">
+
+            {% if exception is defined %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ exception }}
+                </div>
+            {% endif %}
+
+            {% if message is defined %}
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message }}
+                </div>
+            {% endif %}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Upon registration, your request will be process by the Admin. Then after that you'll be allowed to access the site.
+                    <br>
+                    <br>
+                    I don't want to register, go back to <a href="{{ path('user_management_login') }}">Login</a>
+                </div>
+                <div class="panel-body">
+                    <form method="POST" action="{{ path('user_management_register_create') }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="form-group">
+                            <p>First Name:</p>
+                            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="John" value="{{ (old['first_name'] is defined) ? old['first_name'] : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <p>Last Name:</p>
+                            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Doe" value="{{ old['last_name'] is defined ? old['last_name'] : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <p>Email:</p>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="example@provider.com" value="{{ old['email'] is defined ? old['email'] : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <p>Username:</p>
+                            <input type="text" id="username" name="username" class="form-control" placeholder="johndoe123" value="{{ old['username'] is defined ? old['username'] : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <p>Password:</p>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="P@ssw0rd!">
+                            <small>Password must contain a minimum of 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.</small>
+                        </div>
+                        <div class="form-group">
+                            <p>Confirm Password:</p>
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="P@ssw0rd!">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-primary" value="Register">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock %}

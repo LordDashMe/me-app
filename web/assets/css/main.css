@@ -21,7 +21,7 @@ body {
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {
     .login-wrapper {
-        margin: 150px auto;
+        margin: 40px auto;
         width: 100%;
     }
 } 

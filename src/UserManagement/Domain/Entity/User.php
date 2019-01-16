@@ -2,9 +2,13 @@
 
 namespace UserManagement\Domain\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping AS ORM;
+
+use UserManagement\Domain\ValueObject\Email;
+use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
+use UserManagement\Domain\ValueObject\CreatedAt;
 
 /**
  * @ORM\Entity
@@ -12,15 +16,32 @@ use UserManagement\Domain\ValueObject\Password;
  */
 class User
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
+
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="text")
      */
     private $username;
 
@@ -30,52 +51,72 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="smallint", options={"comment":"1 = Active | 2 = Inactive"})
      */
-    private $firstname;
+    private $status;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
-    private $lastname;
+    private $createdAt;
 
-    public function setUsername(Username $username) 
-    {
+    public function __construct(
+        UserId $id,
+        $firstName,
+        $lastName,
+        Email $email,
+        UserName $username,
+        Password $password,
+        $status,
+        CreatedAt $createdAt
+    ) {
+        $this->id = $id->get();
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email->get();
         $this->username = $username->get();
+        $this->password = $password->get();
+        $this->status = $status;
+        $this->createdAt = $createdAt->get();
     }
 
-    public function getUsername()
+    public function id()
+    {
+        return $this->id;
+    }
+
+    public function firstName()
+    {
+        return $this->firstName;
+    }
+
+    public function lastName()
+    {
+        return $this->lastName;
+    }
+
+    public function email()
+    {
+        return $this->email;
+    }
+
+    public function username()
     {
         return $this->username;
     }
 
-    public function setPassword(Password $password)
-    {
-        $this->password = $password->get();
-    }
-
-    public function getPassword()
+    public function password()
     {
         return $this->password;
     }
 
-    public function setFirstname($firstname)
+    public function status()
     {
-        $this->firstname = $firstname;
+        return $this->status;
     }
 
-    public function getFirstname()
+    public function createAt()
     {
-        return $this->firstname;
-    }
-
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
-    public function getLastname()
-    {
-        return $this->lastname;
+        return $this->createAt;
     }
 }

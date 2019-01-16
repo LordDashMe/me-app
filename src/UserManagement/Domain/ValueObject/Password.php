@@ -4,6 +4,8 @@ namespace UserManagement\Domain\ValueObject;
 
 class Password
 {
+    const STANDARD_FORMAT = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&*()_+|<>:\";\'~=`{}~\^\-\[\]\\\,\.\/])[A-Za-z\d$@$!%*#?&*()_+|<>:\";\'~=`{}~\^\-\[\]\\\,\.\/]{8,}$/';
+
     private $password;
     
     public function __construct($password = '')
@@ -11,10 +13,9 @@ class Password
         $this->password = $password;
     }
 
-    public function isInvalidFormat()
+    public function isValid()
     {
-        // TODO: Apply the regex in the condition, using the standard for Password.
-        return ($this->password) ? false : true;
+        return \preg_match(Password::STANDARD_FORMAT, $this->password);
     }
 
     public function get()

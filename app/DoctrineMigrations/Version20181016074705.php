@@ -17,11 +17,13 @@ class Version20181016074705 extends AbstractMigration
     {
         $table = $schema->createTable('users');
     
-        $table->addColumn('id', 'integer', array('length' => 11, 'autoincrement' => true));
+        $table->addColumn('id', 'guid');
+        $table->addColumn('first_name', 'text');
+        $table->addColumn('last_name', 'text');
+        $table->addColumn('email', 'text');
         $table->addColumn('username', 'text');
         $table->addColumn('password', 'text');
-        $table->addColumn('firstname', 'string', array('length' => 32));
-        $table->addColumn('lastname', 'string', array('length' => 32));
+        $table->addColumn('status', 'smallint', array('comment' => '1 = Active | 2 = Inactive'));
         $table->addColumn('created_at', 'datetime', array('default' => '2000-01-01 01:01:01'));
 
         $table->setPrimaryKey(array('id'));

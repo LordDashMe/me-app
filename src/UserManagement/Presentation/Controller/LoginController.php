@@ -11,10 +11,6 @@ class LoginController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $data = [
-            'message' => 'Hello, World!'
-        ];
-
-        return $this->render('@user_management_resources/login/index.html.twig', $data);
+        return $this->render('@user_management_resources/login.html.twig', array());
     }
 }

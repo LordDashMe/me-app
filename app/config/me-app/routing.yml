@@ -1,9 +1,14 @@
-user_login:
-    path: /user-login/
+user_management_login:
+    path: /user/login/
     defaults: { _controller: UserManagement\Presentation\Controller\LoginController::indexAction }
     methods: [GET, HEAD]
 
-user_create:
-    path: /user-login/create
-    defaults: { _controller: UserManagement\Presentation\Controller\LoginController::userCreateAction }
+user_management_register:
+    path: /user/register/
+    defaults: { _controller: UserManagement\Presentation\Controller\RegistrationController::indexAction }
     methods: [GET, HEAD]
+
+user_management_register_create:
+    path: /user/register/
+    defaults: { _controller: UserManagement\Presentation\Controller\RegistrationController::createAction }
+    methods: [POST]
