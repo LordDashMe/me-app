@@ -35,6 +35,33 @@ class UserRegistrationTest extends TestCase
     /**
      * @test
      */
+    public function it_should_throw_exception_when_required_field_is_empty()
+    {
+        $this->expectException(RegistrationFailedException::class);
+        $this->expectExceptionCode(RegistrationFailedException::REQUIRED_FIELD_IS_EMPTY);
+
+        $userData = [
+            'first_name' => '',
+            'last_name' => '',
+            'email' => 'john.doe@provider.com',
+            'username' => 'johndoe123',
+            'password' => '',
+            'confirm_password' => ''
+        ];
+        
+        $userRepository = Mockery::mock(UserRepository::class);
+        $userRepository->shouldReceive('isRegistered')
+                       ->andReturn(false);
+
+        $passwordEncoder = Mockery::mock(PasswordEncoder::class);
+
+        $userRegistration = new UserRegistration($userData, $userRepository, $passwordEncoder);
+        $userRegistration->validate();
+    }
+
+    /**
+     * @test
+     */
     public function it_should_throw_exception_when_invalid_email_format_given()
     {
         $this->expectException(RegistrationFailedException::class);
@@ -158,7 +185,7 @@ class UserRegistrationTest extends TestCase
         $userRepository->shouldReceive('isRegistered')
                        ->andReturn(false);
         $userRepository->shouldReceive('create')
-                       ->andReturn(1);
+                       ->andReturn(true);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
         $passwordEncoder->shouldReceive('encodePlainText')
@@ -167,6 +194,6 @@ class UserRegistrationTest extends TestCase
         $userRegistration = new UserRegistration($userData, $userRepository, $passwordEncoder);
         $userRegistration->validate();
 
-        $this->assertEquals(1, $userRegistration->execute());
+        $this->assertEquals(true, $userRegistration->execute());
     }
 }

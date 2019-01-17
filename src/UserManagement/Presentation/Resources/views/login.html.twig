@@ -6,27 +6,51 @@
 <div id="wrapper">
     <div id="container">
         <div class="login-wrapper">
+
+            {% if exception is defined %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ exception }}
+                </div>
+            {% endif %}
+
             <div class="panel panel-default">
                 <div class="panel-heading">Tell me who you are? Give your proper credential below:</div>
                 <div class="panel-body">
-                    <div class="form-group">
-                        <p>Username:</p>
-                        <input type="text" id="username" class="form-control" placeholder="johndoe123">
-                    </div>
-                    <div class="form-group">
-                        <p>Password:</p>
-                        <input type="password" id="password" class="form-control" placeholder="********">
-                    </div>
-                    <div class="form-group">
-                        Don't have an account yet? <a href="{{ path('user_management_register') }}">Register</a>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3">
-                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Submit">
+                    <form method="POST" action="{{ path('user_management_login_submit') }}">
+                        <div class="form-group">
+                            <p>Username:</p>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username"
+                                class="form-control" 
+                                placeholder="johndoe123"
+                                required
+                            >
+                        </div>
+                        <div class="form-group">
+                            <p>Password:</p>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password"
+                                class="form-control" 
+                                placeholder="********"
+                                required
+                            >
+                        </div>
+                        <div class="form-group">
+                            Don't have an account yet? <a href="{{ path('user_management_register') }}">Register</a>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Submit">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

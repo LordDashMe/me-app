@@ -16,5 +16,9 @@ interface UserRepository
 
     public function softDelete(UserId $id);
 
+    public function getByUsername(Username $username);
+
     public function isApproved(Username $username);
+
+    public function isRegistered(Username $username);
 }

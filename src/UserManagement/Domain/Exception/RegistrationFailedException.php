@@ -4,10 +4,21 @@ namespace UserManagement\Domain\Exception;
 
 class RegistrationFailedException extends \Exception
 {
-    const INVALID_EMAIL_FORMAT = 1;
-    const USERNAME_ALREADY_REGISTERED = 2;
-    const INVALID_PASSWORD_FORMAT = 3;
-    const CONFIRMATION_PASSWORD_NOT_MATCHED = 4;
+    const REQUIRED_FIELD_IS_EMPTY = 1;
+    const INVALID_EMAIL_FORMAT = 2;
+    const USERNAME_ALREADY_REGISTERED = 3;
+    const INVALID_PASSWORD_FORMAT = 4;
+    const CONFIRMATION_PASSWORD_NOT_MATCHED = 5;
+
+    public static function requiredFieldIsEmpty(
+        $requiredField,
+        $code = self::REQUIRED_FIELD_IS_EMPTY,
+        $previous = null
+    ) {
+        $message = "The {$requiredField} field is empty.";
+
+        return new static($message, $code, $previous);
+    }
 
     public static function invalidEmailFormat(
         $message = 'The given email format is invalid.',

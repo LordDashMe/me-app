@@ -18,6 +18,45 @@ body {
     width: 340px;
 }
 
+.registration-wrapper {
+    margin: 50px auto;
+    width: 340px;
+}
+
+.home-wrapper {
+    padding-top: 25px;
+}
+
+.navbar-default .navbar-brand {
+    color: #000;
+}
+
+h1, h4, p, table {
+    color: #000;
+}
+
+.navbar-default .navbar-nav>.active>a, 
+.navbar-default .navbar-nav>.active>a:focus, 
+.navbar-default .navbar-nav>.active>a:hover {
+    color: #000;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #000;
+}
+
+.expense-list-pagination>.pagination {
+    margin: 0px 0;
+}
+.expense-list-pagination>.pagination>li>a {
+    color: #000;
+}
+.expense-list-pagination>.pagination>.active>a {
+    background-color: #777;
+    border-color: #ccc;
+    color: #fff;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {
     .login-wrapper {

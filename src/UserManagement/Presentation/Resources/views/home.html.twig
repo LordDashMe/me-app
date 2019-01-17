@@ -1,0 +1,142 @@
+{% extends '@app_bundle_resources/index.html.twig' %}
+
+{% block title %} Me App | Home {% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><b>Me App</b> | <small>John Doe</small></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                {# <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li> #}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../navbar/">Logout</a></li>
+                {# <li><a href="../navbar-static-top/">Static top</a></li> #}
+                {# <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li> #}
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="wrapper">
+    <div id="container">
+        <div class="home-wrapper">
+
+            <h1>Hello, John Doe!</h1>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Your Expenses List:</h4> 
+                    <p>Total Cost: <b>1,120</b> | Total Day(s): <b>2</b></p>
+                    <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Entry</a> 
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table expenses">
+                            <thead>
+                                <tr>
+                                    <th>Entry ID</th>
+                                    <th>Label</th>
+                                    <th>Cost</th>
+                                    <th>Created At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>EID-2019-2</td>
+                                    <td>Star Bucks</td>
+                                    <td>1,000</td>
+                                    <td>2019-01-16 17:23:00</td>
+                                    <td>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>EID-2019-2</td>
+                                    <td>Star Bucks</td>
+                                    <td>1,000</td>
+                                    <td>2019-01-16 17:23:00</td>
+                                    <td>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>EID-2019-2</td>
+                                    <td>Star Bucks</td>
+                                    <td>1,000</td>
+                                    <td>2019-01-16 17:23:00</td>
+                                    <td>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>EID-2019-2</td>
+                                    <td>Star Bucks</td>
+                                    <td>1,000</td>
+                                    <td>2019-01-16 17:23:00</td>
+                                    <td>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>EID-2019-1</td>
+                                    <td>Siomai House</td>
+                                    <td>120</td>
+                                    <td>2019-01-16 16:23:00</td>
+                                    <td>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="expense-list-pagination" id="example_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0">Previous</a></li>
+                                    <li class="paginate_button active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0">2</a></li>
+                                    <li class="paginate_button "><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0">3</a></li>
+                                    <li class="paginate_button "><a href="#" aria-controls="example" data-dt-idx="4" tabindex="0">4</a></li>
+                                    <li class="paginate_button "><a href="#" aria-controls="example" data-dt-idx="5" tabindex="0">...</a></li>
+                                    <li class="paginate_button "><a href="#" aria-controls="example" data-dt-idx="6" tabindex="0">6</a></li>
+                                    <li class="paginate_button next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="7" tabindex="0">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+        </div>
+	</div>
+</div>
+{% endblock %}

@@ -8,19 +8,29 @@ use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\CreatedAt;
-use UserManagement\Domain\ValueObject\MatchPassword;
+use UserManagement\Domain\ValueObject\ConfirmPassword;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 
 class UserRegistration
 {
+    private $requiredFields = [
+        'first_name' => 'First Name',
+        'last_name' => 'Last Name',
+        'email' => 'Email',
+        'username' => 'Username',
+        'password' => 'Password',
+        'confirm_password' => 'Confirm Password'
+    ];
+
     private $userData;
     private $userRepository;
     private $passwordEncoder;
+    
     private $userEntity;
 
-    public function __construct($userData = [], UserRepository $userRepository, PasswordEncoder $passwordEncoder)
+    public function __construct($userData = [], UserRepository $userRepository, PasswordEncoder $passwordEncoder) 
     {
         $this->userData = $userData;
         $this->userRepository = $userRepository;
@@ -29,11 +39,23 @@ class UserRegistration
 
     public function validate()
     {
-        $this->validateEmail()
+        $this->validateRequiredFields()
+             ->validateEmail()
              ->validateUsername()
              ->validatePassword();
 
         $this->buildUserEntity();
+
+        return $this;
+    }
+
+    private function validateRequiredFields()
+    {
+        foreach ($this->requiredFields as $requiredField => $requiedFieldLabel) {
+            if (empty($this->userData[$requiredField])) {
+                throw RegistrationFailedException::requiredFieldIsEmpty($requiedFieldLabel);
+            }
+        }
 
         return $this;
     }
@@ -72,9 +94,11 @@ class UserRegistration
             throw RegistrationFailedException::invalidPasswordFormat();
         }
         
-        $matchPassword = new MatchPassword($password, $this->userData['confirm_password']);
-        
-        if (! $matchPassword->isEqual()) {
+        $confirmPassword = new ConfirmPassword(
+            $password, $this->userData['confirm_password']
+        );
+
+        if (! $confirmPassword->isEqual()) {
             throw RegistrationFailedException::confirmationPasswordNotMatched();
         }
 
@@ -102,8 +126,6 @@ class UserRegistration
             User::STATUS_INACTIVE,
             new CreatedAt()
         );
-
-        return $this;
     }
 
     public function execute() 

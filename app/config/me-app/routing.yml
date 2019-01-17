@@ -3,6 +3,11 @@ user_management_login:
     defaults: { _controller: UserManagement\Presentation\Controller\LoginController::indexAction }
     methods: [GET, HEAD]
 
+user_management_login_submit:
+    path: /user/login/
+    defaults: { _controller: UserManagement\Presentation\Controller\LoginController::submitAction }
+    methods: [POST]
+
 user_management_register:
     path: /user/register/
     defaults: { _controller: UserManagement\Presentation\Controller\RegistrationController::indexAction }
@@ -12,3 +17,8 @@ user_management_register_create:
     path: /user/register/
     defaults: { _controller: UserManagement\Presentation\Controller\RegistrationController::createAction }
     methods: [POST]
+
+user_management_home:
+    path: /home/
+    defaults: { _controller: UserManagement\Presentation\Controller\HomeController::indexAction }
+    methods: [GET, HEAD]

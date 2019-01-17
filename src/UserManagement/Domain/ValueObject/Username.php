@@ -8,7 +8,7 @@ class Username
 
     private $username;
     
-    public function __construct($username = '')
+    public function __construct($username)
     {
         $this->username = $username;
     }

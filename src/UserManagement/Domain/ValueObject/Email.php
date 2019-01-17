@@ -8,7 +8,7 @@ class Email
 
     private $email;
     
-    public function __construct($email = '')
+    public function __construct($email)
     {
         $this->email = $email;
     }

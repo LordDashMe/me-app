@@ -3,20 +3,23 @@
 namespace UserManagement\Domain\ValueObject;
 
 use UserManagement\Domain\ValueObject\Password;
+use UserManagement\Domain\Service\PasswordEncoder;
 
 class MatchPassword
 {
+    private $passwordEncoder;
     private $password;
-    private $confirmPassword;
+    private $encodedPassword;
     
-    public function __construct(Password $password, $confirmPassword = '')
+    public function __construct(PasswordEncoder $passwordEncoder, $encodedPassword, Password $password)
     {
+        $this->passwordEncoder = $passwordEncoder;
+        $this->encodedPassword = $encodedPassword;
         $this->password = $password->get();
-        $this->confirmPassword = $confirmPassword;
     }
 
-    public function isEqual()
+    public function isMatch()
     {
-        return ($this->password === $this->confirmPassword);
+        return $this->passwordEncoder->verifyEncodedText($this->encodedPassword, $this->password);
     }
 }

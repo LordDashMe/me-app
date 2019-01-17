@@ -4,7 +4,7 @@ services:
         autowire: true
         public: true
         resource: '../../../src/UserManagement/*'
-        exclude: '../../../src/UserManagement/Domain/{Entity,UseCase}'
+        exclude: '../../../src/UserManagement/Domain/{Entity,UseCase,ValueObject}'
     
     UserManagement\Domain\Entity\:
         public: true
@@ -13,7 +13,12 @@ services:
     UserManagement\Domain\UseCase\:
         public: true
         resource: '../../../src/UserManagement/Domain/UseCase/*'
-
+    
+    UserManagement\Presentation\Controller\LoginController:
+        bind:
+            UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
+            UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
+    
     UserManagement\Presentation\Controller\RegistrationController:
         bind:
             UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'

@@ -38,9 +38,27 @@ class UserRepositoryImpl implements UserRepository
 
     }
 
+    public function getByUsername(Username $username)
+    {
+        $criteria = ['username' => $username->get()];
+
+        $repository = $this->entityManager->getRepository(User::class);
+        
+        return $repository->findOneBy($criteria);
+    }
+
     public function isApproved(Username $username)
     {
+        $criteria = [
+            'username' => $username->get(),
+            'status' => User::STATUS_ACTIVE
+        ];
 
+        $repository = $this->entityManager->getRepository(User::class);
+        
+        $userRecord = $repository->findOneBy($criteria);
+
+        return (count($userRecord) > 0);
     }
 
     public function isRegistered(Username $username)
@@ -49,8 +67,8 @@ class UserRepositoryImpl implements UserRepository
 
         $repository = $this->entityManager->getRepository(User::class);
         
-        $item = $repository->findOneBy($criteria);
+        $userRecord = $repository->findOneBy($criteria);
 
-        return (count($item) > 0);
+        return (count($userRecord) > 0);
     }
 }
