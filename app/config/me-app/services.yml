@@ -23,3 +23,8 @@ services:
         bind:
             UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
             UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
+
+    UserManagement\Presentation\EventSubscriber\TokenSubscriber:
+        autowire: true
+        tags:
+            - { name: kernel.event_subscriber, event: kernel.exception }

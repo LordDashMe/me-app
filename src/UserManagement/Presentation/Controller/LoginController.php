@@ -10,8 +10,10 @@ use UserManagement\Domain\UseCase\UserLogin;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Exception\LoginFailedException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use UserManagement\Presentation\Controller\Security\UnauthenticatedController;
 
-class LoginController extends Controller
+class LoginController extends Controller implements UnauthenticatedController
 {
     private $userRepository;
     private $passwordEncoder;
@@ -27,7 +29,7 @@ class LoginController extends Controller
         return $this->render('@user_management_resources/login.html.twig', []);
     }
     
-    public function submitAction(Request $request)
+    public function submitAction(Request $request, SessionInterface $session)
     {
         $loginData = [
             'username' => $request->get('username'),
@@ -51,8 +53,10 @@ class LoginController extends Controller
             ]);
         }
 
-        var_dump($userLogin->execute());
+        $session->set('user', $userLogin->execute());
 
-        return $this->render('@user_management_resources/login.html.twig', []);
+        return $this->redirectToRoute('user_management_home');
+
+        // return $this->render('@user_management_resources/login.html.twig', []);
     }
 }

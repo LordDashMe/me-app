@@ -22,3 +22,8 @@ user_management_home:
     path: /home/
     defaults: { _controller: UserManagement\Presentation\Controller\HomeController::indexAction }
     methods: [GET, HEAD]
+
+user_management_logout:
+    path: /user/logout/
+    defaults: { _controller: UserManagement\Presentation\Controller\HomeController::logoutAction }
+    methods: [GET, HEAD]
