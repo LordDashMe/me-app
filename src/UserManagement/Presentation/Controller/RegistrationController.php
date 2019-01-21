@@ -10,8 +10,9 @@ use UserManagement\Domain\UseCase\UserRegistration;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Exception\RegistrationFailedException;
+use UserManagement\Presentation\Controller\Security\UnauthenticatedController;
 
-class RegistrationController extends Controller
+class RegistrationController extends Controller implements UnauthenticatedController
 {
     private $userRepository;
     private $passwordEncoder;
