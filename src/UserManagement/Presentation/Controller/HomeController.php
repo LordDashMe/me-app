@@ -20,6 +20,6 @@ class HomeController extends Controller implements AuthenticatedController
     {
         $session->clear();
         
-        return $this->redirectToRoute('user_management_login');
+        return $this->redirectToRoute('user_management_home');
     }
 }

@@ -24,7 +24,6 @@ services:
             UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
             UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
 
-    UserManagement\Presentation\EventSubscriber\TokenSubscriber:
+    UserManagement\Presentation\EventSubscriber\AuthenticationSubscriber:
         autowire: true
-        tags:
-            - { name: kernel.event_subscriber, event: kernel.exception }
+        tags: [kernel.event_subscriber]

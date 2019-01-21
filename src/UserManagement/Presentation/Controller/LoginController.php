@@ -53,7 +53,7 @@ class LoginController extends Controller implements UnauthenticatedController
             ]);
         }
 
-        $session->set('user', $userLogin->execute());
+        $session->set('user_entity', $userLogin->execute());
 
         return $this->redirectToRoute('user_management_home');
 

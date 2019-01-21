@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Container\ContainerInterface;
 
-class TokenSubscriber implements EventSubscriberInterface
+class AuthenticationSubscriber implements EventSubscriberInterface
 {
     private $session;
     private $container;
@@ -35,25 +35,29 @@ class TokenSubscriber implements EventSubscriberInterface
             return;
         }
 
-        var_dump($this->session->get('user'));
+        $this->validateAuthenticatedController($controller, $event);
+        $this->validateUnauthenticatedController($controller, $event);        
+    }
 
+    private function validateAuthenticatedController($controller, $event)
+    {
         if ($controller[0] instanceof \UserManagement\Presentation\Controller\Security\AuthenticatedController) {
-
-            if (! $this->session->get('user')) {
+            if (! $this->session->get('user_entity')) {
                 $url = $this->container->get('router')
                     ->generate('user_management_login', array(), UrlGeneratorInterface::ABSOLUTE_PATH);
-
                 $event->setController(function() use ($url) {
                     return new RedirectResponse($url);
                 });
             }
         }
+    }
 
+    private function validateUnauthenticatedController($controller, $event)
+    {
         if ($controller[0] instanceof \UserManagement\Presentation\Controller\Security\UnauthenticatedController) {
-            if ($this->session->get('user')) {
+            if ($this->session->get('user_entity')) {
                 $url = $this->container->get('router')
                     ->generate('user_management_home', array(), UrlGeneratorInterface::ABSOLUTE_PATH);
-
                 $event->setController(function() use ($url) {
                     return new RedirectResponse($url);
                 });
