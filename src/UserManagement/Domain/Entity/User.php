@@ -67,7 +67,7 @@ class User
         Email $email,
         UserName $username,
         Password $password,
-        $status,
+        $status = self::STATUS_INACTIVE,
         CreatedAt $createdAt
     ) {
         $this->id = $id->get();

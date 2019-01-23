@@ -6,19 +6,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use UserManagement\Domain\UseCase\UserLogout;
+use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Presentation\Controller\Security\AuthenticatedController;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class HomeController extends Controller implements AuthenticatedController
 {
-    public function indexAction(Request $request, SessionInterface $session)
+    private $userSessionManager;
+
+    public function __construct(UserSessionManager $userSessionManager)
+    {
+        $this->userSessionManager = $userSessionManager;
+    }
+
+    public function indexAction(Request $request)
     {
         return $this->render('@user_management_resources/home.html.twig', []);
     }
 
-    public function logoutAction(SessionInterface $session)
+    public function logoutAction()
     {
-        $session->clear();
+        $userLogout = new UserLogout($this->userSessionManager);
+        $userLogout->execute();
         
         return $this->redirectToRoute('user_management_home');
     }

@@ -2,26 +2,25 @@
 
 namespace UserManagement\Infrastructure\Service;
 
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 use UserManagement\Domain\Service\PasswordEncoder;
 
-class PasswordEncoderImpl extends BCryptPasswordEncoder implements PasswordEncoder
+class PasswordEncoderImpl implements PasswordEncoder
 {
-    const ENCODER_COST = 8;
-    const DEFAULT_SALT = 'secret';
+    private $encoder;
 
-    public function __construct()
+    public function __construct(SelfSaltingEncoderInterface $encoder)
     {
-        parent::__construct(self::ENCODER_COST);
+        $this->encoder = $encoder;
     }
 
-    public function encodePlainText($plainText)
+    public function encodePlainText($plainText, $salt)
     {
-        return $this->encodePassword($plainText, self::DEFAULT_SALT);
+        return $this->encoder->encodePassword($plainText, $salt);
     }
 
-    public function verifyEncodedText($encodedText, $plainText)
+    public function verifyEncodedText($encodedText, $plainText, $salt)
     {
-        return $this->isPasswordValid($encodedText, $plainText, self::DEFAULT_SALT);
+        return $this->encoder->isPasswordValid($encodedText, $plainText, $salt);
     }
 }

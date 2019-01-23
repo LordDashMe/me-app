@@ -8,26 +8,34 @@ use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\MatchPassword;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
+use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LoginFailedException;
 
 class UserLogin
-{
+{    
+    private $userLoginData;
+    private $userRepository;
+    private $passwordEncoder;
+    private $userSessionManager;
+
     private $requiredFields = [
         'username' => 'Username',
         'password' => 'Password'
     ];
 
-    private $loginData;
-    private $userRepository;
-    private $passwordEncoder;
-
     private $userEntity;
 
-    public function __construct($loginData, UserRepository $userRepository, PasswordEncoder $passwordEncoder)
-    {
-        $this->loginData = $loginData;
+    public function __construct(
+        $userLoginData = [], 
+        UserRepository $userRepository, 
+        PasswordEncoder $passwordEncoder,
+        UserSessionManager $userSessionManager
+
+    ) {
+        $this->userLoginData = $userLoginData;
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
+        $this->userSessionManager = $userSessionManager;
     }
 
     public function validate()
@@ -41,7 +49,7 @@ class UserLogin
     private function validateRequiredFields()
     {
         foreach ($this->requiredFields as $requiredField => $requiedFieldLabel) {
-            if (empty($this->loginData[$requiredField])) {
+            if (empty($this->userLoginData[$requiredField])) {
                 throw LoginFailedException::requiredFieldIsEmpty($requiedFieldLabel);
             }
         }
@@ -52,7 +60,7 @@ class UserLogin
     private function validateUserCredentialsAndStatus()
     {
         $this->userEntity = $this->userRepository->getByUsername(
-            new Username($this->loginData['username'])
+            new Username($this->userLoginData['username'])
         );
         
         $this->checkUserAccount();
@@ -74,7 +82,7 @@ class UserLogin
         $matchPassword = new MatchPassword(
             $this->passwordEncoder, 
             $this->userEntity->password(), 
-            new Password($this->loginData['password'])
+            new Password($this->userLoginData['password'])
         );
 
         if (! $matchPassword->isMatch()) {
@@ -84,13 +92,16 @@ class UserLogin
 
     private function checkUserStatus()
     {
-        if (! $this->userRepository->isApproved(new Username($this->loginData['username']))) {
+        if (! $this->userRepository->isApproved(new Username($this->userLoginData['username']))) {
             throw LoginFailedException::userStatusIsNotActive();
         }
     }
 
     public function execute()
     {
-        return $this->userEntity;
+        $this->userSessionManager->set(
+            $this->userSessionManager->getUserEntityAttributeName(), 
+            $this->userEntity
+        );
     }
 }

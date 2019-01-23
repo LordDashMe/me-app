@@ -17,7 +17,7 @@ class RegistrationFailedException extends \Exception
     ) {
         $message = "The {$requiredField} field is empty.";
 
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 
     public static function invalidEmailFormat(
@@ -25,7 +25,7 @@ class RegistrationFailedException extends \Exception
         $code = self::INVALID_EMAIL_FORMAT,
         $previous = null
     ) {
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 
     public static function usernameAlreadyRegistered(
@@ -33,7 +33,7 @@ class RegistrationFailedException extends \Exception
         $code = self::USERNAME_ALREADY_REGISTERED,
         $previous = null
     ) {
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 
     public static function invalidPasswordFormat(
@@ -41,7 +41,7 @@ class RegistrationFailedException extends \Exception
         $code = self::INVALID_PASSWORD_FORMAT,
         $previous = null
     ) {
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 
     public static function confirmationPasswordNotMatched(
@@ -49,6 +49,6 @@ class RegistrationFailedException extends \Exception
         $code = self::CONFIRMATION_PASSWORD_NOT_MATCHED,
         $previous = null
     ) {
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 }

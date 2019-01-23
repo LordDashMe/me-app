@@ -42,10 +42,13 @@ class RegistrationController extends Controller implements UnauthenticatedContro
         try {
             
             $userRegistration = new UserRegistration(
-                $userData, $this->userRepository, $this->passwordEncoder
+                $userData, 
+                $this->userRepository, 
+                $this->passwordEncoder
             );
 
             $userRegistration->validate();
+            $userRegistration->execute();
 
         } catch (RegistrationFailedException $exception) {
             
@@ -56,8 +59,6 @@ class RegistrationController extends Controller implements UnauthenticatedContro
                 'old' => $userData
             ]);
         }
-
-        $userRegistration->execute();
         
         return $this->render('@user_management_resources/registration.html.twig', [
             'message' => 'Request for account has been sent! Please wait for the Admin to approve the request.'

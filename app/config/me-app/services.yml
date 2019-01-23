@@ -1,5 +1,9 @@
 services:
 
+    Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder:
+        arguments:
+            $cost: 8
+
     UserManagement\:
         autowire: true
         public: true
@@ -14,16 +18,31 @@ services:
         public: true
         resource: '../../../src/UserManagement/Domain/UseCase/*'
     
+    UserManagement\Infrastructure\Service\PasswordEncoderImpl:
+        bind:
+            Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface: '@Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder'
+    
+    UserManagement\Infrastructure\Service\UserSessionManagerImpl:
+        bind:
+            Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
+    
     UserManagement\Presentation\Controller\LoginController:
         bind:
             UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
             UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
-    
+            UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
+
     UserManagement\Presentation\Controller\RegistrationController:
         bind:
             UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
             UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
 
+    UserManagement\Presentation\Controller\HomeController:
+        bind:
+            UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
+
     UserManagement\Presentation\EventSubscriber\AuthenticationSubscriber:
         autowire: true
+        bind:
+            UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
         tags: [kernel.event_subscriber]

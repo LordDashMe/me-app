@@ -4,6 +4,7 @@ namespace UserManagement\Domain\ValueObject;
 
 class Password
 {
+    /** @var string  Password must contain a minimum of 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character. */
     const STANDARD_FORMAT = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&*()_+|<>:\";\'~=`{}~\^\-\[\]\\\,\.\/])[A-Za-z\d$@$!%*#?&*()_+|<>:\";\'~=`{}~\^\-\[\]\\\,\.\/]{8,}$/';
 
     private $password;
@@ -15,7 +16,6 @@ class Password
 
     public function isValid()
     {
-        // Password must contain a minimum of 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.
         return \preg_match(Password::STANDARD_FORMAT, $this->password);
     }
 

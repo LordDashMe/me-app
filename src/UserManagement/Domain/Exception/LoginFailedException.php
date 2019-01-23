@@ -15,7 +15,7 @@ class LoginFailedException extends \Exception
     ) {
         $message = "The {$requiredField} field is empty.";
 
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 
     public static function invalidAccount(
@@ -23,7 +23,7 @@ class LoginFailedException extends \Exception
         $code = self::INVALID_ACCOUNT,
         $previous = null
     ) {
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 
     public static function userStatusIsNotActive(
@@ -31,6 +31,6 @@ class LoginFailedException extends \Exception
         $code = self::USER_STATUS_IS_NOT_ACTIVE,
         $previous = null
     ) {
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 }

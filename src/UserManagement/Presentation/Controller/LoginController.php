@@ -9,19 +9,24 @@ use Symfony\Component\Routing\Annotation\Route;
 use UserManagement\Domain\UseCase\UserLogin;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
+use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LoginFailedException;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use UserManagement\Presentation\Controller\Security\UnauthenticatedController;
 
 class LoginController extends Controller implements UnauthenticatedController
 {
     private $userRepository;
     private $passwordEncoder;
+    private $userSessionManager;
 
-    public function __construct(UserRepository $userRepository, PasswordEncoder $passwordEncoder)
-    {
+    public function __construct(
+        UserRepository $userRepository, 
+        PasswordEncoder $passwordEncoder, 
+        UserSessionManager $userSessionManager
+    ) {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
+        $this->userSessionManager = $userSessionManager;
     }
 
     public function indexAction(Request $request)
@@ -29,7 +34,7 @@ class LoginController extends Controller implements UnauthenticatedController
         return $this->render('@user_management_resources/login.html.twig', []);
     }
     
-    public function submitAction(Request $request, SessionInterface $session)
+    public function submitAction(Request $request)
     {
         $loginData = [
             'username' => $request->get('username'),
@@ -39,10 +44,14 @@ class LoginController extends Controller implements UnauthenticatedController
         try {
             
             $userLogin = new UserLogin(
-                $loginData, $this->userRepository, $this->passwordEncoder
+                $loginData, 
+                $this->userRepository, 
+                $this->passwordEncoder,
+                $this->userSessionManager
             );
 
             $userLogin->validate();
+            $userLogin->execute();
 
         } catch (LoginFailedException $exception) {
             
@@ -53,10 +62,6 @@ class LoginController extends Controller implements UnauthenticatedController
             ]);
         }
 
-        $session->set('user_entity', $userLogin->execute());
-
         return $this->redirectToRoute('user_management_home');
-
-        // return $this->render('@user_management_resources/login.html.twig', []);
     }
 }

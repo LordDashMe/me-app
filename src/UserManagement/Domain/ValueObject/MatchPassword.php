@@ -20,6 +20,8 @@ class MatchPassword
 
     public function isMatch()
     {
-        return $this->passwordEncoder->verifyEncodedText($this->encodedPassword, $this->password);
+        return $this->passwordEncoder->verifyEncodedText(
+            $this->encodedPassword, $this->password, $this->password
+        );
     }
 }

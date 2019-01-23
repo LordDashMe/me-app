@@ -6,20 +6,29 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Container\ContainerInterface;
+use UserManagement\Domain\Service\UserSessionManager;
+use UserManagement\Presentation\Controller\Security\AuthenticatedController;
+use UserManagement\Presentation\Controller\Security\UnauthenticatedController;
 
 class AuthenticationSubscriber implements EventSubscriberInterface
 {
-    private $session;
     private $container;
+    private $userSessionManager;
     
-    public function __construct(ContainerInterface $container,SessionInterface $session)
+    public function __construct(ContainerInterface $container, UserSessionManager $userSessionManager)
     {
-        $this->session = $session;
         $this->container = $container;
+        $this->userSessionManager = $userSessionManager;
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::CONTROLLER => 'onKernelController',
+        ];
     }
 
     public function onKernelController(FilterControllerEvent $event)
@@ -30,6 +39,8 @@ class AuthenticationSubscriber implements EventSubscriberInterface
          * $controller passed can be either a class or a Closure.
          * This is not usual in Symfony but it may happen.
          * If it is a class, it comes in array format
+         * 
+         * - from Symfony
          */
         if (!is_array($controller)) {
             return;
@@ -41,34 +52,32 @@ class AuthenticationSubscriber implements EventSubscriberInterface
 
     private function validateAuthenticatedController($controller, $event)
     {
-        if ($controller[0] instanceof \UserManagement\Presentation\Controller\Security\AuthenticatedController) {
-            if (! $this->session->get('user_entity')) {
-                $url = $this->container->get('router')
-                    ->generate('user_management_login', array(), UrlGeneratorInterface::ABSOLUTE_PATH);
-                $event->setController(function() use ($url) {
-                    return new RedirectResponse($url);
-                });
-            }
+        if (! $controller[0] instanceof AuthenticatedController) {
+            return;
+        }
+
+        if (! $this->userSessionManager->get($this->userSessionManager->getUserEntityAttributeName())) {
+            $url = $this->container->get('router')->generate(
+                'user_management_login', array(), UrlGeneratorInterface::ABSOLUTE_PATH
+            );
+            $event->setController(function() use ($url) {
+                return new RedirectResponse($url);
+            });
         }
     }
 
     private function validateUnauthenticatedController($controller, $event)
     {
-        if ($controller[0] instanceof \UserManagement\Presentation\Controller\Security\UnauthenticatedController) {
-            if ($this->session->get('user_entity')) {
-                $url = $this->container->get('router')
-                    ->generate('user_management_home', array(), UrlGeneratorInterface::ABSOLUTE_PATH);
-                $event->setController(function() use ($url) {
-                    return new RedirectResponse($url);
-                });
-            }
+        if (! $controller[0] instanceof UnauthenticatedController) {
+            return;
         }
-    }
 
-    public static function getSubscribedEvents()
-    {
-        return [
-            KernelEvents::CONTROLLER => 'onKernelController',
-        ];
+        if ($this->userSessionManager->get($this->userSessionManager->getUserEntityAttributeName())) {
+            $url = $this->container->get('router')
+                ->generate('user_management_home', array(), UrlGeneratorInterface::ABSOLUTE_PATH);
+            $event->setController(function() use ($url) {
+                return new RedirectResponse($url);
+            });
+        }
     }
 }
