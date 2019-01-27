@@ -1,29 +1,45 @@
 user_management_login:
-    path: /user/login/
+    path: /user/login
     defaults: { _controller: UserManagement\Presentation\Controller\LoginController::indexAction }
     methods: [GET, HEAD]
-
 user_management_login_submit:
-    path: /user/login/
+    path: /user/login
     defaults: { _controller: UserManagement\Presentation\Controller\LoginController::submitAction }
     methods: [POST]
-
 user_management_register:
-    path: /user/register/
+    path: /user/register
     defaults: { _controller: UserManagement\Presentation\Controller\RegistrationController::indexAction }
     methods: [GET, HEAD]
-
 user_management_register_create:
-    path: /user/register/
+    path: /user/register
     defaults: { _controller: UserManagement\Presentation\Controller\RegistrationController::createAction }
     methods: [POST]
-
 user_management_home:
-    path: /home/
+    path: /home
     defaults: { _controller: UserManagement\Presentation\Controller\HomeController::indexAction }
     methods: [GET, HEAD]
-
 user_management_logout:
-    path: /user/logout/
+    path: /user/logout
     defaults: { _controller: UserManagement\Presentation\Controller\HomeController::logoutAction }
     methods: [GET, HEAD]
+
+expense_management_create:
+    path: /expense
+    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::createAction }
+    methods: [POST]
+expense_management_update:
+    path: /expense/{expenseId}
+    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::updateAction }
+    methods: [POST]
+expense_management_find:
+    path: /expense/{expenseId}
+    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::findAction }
+    methods: [GET, HEAD]
+expense_management_datatable:
+    path: /expense/datatable
+    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::getDatatableAction }
+    methods: [GET, HEAD]
+expense_management_soft_delete:
+    path: /expense/delete/{expenseId}
+    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::softDeleteAction }
+    methods: [POST]

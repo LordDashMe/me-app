@@ -8,22 +8,19 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20181016074705 extends AbstractMigration
+class Version20190127093239 extends AbstractMigration
 {
     /**
      * @param Schema $schema
      */
     public function up(Schema $schema)
     {
-        $table = $schema->createTable('users');
+        $table = $schema->createTable('expenses');
     
         $table->addColumn('id', 'guid');
-        $table->addColumn('firstName', 'text');
-        $table->addColumn('lastName', 'text');
-        $table->addColumn('email', 'text');
-        $table->addColumn('username', 'text');
-        $table->addColumn('password', 'text');
-        $table->addColumn('status', 'smallint', array('comment' => '1 = Active | 2 = Inactive'));
+        $table->addColumn('userId', 'text');
+        $table->addColumn('label', 'text');
+        $table->addColumn('cost', 'integer');
         $table->addColumn('createdAt', 'datetime', array('default' => '2000-01-01 01:01:01'));
 
         $table->setPrimaryKey(array('id'));
@@ -34,6 +31,6 @@ class Version20181016074705 extends AbstractMigration
      */
     public function down(Schema $schema)
     {
-        $schema->dropTable('users');
+        $schema->dropTable('expenses');
     }
 }

@@ -2,12 +2,12 @@
 
 namespace UserManagement\Domain\UseCase;
 
+use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
-use UserManagement\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\ValueObject\ConfirmPassword;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;

@@ -4,11 +4,11 @@ namespace UserManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 
+use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
-use UserManagement\Domain\ValueObject\CreatedAt;
 
 /**
  * @ORM\Entity
@@ -80,42 +80,42 @@ class User
         $this->createdAt = $createdAt->get();
     }
 
-    public function id()
+    public function getId()
     {
         return $this->id;
     }
 
-    public function firstName()
+    public function getFirstName()
     {
         return $this->firstName;
     }
 
-    public function lastName()
+    public function getLastName()
     {
         return $this->lastName;
     }
 
-    public function email()
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function username()
+    public function getUsername()
     {
         return $this->username;
     }
 
-    public function password()
+    public function getPassword()
     {
         return $this->password;
     }
 
-    public function status()
+    public function getStatus()
     {
         return $this->status;
     }
 
-    public function createAt()
+    public function getCreateAt()
     {
         return $this->createAt;
     }

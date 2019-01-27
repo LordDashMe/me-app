@@ -2,7 +2,4 @@
 
 namespace UserManagement\API\Controller;
 
-class LoginController
-{
-    
-}
+class LoginController {}

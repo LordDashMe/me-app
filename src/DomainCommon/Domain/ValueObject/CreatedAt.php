@@ -1,6 +1,6 @@
 <?php
 
-namespace UserManagement\Domain\ValueObject;
+namespace DomainCommon\Domain\ValueObject;
 
 class CreatedAt
 {

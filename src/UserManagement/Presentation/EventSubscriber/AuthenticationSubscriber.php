@@ -10,8 +10,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Container\ContainerInterface;
 use UserManagement\Domain\Service\UserSessionManager;
-use UserManagement\Presentation\Controller\Security\AuthenticatedController;
-use UserManagement\Presentation\Controller\Security\UnauthenticatedController;
+use DomainCommon\Presentation\Controller\Security\AuthenticatedController;
+use DomainCommon\Presentation\Controller\Security\UnauthenticatedController;
 
 class AuthenticationSubscriber implements EventSubscriberInterface
 {
@@ -40,7 +40,7 @@ class AuthenticationSubscriber implements EventSubscriberInterface
          * This is not usual in Symfony but it may happen.
          * If it is a class, it comes in array format
          * 
-         * - from Symfony
+         * - From Symfony
          */
         if (!is_array($controller)) {
             return;

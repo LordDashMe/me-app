@@ -18,7 +18,9 @@
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle",
-            "UserManagement\\": "src/UserManagement"
+            "DomainCommon\\": "src/DomainCommon",
+            "UserManagement\\": "src/UserManagement",
+            "ExpenseManagement\\": "src/ExpenseManagement"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },

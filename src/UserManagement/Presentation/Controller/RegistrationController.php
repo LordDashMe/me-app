@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use DomainCommon\Presentation\Controller\Security\UnauthenticatedController;
 use UserManagement\Domain\UseCase\UserRegistration;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Exception\RegistrationFailedException;
-use UserManagement\Presentation\Controller\Security\UnauthenticatedController;
 
 class RegistrationController extends Controller implements UnauthenticatedController
 {

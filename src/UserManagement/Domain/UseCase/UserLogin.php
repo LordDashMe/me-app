@@ -81,7 +81,7 @@ class UserLogin
     {
         $matchPassword = new MatchPassword(
             $this->passwordEncoder, 
-            $this->userEntity->password(), 
+            $this->userEntity->getPassword(), 
             new Password($this->userLoginData['password'])
         );
 

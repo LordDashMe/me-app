@@ -6,9 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use DomainCommon\Presentation\Controller\Security\AuthenticatedController;
 use UserManagement\Domain\UseCase\UserLogout;
 use UserManagement\Domain\Service\UserSessionManager;
-use UserManagement\Presentation\Controller\Security\AuthenticatedController;
 
 class HomeController extends Controller implements AuthenticatedController
 {
