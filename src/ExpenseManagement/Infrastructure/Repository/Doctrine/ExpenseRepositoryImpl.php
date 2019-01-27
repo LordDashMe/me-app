@@ -2,6 +2,7 @@
 
 namespace ExpenseManagement\Infrastructure\Repository\Doctrine;
 
+use UserManagement\Domain\ValueObject\UserId;
 use ExpenseManagement\Domain\Entity\Expense;
 use ExpenseManagement\Domain\ValueObject\ExpenseId;
 use ExpenseManagement\Domain\Repository\ExpenseRepository;
@@ -23,7 +24,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository
         
     }
 
-    public function find(ExpenseId $expenseId)
+    public function findUserExpenses(UserId $userId)
     {
 
     }

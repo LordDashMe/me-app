@@ -40,6 +40,11 @@ class Expense
     /**
      * @ORM\Column(type="string")
      */
+    private $date;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     private $createdAt;
 
     public function __construct(
@@ -47,12 +52,14 @@ class Expense
         UserId $userId,
         Label $label,
         Cost $cost,
+        Date $date,
         CreatedAt $createdAt
     ) {
         $this->id = $id->get();
         $this->userId = $userId->get();
         $this->label = $label->get();
         $this->cost = $cost->get();
+        $this->date = $date->get();
         $this->createdAt = $createdAt->get();
     }
 
@@ -74,6 +81,11 @@ class Expense
     public function getCost()
     {
         return $this->cost;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
     }
 
     public function getCreateAt()

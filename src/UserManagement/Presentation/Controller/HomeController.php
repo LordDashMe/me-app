@@ -21,7 +21,17 @@ class HomeController extends Controller implements AuthenticatedController
 
     public function indexAction(Request $request)
     {
-        return $this->render('@user_management_resources/home.html.twig', []);
+        $userEntity = $this->userSessionManager->get(
+            $this->userSessionManager->getUserEntityAttributeName()
+        );
+
+        $data = [
+            'userFirstName' => $userEntity->getFirstName()
+        ];
+
+        return $this->render('@user_management_resources/home.html.twig', [
+            'data' => $data
+        ]);
     }
 
     public function logoutAction()

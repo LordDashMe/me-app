@@ -2,6 +2,7 @@
 
 namespace ExpenseManagement\Domain\Repository;
 
+use UserManagement\Domain\ValueObject\UserId;
 use ExpenseManagement\Domain\Entity\Expense;
 use ExpenseManagement\Domain\ValueObject\ExpenseId;
 
@@ -11,7 +12,7 @@ interface ExpenseRepository
 
     public function update(ExpenseId $expenseId, Expense $expenseEntity);
 
-    public function find(ExpenseId $expenseId);
+    public function findUserExpenses(UserId $userId);
 
     public function getDataTable();
 

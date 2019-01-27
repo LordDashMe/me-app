@@ -1,0 +1,87 @@
+<div class="index-page-wrapper">
+    
+    <br>
+    <h1>Hello, {{ userFirstName }}!</h1>
+    <p>Total Expense(s): <b>1,000</b> | Total Day(s): <b>5</b></p>
+    <br>
+    <a class="btn btn-default btn-sm action-add-expense-entry">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Expense Entry
+    </a>
+    <br>
+    <br>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Expense List</b></div>
+        <div class="panel-body">
+            <table id="example" class="display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Entry ID</th>
+                        <th>Label</th>
+                        <th>Cost</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- START ACTION POPUP -->
+<div id="action-popup" class="panel panel-default mfp-hide action-popup">
+    <div class="panel-heading">
+        <h3 class="panel-title"></h3>
+    </div>
+    <div class="panel-body">
+        <form method="POST" action="">
+            <div class="form-group">
+                <p>Label: <span class="required-field">*</span></p>
+                <input 
+                    type="text" 
+                    id="expense_label" 
+                    name="expense_label"
+                    class="form-control" 
+                    placeholder="Bottled Water"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <p>Cost: <span class="required-field">*</span></p>
+                <input 
+                    type="number" 
+                    id="expense_cost" 
+                    name="expense_cost"
+                    class="form-control" 
+                    placeholder="1000"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <p>Date: <span class="required-field">*</span></p>
+                <input 
+                    type="text" 
+                    id="expense_date" 
+                    name="expense_date" 
+                    class="form-control"
+                    placeholder="01/23/2019"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <a 
+                            href="#" 
+                            id="action-submit" 
+                            name="action-submit" 
+                            tabindex="4" 
+                            class="form-control btn btn-primary"
+                        >Submit</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END ACTION POPUP -->
