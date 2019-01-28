@@ -18,13 +18,13 @@ class Version20181016074705 extends AbstractMigration
         $table = $schema->createTable('users');
     
         $table->addColumn('id', 'guid');
-        $table->addColumn('firstName', 'text');
-        $table->addColumn('lastName', 'text');
+        $table->addColumn('first_name', 'text');
+        $table->addColumn('last_name', 'text');
         $table->addColumn('email', 'text');
         $table->addColumn('username', 'text');
         $table->addColumn('password', 'text');
         $table->addColumn('status', 'smallint', array('comment' => '1 = Active | 2 = Inactive'));
-        $table->addColumn('createdAt', 'datetime', array('default' => '2000-01-01 01:01:01'));
+        $table->addColumn('created_at', 'datetime', array('default' => '2000-01-01 01:01:01'));
 
         $table->setPrimaryKey(array('id'));
     }
