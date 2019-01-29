@@ -4,15 +4,19 @@ namespace Tests\Unit\UserManagement\Domain\UseCase;
 
 use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
+use DomainCommon\Domain\ValueObject\CreatedAt;
+use DomainCommon\Domain\Exception\RequiredFieldException;
 use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\UseCase\UserLogin;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
-use UserManagement\Domain\ValueObject\CreatedAt;
-use UserManagement\Domain\UseCase\UserLogin;
-use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\Service\PasswordEncoder;
+use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LoginFailedException;
 
 class UserLoginTest extends TestCase
@@ -29,8 +33,14 @@ class UserLoginTest extends TestCase
         
         $userRepository = Mockery::mock(UserRepository::class);
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
+        $userSessionManager = Mockery::mock(UserSessionManager::class);
 
-        $userLogin = new UserLogin($loginData, $userRepository, $passwordEncoder);
+        $userLogin = new UserLogin(
+            $loginData, 
+            $userRepository, 
+            $passwordEncoder, 
+            $userSessionManager
+        );
 
         $this->assertInstanceOf(UserLogin::class, $userLogin);
     }
@@ -40,8 +50,8 @@ class UserLoginTest extends TestCase
      */
     public function it_should_throw_exception_when_required_field_is_empty()
     {
-        $this->expectException(LoginFailedException::class);
-        $this->expectExceptionCode(LoginFailedException::REQUIRED_FIELD_IS_EMPTY);
+        $this->expectException(RequiredFieldException::class);
+        $this->expectExceptionCode(RequiredFieldException::REQUIRED_FIELD_IS_EMPTY);
 
         $loginData = [
             'username' => '',
@@ -50,8 +60,15 @@ class UserLoginTest extends TestCase
         
         $userRepository = Mockery::mock(UserRepository::class);
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
+        $userSessionManager = Mockery::mock(UserSessionManager::class);
 
-        $userLogin = new UserLogin($loginData, $userRepository, $passwordEncoder);
+        $userLogin = new UserLogin(
+            $loginData, 
+            $userRepository, 
+            $passwordEncoder, 
+            $userSessionManager
+        );
+
         $userLogin->validate();
     }
 
@@ -73,8 +90,15 @@ class UserLoginTest extends TestCase
                        ->andReturn(null);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
+        $userSessionManager = Mockery::mock(UserSessionManager::class);
 
-        $userLogin = new UserLogin($loginData, $userRepository, $passwordEncoder);
+        $userLogin = new UserLogin(
+            $loginData, 
+            $userRepository, 
+            $passwordEncoder, 
+            $userSessionManager
+        );
+
         $userLogin->validate();
     }
 
@@ -101,7 +125,15 @@ class UserLoginTest extends TestCase
         $passwordEncoder->shouldReceive('verifyEncodedText')
                        ->andReturn(true);
 
-        $userLogin = new UserLogin($loginData, $userRepository, $passwordEncoder);
+        $userSessionManager = Mockery::mock(UserSessionManager::class);
+
+        $userLogin = new UserLogin(
+            $loginData, 
+            $userRepository, 
+            $passwordEncoder, 
+            $userSessionManager
+        );
+
         $userLogin->validate();
     }
 
@@ -125,18 +157,30 @@ class UserLoginTest extends TestCase
         $passwordEncoder->shouldReceive('verifyEncodedText')
                        ->andReturn(true);
 
-        $userLogin = new UserLogin($loginData, $userRepository, $passwordEncoder);
+        $userSessionManager = Mockery::mock(UserSessionManager::class);
+        $userSessionManager->shouldReceive('getUserEntityAttributeName')
+                           ->andReturn('session_user_entity');
+        $userSessionManager->shouldReceive('set')
+                           ->andReturn(null);
+
+        $userLogin = new UserLogin(
+            $loginData, 
+            $userRepository, 
+            $passwordEncoder, 
+            $userSessionManager
+        );
+
         $userLogin->validate();
 
-        $this->assertInstanceOf(User::class, $userLogin->execute());
+        $this->assertEquals(null, $userLogin->perform());
     }
 
     private function mockUserEntity()
     {
         return new User(
             new UserId(),
-            'John',
-            'Doe',
+            new FirstName('John'),
+            new LastName('Doe'),
             new Email('john.doe@provider.com'),
             new UserName('johndoe123'),
             new Password('P@ssw0rd!'),

@@ -3,12 +3,13 @@
 namespace UserManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
-
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
+use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\FirstName;
 
 /**
  * @ORM\Entity
@@ -21,49 +22,49 @@ class User
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="guid")
+     * @ORM\Column(type="guid", name="id")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="first_name")
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="last_name")
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="email")
      */
     private $email;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="username")
      */
     private $username;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="password")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="smallint", options={"comment":"1 = Active | 2 = Inactive"})
+     * @ORM\Column(type="smallint", name="status", options={"comment":"1 = Active | 2 = Inactive"})
      */
     private $status;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="created_at")
      */
     private $createdAt;
 
     public function __construct(
         UserId $id,
-        $firstName,
-        $lastName,
+        FirstName $firstName,
+        LastName $lastName,
         Email $email,
         UserName $username,
         Password $password,
@@ -71,8 +72,8 @@ class User
         CreatedAt $createdAt
     ) {
         $this->id = $id->get();
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->firstName = $firstName->get();
+        $this->lastName = $lastName->get();
         $this->email = $email->get();
         $this->username = $username->get();
         $this->password = $password->get();

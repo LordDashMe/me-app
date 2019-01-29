@@ -2,27 +2,24 @@
 
 namespace UserManagement\Domain\UseCase;
 
+use DomainCommon\Domain\UseCase\DefaultUseCase;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
+use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\FirstName;
+use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\ValueObject\MatchPassword;
 use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LoginFailedException;
 
-class UserLogin
+class UserLogin extends DefaultUseCase
 {    
     private $userLoginData;
     private $userRepository;
     private $passwordEncoder;
     private $userSessionManager;
-
-    private $requiredFields = [
-        'username' => 'Username',
-        'password' => 'Password'
-    ];
-
     private $userEntity;
 
     public function __construct(
@@ -36,23 +33,18 @@ class UserLogin
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
         $this->userSessionManager = $userSessionManager;
+
+        $this->requiredFields = [
+            'username' => 'Username',
+            'password' => 'Password'
+        ];
     }
 
     public function validate()
     {
-        $this->validateRequiredFields()
-             ->validateUserCredentialsAndStatus();
+        $this->validateRequiredFields($this->userLoginData);
 
-        return $this;
-    }
-
-    private function validateRequiredFields()
-    {
-        foreach ($this->requiredFields as $requiredField => $requiedFieldLabel) {
-            if (empty($this->userLoginData[$requiredField])) {
-                throw LoginFailedException::requiredFieldIsEmpty($requiedFieldLabel);
-            }
-        }
+        $this->validateUserCredentialsAndStatus();
 
         return $this;
     }
@@ -66,8 +58,6 @@ class UserLogin
         $this->checkUserAccount();
         $this->checkUserCredentials();
         $this->checkUserStatus();
-        
-        return $this;
     }
 
     private function checkUserAccount()
@@ -97,7 +87,7 @@ class UserLogin
         }
     }
 
-    public function execute()
+    public function perform()
     {
         $this->userSessionManager->set(
             $this->userSessionManager->getUserEntityAttributeName(), 

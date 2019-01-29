@@ -4,9 +4,10 @@ namespace Tests\Unit\UserManagement\Domain\UseCase;
 
 use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
-use UserManagement\Domain\Repository\UserRepository;
+use DomainCommon\Domain\Exception\RequiredFieldException;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\UseCase\UserRegistration;
+use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 
 class UserRegistrationTest extends TestCase
@@ -40,8 +41,8 @@ class UserRegistrationTest extends TestCase
      */
     public function it_should_throw_exception_when_required_field_is_empty()
     {
-        $this->expectException(RegistrationFailedException::class);
-        $this->expectExceptionCode(RegistrationFailedException::REQUIRED_FIELD_IS_EMPTY);
+        $this->expectException(RequiredFieldException::class);
+        $this->expectExceptionCode(RequiredFieldException::REQUIRED_FIELD_IS_EMPTY);
 
         $registrationData = [
             'first_name' => '',
@@ -203,7 +204,7 @@ class UserRegistrationTest extends TestCase
         $userRepository->shouldReceive('isRegistered')
                        ->andReturn(false);
         $userRepository->shouldReceive('create')
-                       ->andReturn(true);
+                       ->andReturn(null);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
         $passwordEncoder->shouldReceive('encodePlainText')
@@ -215,6 +216,6 @@ class UserRegistrationTest extends TestCase
         
         $userRegistration->validate();
 
-        $this->assertEquals(true, $userRegistration->execute());
+        $this->assertEquals(null, $userRegistration->perform());
     }
 }
