@@ -16,11 +16,11 @@ use UserManagement\Domain\Exception\LoginFailedException;
 
 class UserLogin extends DefaultUseCase
 {    
-    private $userLoginData;
-    private $userRepository;
-    private $passwordEncoder;
-    private $userSessionManager;
-    private $userEntity;
+    private $userLoginData = null;
+    private $userRepository = null;
+    private $passwordEncoder = null;
+    private $userSessionManager = null;
+    private $userEntity = null;
 
     public function __construct(
         $userLoginData = [], 
@@ -43,7 +43,6 @@ class UserLogin extends DefaultUseCase
     public function validate()
     {
         $this->validateRequiredFields($this->userLoginData);
-
         $this->validateUserCredentialsAndStatus();
 
         return $this;
