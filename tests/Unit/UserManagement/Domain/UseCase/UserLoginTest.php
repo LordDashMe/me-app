@@ -158,7 +158,7 @@ class UserLoginTest extends TestCase
                        ->andReturn(true);
 
         $userSessionManager = Mockery::mock(UserSessionManager::class);
-        $userSessionManager->shouldReceive('getUserEntityAttributeName')
+        $userSessionManager->shouldReceive('getUserEntitySessionName')
                            ->andReturn('session_user_entity');
         $userSessionManager->shouldReceive('set')
                            ->andReturn(null);

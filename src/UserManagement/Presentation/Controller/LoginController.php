@@ -2,10 +2,10 @@
 
 namespace UserManagement\Presentation\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use DomainCommon\Presentation\Controller\Security\UnauthenticatedController;
 use UserManagement\Domain\UseCase\UserLogin;
 use UserManagement\Domain\Repository\UserRepository;
@@ -51,7 +51,7 @@ class LoginController extends Controller implements UnauthenticatedController
             );
 
             $userLogin->validate();
-            $userLogin->execute();
+            $userLogin->perform();
 
         } catch (LoginFailedException $exception) {
             

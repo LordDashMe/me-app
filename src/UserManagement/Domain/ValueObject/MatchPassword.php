@@ -11,8 +11,11 @@ class MatchPassword
     private $password;
     private $encodedPassword;
     
-    public function __construct(PasswordEncoder $passwordEncoder, $encodedPassword, Password $password)
-    {
+    public function __construct(
+        PasswordEncoder $passwordEncoder, 
+        $encodedPassword, 
+        Password $password
+    ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->encodedPassword = $encodedPassword;
         $this->password = $password->get();

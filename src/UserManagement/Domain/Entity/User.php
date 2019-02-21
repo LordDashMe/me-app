@@ -3,6 +3,7 @@
 namespace UserManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;

@@ -4,7 +4,7 @@ namespace UserManagement\Domain\Service;
 
 interface UserSessionManager
 {
-    public function getUserEntityAttributeName();
+    public function getUserEntitySessionName();
 
     public function set($attribute, $value);
 

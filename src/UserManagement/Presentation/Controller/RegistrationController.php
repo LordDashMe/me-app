@@ -2,14 +2,14 @@
 
 namespace UserManagement\Presentation\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use DomainCommon\Presentation\Controller\Security\UnauthenticatedController;
+use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\UseCase\UserRegistration;
 use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 
 class RegistrationController extends Controller implements UnauthenticatedController
@@ -48,7 +48,7 @@ class RegistrationController extends Controller implements UnauthenticatedContro
             );
 
             $userRegistration->validate();
-            $userRegistration->execute();
+            $userRegistration->perform();
 
         } catch (RegistrationFailedException $exception) {
             

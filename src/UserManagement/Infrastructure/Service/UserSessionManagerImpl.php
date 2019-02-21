@@ -7,7 +7,7 @@ use UserManagement\Domain\Service\UserSessionManager;
 
 class UserSessionManagerImpl implements UserSessionManager
 {
-    const USER_ENTITY_ATTRIBUTE_NAME = 'session_user_entity';
+    const USER_ENTITY_SESSION_NAME = 'session_user_entity';
 
     private $session;
 
@@ -16,9 +16,9 @@ class UserSessionManagerImpl implements UserSessionManager
         $this->session = $session;
     }
 
-    public function getUserEntityAttributeName()
+    public function getUserEntitySessionName()
     {
-        return self::USER_ENTITY_ATTRIBUTE_NAME;
+        return self::USER_ENTITY_SESSION_NAME;
     }
 
     public function set($attribute, $value)

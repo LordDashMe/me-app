@@ -12,9 +12,9 @@ class LoginFailedException extends Exception
     public static function invalidAccount($previous = null) 
     {
         $message = 'Invalid account.';
-        $code = static::INVALID_ACCOUNT;
+        $code = self::INVALID_ACCOUNT;
 
-        return new static($message, $code, $previous);
+        return new self($message, $code, $previous);
     }
 
     public static function userStatusIsNotActive($previous = null) 

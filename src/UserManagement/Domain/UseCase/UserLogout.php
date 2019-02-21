@@ -13,7 +13,7 @@ class UserLogout
         $this->userSessionManager = $userSessionManager;
     }
 
-    public function execute()
+    public function perform()
     {
         $this->userSessionManager->forget();
     }

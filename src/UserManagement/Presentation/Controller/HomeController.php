@@ -2,10 +2,10 @@
 
 namespace UserManagement\Presentation\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use DomainCommon\Presentation\Controller\Security\AuthenticatedController;
 use UserManagement\Domain\UseCase\UserLogout;
 use UserManagement\Domain\Service\UserSessionManager;
@@ -22,7 +22,7 @@ class HomeController extends Controller implements AuthenticatedController
     public function indexAction(Request $request)
     {
         $userEntity = $this->userSessionManager->get(
-            $this->userSessionManager->getUserEntityAttributeName()
+            $this->userSessionManager->getUserEntitySessionName()
         );
 
         $data = [
@@ -37,7 +37,7 @@ class HomeController extends Controller implements AuthenticatedController
     public function logoutAction()
     {
         $userLogout = new UserLogout($this->userSessionManager);
-        $userLogout->execute();
+        $userLogout->perform();
         
         return $this->redirectToRoute('user_management_home');
     }
