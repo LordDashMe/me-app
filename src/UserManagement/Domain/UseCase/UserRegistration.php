@@ -3,7 +3,7 @@
 namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
-use DomainCommon\Domain\UseCase\DefaultUseCase;
+use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
@@ -16,8 +16,17 @@ use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\ValueObject\ConfirmPassword;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 
-class UserRegistration extends DefaultUseCase
+class UserRegistration
 {
+    private $requiredFields = [
+        'first_name'       => 'First Name',
+        'last_name'        => 'Last Name',
+        'email'            => 'Email',
+        'username'         => 'Username',
+        'password'         => 'Password',
+        'confirm_password' => 'Confirm Password'
+    ];
+
     private $userRegistrationData = [];
     private $userRepository;
     private $passwordEncoder;
@@ -30,20 +39,11 @@ class UserRegistration extends DefaultUseCase
         $this->userRegistrationData = $userRegistrationData;
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
-
-        $this->requiredFields = [
-            'first_name'       => 'First Name',
-            'last_name'        => 'Last Name',
-            'email'            => 'Email',
-            'username'         => 'Username',
-            'password'         => 'Password',
-            'confirm_password' => 'Confirm Password'
-        ];
     }
 
     public function validate()
     {
-        $this->validateRequiredFields($this->userRegistrationData);
+        (new ValidateRequireFields($this->requiredFields, $this->userRegistrationData))->perform();
 
         $this->validateEmail();
         $this->validateUsername();

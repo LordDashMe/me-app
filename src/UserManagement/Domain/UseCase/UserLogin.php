@@ -2,7 +2,7 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use DomainCommon\Domain\UseCase\DefaultUseCase;
+use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
@@ -14,16 +14,21 @@ use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LoginFailedException;
 
-class UserLogin extends DefaultUseCase
+class UserLogin
 {    
-    private $userLoginData;
+    private $requiredFields = [
+        'username' => 'Username',
+        'password' => 'Password'
+    ];
+
+    private $userLoginData = [];
     private $userRepository;
     private $passwordEncoder;
     private $userSessionManager;
     private $userEntity;
 
     public function __construct(
-        $userLoginData = [], 
+        $userLoginData, 
         UserRepository $userRepository, 
         PasswordEncoder $passwordEncoder,
         UserSessionManager $userSessionManager
@@ -33,16 +38,12 @@ class UserLogin extends DefaultUseCase
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
         $this->userSessionManager = $userSessionManager;
-
-        $this->requiredFields = [
-            'username' => 'Username',
-            'password' => 'Password'
-        ];
     }
 
     public function validate()
     {
-        $this->validateRequiredFields($this->userLoginData);
+        (new ValidateRequireFields($this->requiredFields, $this->userLoginData))->perform();
+
         $this->validateUserCredentialsAndStatus();
 
         return $this;

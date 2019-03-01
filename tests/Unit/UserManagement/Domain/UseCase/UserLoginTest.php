@@ -48,7 +48,7 @@ class UserLoginTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_required_field_is_empty()
+    public function it_should_throw_required_field_exception_when_required_field_is_empty()
     {
         $this->expectException(RequiredFieldException::class);
         $this->expectExceptionCode(RequiredFieldException::REQUIRED_FIELD_IS_EMPTY);
@@ -75,7 +75,7 @@ class UserLoginTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_user_account_is_invalid()
+    public function it_should_throw_login_failed_exception_when_user_account_is_invalid()
     {
         $this->expectException(LoginFailedException::class);
         $this->expectExceptionCode(LoginFailedException::INVALID_ACCOUNT);
@@ -105,7 +105,7 @@ class UserLoginTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_user_status_is_inactive()
+    public function it_should_throw_login_failed_exception_when_user_status_is_inactive()
     {
         $this->expectException(LoginFailedException::class);
         $this->expectExceptionCode(LoginFailedException::USER_STATUS_IS_NOT_ACTIVE);

@@ -117,8 +117,8 @@ class User
         return $this->status;
     }
 
-    public function getCreateAt()
+    public function getCreatedAt()
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 }
