@@ -37,7 +37,7 @@ class RegistrationFailedException extends Exception
 
     public static function confirmationPasswordNotMatched($previous = null) 
     {
-        $message = 'The confirmation password not matched.';
+        $message = 'The confirmation password is not matched.';
         $code = self::CONFIRMATION_PASSWORD_NOT_MATCHED;
 
         return new self($message, $code, $previous);
