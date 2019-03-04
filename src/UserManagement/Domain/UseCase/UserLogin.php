@@ -2,6 +2,7 @@
 
 namespace UserManagement\Domain\UseCase;
 
+use DomainCommon\Domain\UseCase\UseCaseInterface;
 use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Username;
@@ -14,7 +15,7 @@ use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LoginFailedException;
 
-class UserLogin
+class UserLogin implements UseCaseInterface
 {    
     private $requiredFields = [
         'username' => 'Username',

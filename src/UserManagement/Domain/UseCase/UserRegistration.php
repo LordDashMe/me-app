@@ -3,6 +3,7 @@
 namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
+use DomainCommon\Domain\UseCase\UseCaseInterface;
 use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
@@ -16,7 +17,7 @@ use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\ValueObject\ConfirmPassword;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 
-class UserRegistration
+class UserRegistration implements UseCaseInterface
 {
     private $requiredFields = [
         'first_name'       => 'First Name',

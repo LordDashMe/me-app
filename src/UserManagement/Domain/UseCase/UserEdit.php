@@ -3,10 +3,12 @@
 namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
+use DomainCommon\Domain\UseCase\UseCaseInterface;
 use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
+use UserManagement\Domain\UseCase\UserManage;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
@@ -14,7 +16,7 @@ use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Exception\UserManageFailedException;
 
-class UserEdit
+class UserEdit extends UserManage implements UseCaseInterface
 {
     private $requiredFields = [
         'first_name' => 'First Name',
@@ -36,21 +38,14 @@ class UserEdit
     {
         (new ValidateRequireFields($this->requiredFields, $this->userEditData))->perform();
 
-        $this->validateUserIdIsNotEmpty();
+        $this->validateUserIdIsNotEmpty($this->userId);
 
         return $this;
     }
 
-    private function validateUserIdIsNotEmpty()
-    {
-        if (empty($this->userId)) {
-            throw UserManageFailedException::userIdIsEmpty();
-        }
-    }
-
     public function perform()
     {
-        return $this->userRepository->edit($this->composeUserEntity());
+        return $this->userRepository->update($this->composeUserEntity());
     }
 
     private function composeUserEntity()

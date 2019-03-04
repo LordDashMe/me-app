@@ -56,7 +56,7 @@ class AuthenticationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (! $this->isUserSessionAvailable()) {
+        if (! $this->userSessionManager->isUserSessionAvailable()) {
             $url = $this->container->get('router')->generate(
                 'user_management_login', array(), UrlGeneratorInterface::ABSOLUTE_PATH
             );
@@ -72,7 +72,7 @@ class AuthenticationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($this->isUserSessionAvailable()) {
+        if ($this->userSessionManager->isUserSessionAvailable()) {
             $url = $this->container->get('router')->generate(
                 'user_management_home', array(), UrlGeneratorInterface::ABSOLUTE_PATH
             );
@@ -80,10 +80,5 @@ class AuthenticationSubscriber implements EventSubscriberInterface
                 return new RedirectResponse($url);
             });
         }
-    }
-
-    private function isUserSessionAvailable()
-    {
-        return (! empty($this->userSessionManager->get($this->userSessionManager->getUserEntitySessionName())));
     }
 }

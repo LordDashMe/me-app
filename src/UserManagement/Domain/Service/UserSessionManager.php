@@ -11,4 +11,6 @@ interface UserSessionManager
     public function get($attribute);
 
     public function forget();
+
+    public function isUserSessionAvailable();
 }

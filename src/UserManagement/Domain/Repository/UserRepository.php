@@ -10,7 +10,7 @@ interface UserRepository
 {
     public function create(User $user);
 
-    public function update(UserId $id, User $user);
+    public function update(User $user);
 
     public function get(UserId $id);
 

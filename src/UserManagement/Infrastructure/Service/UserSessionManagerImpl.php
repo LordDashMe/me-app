@@ -35,4 +35,9 @@ class UserSessionManagerImpl implements UserSessionManager
     {
         $this->session->clear();
     }
+
+    public function isUserSessionAvailable()
+    {
+        return (! empty($this->get($this->getUserEntitySessionName())));
+    }
 }

@@ -6,6 +6,7 @@ use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
 use UserManagement\Domain\UseCase\UserLogout;
 use UserManagement\Domain\Service\UserSessionManager;
+use UserManagement\Domain\Exception\LogoutFailedException;
 
 class UserLogoutTest extends TestCase
 {
@@ -17,6 +18,22 @@ class UserLogoutTest extends TestCase
         $userSessionManager = Mockery::mock(UserSessionManager::class);
 
         $this->assertInstanceOf(UserLogout::class, new UserLogout($userSessionManager));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_throw_logout_failed_exception_when_no_user_session_found()
+    {
+        $this->expectException(LogoutFailedException::class);
+        $this->expectExceptionCode(LogoutFailedException::NO_USER_SESSION_FOUND);
+
+        $userSessionManager = Mockery::mock(UserSessionManager::class);
+        $userSessionManager->shouldReceive('isUserSessionAvailable')
+                           ->andReturn(false);
+
+        $userLogout = new UserLogout($userSessionManager);
+        $userLogout->validate();
     }
 
     /**

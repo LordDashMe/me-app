@@ -34,7 +34,7 @@ class UserEditTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_user_manage_failed_exception_when_book_id_is_empty()
+    public function it_should_throw_user_manage_failed_exception_when_user_id_is_empty()
     {
         $this->expectException(UserManageFailedException::class);
         $this->expectExceptionCode(UserManageFailedException::USER_ID_IS_EMPTY);
@@ -68,7 +68,7 @@ class UserEditTest extends TestCase
         $userRepository->shouldReceive('find')
                        ->andReturn($this->mockUserEntity());
 
-        $userRepository->shouldReceive('edit')
+        $userRepository->shouldReceive('update')
                        ->andReturn($userId);
 
         $userEdit = new UserEdit($userId, $userData, $userRepository);
