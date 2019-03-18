@@ -3,12 +3,12 @@
 namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\UseCase\UseCaseInterface;
-use UserManagement\Domain\UseCase\UserManage;
+use UserManagement\Domain\UseCase\ManageUser;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Exception\UserManageFailedException;
 
-class UserDelete extends UserManage implements UseCaseInterface
+class UserDelete extends ManageUser implements UseCaseInterface
 {
     private $userId;
     private $userRepository;

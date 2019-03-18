@@ -14,6 +14,8 @@ interface UserRepository
 
     public function get(UserId $id);
 
+    public function getDataTable($options);
+
     public function softDelete(UserId $id);
 
     public function getByUsername(Username $username);
