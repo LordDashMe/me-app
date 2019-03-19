@@ -23,14 +23,12 @@ class EditExpense extends ManageUserExpense implements UseCaseInterface
     ];
 
     private $expenseId;
-    private $userId;
     private $editExpenseData = [];
     private $expenseRepository;
 
-    public function __construct($expenseId, $userId, $editExpenseData, ExpenseRepository $expenseRepository) 
+    public function __construct($expenseId, $editExpenseData, ExpenseRepository $expenseRepository) 
     {
         $this->expenseId = $expenseId;
-        $this->userId = $userId;
         $this->editExpenseData = $editExpenseData;
         $this->expenseRepository = $expenseRepository;
     }
@@ -38,7 +36,6 @@ class EditExpense extends ManageUserExpense implements UseCaseInterface
     public function validate()
     {
         $this->validateExpenseIdIsNotEmpty($this->expenseId);
-        $this->validateUserIdIsNotEmpty($this->userId);
         
         (new ValidateRequireFields($this->requiredFields, $this->editExpenseData))->perform();
     }
@@ -50,13 +47,20 @@ class EditExpense extends ManageUserExpense implements UseCaseInterface
 
     private function composeExpenseEntity()
     {
+        $currentExpenseEntity = $this->getCurrentExpenseEntityUsingId();
+
         return new Expense(
             new ExpenseId($this->expenseId),
-            new UserId($this->userId),
+            new UserId($currentExpenseEntity->getUserId()),
             new Label($this->editExpenseData['label']),
             new Cost($this->editExpenseData['cost']),
             new Date($this->editExpenseData['date']),
-            new CreatedAt()
+            new CreatedAt($currentExpenseEntity->getCreatedAt())
         );
+    }
+
+    private function getCurrentExpenseEntityUsingId() 
+    {
+        return $this->expenseRepository->get(new ExpenseId($this->expenseId));
     }
 }

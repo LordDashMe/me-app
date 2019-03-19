@@ -67,6 +67,6 @@ class EditUser extends ManageUser implements UseCaseInterface
 
     private function getCurrentUserEntityUsingId()
     {
-        return $this->userRepository->find(new UserId($this->userId));
+        return $this->userRepository->get(new UserId($this->userId));
     }
 }

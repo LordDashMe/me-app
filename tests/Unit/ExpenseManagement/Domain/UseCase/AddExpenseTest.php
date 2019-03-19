@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use DomainCommon\Domain\Exception\RequiredFieldException;
 use ExpenseManagement\Domain\UseCase\AddExpense;
 use ExpenseManagement\Domain\Repository\ExpenseRepository;
+use ExpenseManagement\Domain\Exception\ManageUserExpenseFailedException;
 
 class AddExpenseTest extends TestCase
 {
@@ -26,6 +27,28 @@ class AddExpenseTest extends TestCase
         $expenseRepository = Mockery::mock(ExpenseRepository::class);
 
         $this->assertInstanceOf(AddExpense::class, new AddExpense($userId, $addExpenseData, $expenseRepository));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_throw_exception_when_user_id_is_empty()
+    {
+        $this->expectException(ManageUserExpenseFailedException::class);
+        $this->expectExceptionCode(ManageUserExpenseFailedException::USER_ID_IS_EMPTY);
+
+        $userId = '';
+
+        $addExpenseData = [
+            'label' => '',
+            'cost' => '',
+            'date' => ''
+        ];
+
+        $expenseRepository = Mockery::mock(ExpenseRepository::class);
+
+        $addExpense = new AddExpense($userId, $addExpenseData, $expenseRepository);
+        $addExpense->validate();
     }
 
     /**

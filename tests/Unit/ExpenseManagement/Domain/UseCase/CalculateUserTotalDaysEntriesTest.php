@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use UserManagement\Domain\ValueObject\UserId;
 use ExpenseManagement\Domain\Repository\ExpenseRepository;
 use ExpenseManagement\Domain\UseCase\CalculateUserTotalDaysEntries;
+use ExpenseManagement\Domain\Exception\ManageUserExpenseFailedException;
 
 class CalculateUserTotalDaysEntriesTest extends TestCase
 {
@@ -20,6 +21,22 @@ class CalculateUserTotalDaysEntriesTest extends TestCase
         $expenseRepository = Mockery::mock(ExpenseRepository::class);
 
         $this->assertInstanceOf(CalculateUserTotalDaysEntries::class, new CalculateUserTotalDaysEntries($userId, $expenseRepository));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_throw_exception_when_user_id_is_empty()
+    {
+        $this->expectException(ManageUserExpenseFailedException::class);
+        $this->expectExceptionCode(ManageUserExpenseFailedException::USER_ID_IS_EMPTY);
+
+        $userId = '';
+
+        $expenseRepository = Mockery::mock(ExpenseRepository::class);
+
+        $calculateUsertotalDaysEntries = new CalculateUserTotalDaysEntries($userId, $expenseRepository);
+        $calculateUsertotalDaysEntries->validate();
     }
 
     /**

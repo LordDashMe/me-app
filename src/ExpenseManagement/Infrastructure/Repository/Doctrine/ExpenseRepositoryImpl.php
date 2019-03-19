@@ -30,14 +30,26 @@ class ExpenseRepositoryImpl implements ExpenseRepository
         $this->entityManager->flush();   
     }
 
+    public function get(UserId $id)
+    {
+        $criteria = [
+            'deletedAt' => '',
+            'id' => $id->get()
+        ];
+        
+        $userEntity = $this->entityManager->getRepository(Expense::class)->findBy($criteria);
+        
+        return $userEntity[0];
+    }
+
     public function getDataTable(UserId $userId, $options)
     {
-        $total = $this->entityManager->getRepository(User::class)->createQueryBuilder('ue')
+        $total = $this->entityManager->getRepository(Expense::class)->createQueryBuilder('ue')
             ->select('COUNT(ue.ID)')
             ->getQuery()
             ->getSingleScalarResult();
 
-        $queryBuilder = $this->entityManager->getRepository(User::class)->createQueryBuilder('ue');
+        $queryBuilder = $this->entityManager->getRepository(Expense::class)->createQueryBuilder('ue');
         $queryBuilder->where("ue.DeletedAt = '' AND ue.UserID = :userId");
         $queryBuilder->andWhere("ue.ID LIKE :id OR ue.Label LIKE :label");
         $queryBuilder->setParameter('userId', "'{$userId->get()}'");
@@ -60,15 +72,13 @@ class ExpenseRepositoryImpl implements ExpenseRepository
         ];   
     }
 
-    public function softDelete(ExpenseId $expenseId, UserId $userId)
+    public function softDelete(ExpenseId $expenseId)
     {
-        $expenseEntityPropertyCriteria = [
-            'id' => $id->get(),
-            'userId' => $userId->get()
+        $criteria = [
+            'id' => $id->get()
         ];
 
-        $expenseEntity = $this->entityManager->getRepository(Expense::class)->findBy($expenseEntityPropertyCriteria);
-
+        $expenseEntity = $this->entityManager->getRepository(Expense::class)->findBy($criteria);
         $expenseEntity[0]->setDeletedAt((new CreatedAt())->get());
 
         $this->entityManager->flush();

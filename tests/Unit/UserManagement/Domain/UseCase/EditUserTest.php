@@ -68,7 +68,7 @@ class EditUserTest extends TestCase
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $userRepository->shouldReceive('find')
+        $userRepository->shouldReceive('get')
                        ->andReturn($this->mockUserEntity());
 
         $userRepository->shouldReceive('update')
@@ -83,7 +83,7 @@ class EditUserTest extends TestCase
     private function mockUserEntity()
     {
         return new User(
-            new UserId(),
+            new UserId('fhqwer1o5'),
             new FirstName('John'),
             new LastName('Doe'),
             new Email('john.doe@provider.com'),

@@ -15,11 +15,13 @@ class ExpensesDataTableTest extends TestCase
      */
     public function it_should_load_expenses_data_table_class()
     {
+        $userId = '';
+
         $dataTableRequestData = [];
 
         $expenseRepository = Mockery::mock(ExpenseRepository::class);
 
-        $this->assertInstanceOf(ExpensesDataTable::class, new ExpensesDataTable(new UserId(), $dataTableRequestData, $expenseRepository));
+        $this->assertInstanceOf(ExpensesDataTable::class, new ExpensesDataTable($userId, $dataTableRequestData, $expenseRepository));
     }
 
     /**
@@ -27,6 +29,8 @@ class ExpensesDataTableTest extends TestCase
      */
     public function it_should_perform_expenses_data_table()
     {
+        $userId = 'fhqwer1o5';
+
         $dataTableRequestData = [
             'start' => 0,
             'length' => 10,
@@ -44,7 +48,7 @@ class ExpensesDataTableTest extends TestCase
                             'data' => []
                         ]);
 
-        $expensesDataTable = new ExpensesDataTable(new UserId(), $dataTableRequestData, $expenseRepository);
+        $expensesDataTable = new ExpensesDataTable($userId, $dataTableRequestData, $expenseRepository);
 
         $this->assertEquals([
             'totalRecords' => 0,

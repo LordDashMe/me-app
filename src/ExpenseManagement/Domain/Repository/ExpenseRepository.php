@@ -12,6 +12,8 @@ interface ExpenseRepository
 
     public function update(Expense $expenseEntity);
 
+    public function find(ExpenseId $expenseId);
+
     public function getDataTable(UserId $userId, $options);
 
     public function softDelete(ExpenseId $expenseId);
