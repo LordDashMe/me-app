@@ -20,11 +20,11 @@ use UserManagement\Domain\Exception\RegistrationFailedException;
 class UserRegistration implements UseCaseInterface
 {
     private $requiredFields = [
-        'first_name'       => 'First Name',
-        'last_name'        => 'Last Name',
-        'email'            => 'Email',
-        'username'         => 'Username',
-        'password'         => 'Password',
+        'first_name' => 'First Name',
+        'last_name' => 'Last Name',
+        'email' => 'Email',
+        'username' => 'Username',
+        'password' => 'Password',
         'confirm_password' => 'Confirm Password'
     ];
 

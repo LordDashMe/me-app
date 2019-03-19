@@ -4,7 +4,7 @@ namespace UserManagement\Domain\UseCase;
 
 use UserManagement\Domain\Exception\UserManageFailedException;
 
-class ManageUser
+class UserManage
 {
     protected function validateUserIdIsNotEmpty($userId)
     {

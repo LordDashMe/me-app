@@ -14,16 +14,17 @@ class UsersDataTable
         'order_column' => 'id',
         'order_by' => 'DESC'
     ];
+    
     private $usersDataTableOptions;
     private $userRepository;
 
     public function __construct($usersDataTableOptions, UserRepository $userRepository) 
     {
-        $this->usersDataTableOptions = $this->mergeDefaults($usersDataTableOptions);
+        $this->usersDataTableOptions = $this->mergeOptionsDefault($usersDataTableOptions);
         $this->userRepository = $userRepository;
     }
 
-    private function mergeDefaults($usersDataTableOptions)
+    private function mergeOptionsDefault($usersDataTableOptions)
     {
         return array_merge($this->usersDataTableOptionsDefault, $usersDataTableOptions);
     }

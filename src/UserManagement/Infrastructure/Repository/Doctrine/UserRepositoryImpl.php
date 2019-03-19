@@ -23,7 +23,7 @@ class UserRepositoryImpl implements UserRepository
         $this->entityManager->flush();
     }
 
-    public function update(UserId $id, User $user)
+    public function update(User $user)
     {
 
     }
@@ -31,6 +31,11 @@ class UserRepositoryImpl implements UserRepository
     public function get(UserId $id)
     {
 
+    }
+
+    public function getDataTable($options) 
+    {
+        
     }
 
     public function softDelete(UserId $id)

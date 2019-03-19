@@ -8,7 +8,7 @@ use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\UseCase\ManageUser;
+use UserManagement\Domain\UseCase\UserManage;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
@@ -16,11 +16,11 @@ use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Exception\UserManageFailedException;
 
-class UserEdit extends ManageUser implements UseCaseInterface
+class UserEdit extends UserManage implements UseCaseInterface
 {
     private $requiredFields = [
         'first_name' => 'First Name',
-        'last_name'  => 'Last Name'
+        'last_name' => 'Last Name'
     ];
 
     private $userId;

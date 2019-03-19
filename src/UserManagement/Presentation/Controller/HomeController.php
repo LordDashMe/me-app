@@ -37,6 +37,7 @@ class HomeController extends Controller implements AuthenticatedController
     public function logoutAction()
     {
         $userLogout = new UserLogout($this->userSessionManager);
+        $userLogout->validate();
         $userLogout->perform();
         
         return $this->redirectToRoute('user_management_home');
