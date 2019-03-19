@@ -70,4 +70,3 @@ services:
         autowire: true
         public: true
         resource: '../../../src/LogManagement/*'
-        # exclude: '../../../src/LogManagement/Domain/{Entity,UseCase,ValueObject}'

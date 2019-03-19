@@ -12,7 +12,7 @@ interface ExpenseRepository
 
     public function update(Expense $expenseEntity);
 
-    public function find(ExpenseId $expenseId);
+    public function get(ExpenseId $expenseId);
 
     public function getDataTable(UserId $userId, $options);
 

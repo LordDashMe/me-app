@@ -30,7 +30,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository
         $this->entityManager->flush();   
     }
 
-    public function get(UserId $id)
+    public function get(ExpenseId $expenseId)
     {
         $criteria = [
             'deletedAt' => '',
