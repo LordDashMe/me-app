@@ -14,11 +14,11 @@ class UsersDataTableTest extends TestCase
      */
     public function it_should_load_users_data_table_class()
     {
-        $usersDataTableData = [];
+        $dataTableRequestData = [];
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $this->assertInstanceOf(UsersDataTable::class, new UsersDataTable($usersDataTableData, $userRepository));
+        $this->assertInstanceOf(UsersDataTable::class, new UsersDataTable($dataTableRequestData, $userRepository));
     }
 
     /**
@@ -26,27 +26,28 @@ class UsersDataTableTest extends TestCase
      */
     public function it_should_perform_users_data_table()
     {
-        $usersDataTableData = [
+        $dataTableRequestData = [
             'start' => 0,
             'length' => 10,
             'search' => '',
-            'order_column' => 'id',
-            'order_by' => 'DESC'
+            'orderColumn' => 'id',
+            'orderBy' => 'DESC'
         ];
+        
         $userRepository = Mockery::mock(UserRepository::class);
 
         $userRepository->shouldReceive('getDataTable')
                        ->andReturn([
-                           'total_records' => 0,
-                           'total_records_filtered' => 0,
+                           'totalRecords' => 0,
+                           'totalRecordsFiltered' => 0,
                            'data' => []
                        ]);
 
-        $usersDataTable = new UsersDataTable($usersDataTableData, $userRepository);
+        $usersDataTable = new UsersDataTable($dataTableRequestData, $userRepository);
 
         $this->assertEquals([
-            'total_records' => 0,
-            'total_records_filtered' => 0,
+            'totalRecords' => 0,
+            'totalRecordsFiltered' => 0,
             'data' => []
         ], $usersDataTable->perform());
     }

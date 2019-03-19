@@ -8,35 +8,37 @@ use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\UseCase\UserManage;
+use UserManagement\Domain\UseCase\ManageUser;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\UserRole;
 use UserManagement\Domain\ValueObject\FirstName;
+use UserManagement\Domain\ValueObject\UserStatus;
 use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\Exception\UserManageFailedException;
+use UserManagement\Domain\Exception\ManageUserFailedException;
 
-class UserEdit extends UserManage implements UseCaseInterface
+class EditUser extends ManageUser implements UseCaseInterface
 {
     private $requiredFields = [
-        'first_name' => 'First Name',
-        'last_name' => 'Last Name'
+        'firstName' => 'First Name',
+        'lastName' => 'Last Name'
     ];
 
     private $userId;
-    private $userEditData = [];
+    private $editUserData = [];
     private $userRepository;
 
-    public function __construct($userId, $userEditData, UserRepository $userRepository) 
+    public function __construct($userId, $editUserData, UserRepository $userRepository) 
     {
         $this->userId = $userId;
-        $this->userEditData = $userEditData;
+        $this->editUserData = $editUserData;
         $this->userRepository = $userRepository;
     }
 
     public function validate()
     {
-        (new ValidateRequireFields($this->requiredFields, $this->userEditData))->perform();
+        (new ValidateRequireFields($this->requiredFields, $this->editUserData))->perform();
 
         $this->validateUserIdIsNotEmpty($this->userId);
 
@@ -54,23 +56,15 @@ class UserEdit extends UserManage implements UseCaseInterface
 
         return new User(
             new UserId($this->userId),
-            new FirstName($this->userEditData['first_name']),
-            new LastName($this->userEditData['last_name']),
+            new FirstName($this->editUserData['firstName']),
+            new LastName($this->editUserData['lastName']),
             new Email($currentUserEntity->getEmail()),
             new Username($currentUserEntity->getUsername()),
             new Password($currentUserEntity->getPassword()),
-            $this->evaluateUserStatus(),
+            new UserStatus($this->editUserData['status']),
+            new UserRole($this->editUserData['role']),
             new CreatedAt($currentUserEntity->getCreatedAt())
         );  
-    }
-
-    private function evaluateUserStatus()
-    {
-        if ($this->userEditData['status'] === User::STATUS_ACTIVE) {
-            return User::STATUS_ACTIVE;
-        }
-
-        return User::STATUS_INACTIVE;
     }
 
     private function getCurrentUserEntityUsingId()

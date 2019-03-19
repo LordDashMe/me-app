@@ -30,19 +30,19 @@ class RegistrationController extends Controller implements UnauthenticatedContro
 
     public function createAction(Request $request)
     {
-        $userData = [
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
+        $userRegistrationData = [
+            'firstName' => $request->get('first_name'),
+            'lastName' => $request->get('last_name'),
             'email' => $request->get('email'),
             'username' => $request->get('username'),
             'password' => $request->get('password'),
-            'confirm_password' => $request->get('confirm_password')
+            'confirmPassword' => $request->get('confirm_password')
         ];
 
         try {
             
             $userRegistration = new UserRegistration(
-                $userData, 
+                $userRegistrationData, 
                 $this->userRepository, 
                 $this->passwordEncoder
             );
@@ -56,7 +56,7 @@ class RegistrationController extends Controller implements UnauthenticatedContro
 
             return $this->render('@user_management_resources/registration.html.twig', [
                 'exception' => $exception->getMessage(),
-                'old' => $userData
+                'old' => $userRegistrationData
             ]);
         }
         

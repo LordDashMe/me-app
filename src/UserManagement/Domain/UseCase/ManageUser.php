@@ -2,14 +2,14 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use UserManagement\Domain\Exception\UserManageFailedException;
+use UserManagement\Domain\Exception\ManageUserFailedException;
 
-class UserManage
+class ManageUser
 {
     protected function validateUserIdIsNotEmpty($userId)
     {
         if (empty($userId)) {
-            throw UserManageFailedException::userIdIsEmpty();
+            throw ManageUserFailedException::userIdIsEmpty();
         }
     }
 }

@@ -25,12 +25,12 @@ class HomeController extends Controller implements AuthenticatedController
             $this->userSessionManager->getUserEntitySessionName()
         );
 
-        $data = [
+        $userData = [
             'userFirstName' => $userEntity->getFirstName()
         ];
 
         return $this->render('@user_management_resources/home.html.twig', [
-            'data' => $data
+            'userData' => $userData
         ]);
     }
 

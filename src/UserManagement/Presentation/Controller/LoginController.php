@@ -36,7 +36,7 @@ class LoginController extends Controller implements UnauthenticatedController
     
     public function submitAction(Request $request)
     {
-        $loginData = [
+        $userLoginData = [
             'username' => $request->get('username'),
             'password' => $request->get('password')
         ];
@@ -44,7 +44,7 @@ class LoginController extends Controller implements UnauthenticatedController
         try {
             
             $userLogin = new UserLogin(
-                $loginData, 
+                $userLoginData, 
                 $this->userRepository, 
                 $this->passwordEncoder,
                 $this->userSessionManager

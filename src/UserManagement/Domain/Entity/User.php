@@ -10,7 +10,9 @@ use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\UserRole;
 use UserManagement\Domain\ValueObject\FirstName;
+use UserManagement\Domain\ValueObject\UserStatus;
 
 /**
  * @ORM\Entity
@@ -20,47 +22,60 @@ class User
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
+    const ROLE_ADMIN = 1;
+    const ROLE_EDITOR = 2;
+    const ROLE_MEMBER = 3;
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="guid", name="id")
+     * @ORM\Column(type="guid", name="ID")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text", name="first_name")
+     * @ORM\Column(type="text", name="FirstName")
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="text", name="last_name")
+     * @ORM\Column(type="text", name="LastName")
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="text", name="email")
+     * @ORM\Column(type="text", name="Email")
      */
     private $email;
 
     /**
-     * @ORM\Column(type="text", name="username")
+     * @ORM\Column(type="text", name="Username")
      */
     private $username;
 
     /**
-     * @ORM\Column(type="text", name="password")
+     * @ORM\Column(type="text", name="Password")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="smallint", name="status", options={"comment":"1 = Active | 2 = Inactive"})
+     * @ORM\Column(type="smallint", name="Status", options={"comment":"1 = Active | 2 = Inactive"})
      */
     private $status;
 
     /**
-     * @ORM\Column(type="string", name="created_at")
+     * @ORM\Column(type="smallint", name="Role", options={"comment":"1 = Admin | 2 = Editor | 3 = Member"})
+     */
+    private $role;
+
+    /**
+     * @ORM\Column(type="string", name="CreatedAt")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", name="DeletedAt")
+     */
+    private $deletedAt = '';
 
     public function __construct(
         UserId $id,
@@ -69,7 +84,8 @@ class User
         Email $email,
         UserName $username,
         Password $password,
-        $status = self::STATUS_INACTIVE,
+        UserStatus $status,
+        UserRole $role,
         CreatedAt $createdAt
     ) {
         $this->id = $id->get();
@@ -78,8 +94,14 @@ class User
         $this->email = $email->get();
         $this->username = $username->get();
         $this->password = $password->get();
-        $this->status = $status;
+        $this->status = $status->get();
+        $this->role = $role->get();
         $this->createdAt = $createdAt->get();
+    }
+
+    public function setDeletedAt(CreatedAt $deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     public function getId()
@@ -115,6 +137,11 @@ class User
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
     }
 
     public function getCreatedAt()

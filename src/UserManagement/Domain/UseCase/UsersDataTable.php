@@ -7,30 +7,30 @@ use UserManagement\Domain\Repository\UserRepository;
 
 class UsersDataTable
 {
-    private $usersDataTableOptionsDefault = [
+    private $dataTableOptionsDefault = [
         'start' => 0,
         'length' => 10,
         'search' => '',
-        'order_column' => 'id',
-        'order_by' => 'DESC'
+        'orderColumn' => 'ID',
+        'orderBy' => 'DESC'
     ];
     
-    private $usersDataTableOptions;
+    private $usersDataTableData;
     private $userRepository;
 
-    public function __construct($usersDataTableOptions, UserRepository $userRepository) 
+    public function __construct($usersDataTableData, UserRepository $userRepository) 
     {
-        $this->usersDataTableOptions = $this->mergeOptionsDefault($usersDataTableOptions);
+        $this->usersDataTableData = $this->mergeOptionsDefault($usersDataTableData);
         $this->userRepository = $userRepository;
     }
 
-    private function mergeOptionsDefault($usersDataTableOptions)
+    private function mergeOptionsDefault($usersDataTableData)
     {
-        return array_merge($this->usersDataTableOptionsDefault, $usersDataTableOptions);
+        return \array_merge($this->dataTableOptionsDefault, $usersDataTableData);
     }
 
     public function perform()
     {
-        return $this->userRepository->getDataTable($this->usersDataTableOptions);   
+        return $this->userRepository->getDataTable($this->usersDataTableData);   
     }
 }

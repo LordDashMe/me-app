@@ -13,7 +13,9 @@ use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\UserRole;
 use UserManagement\Domain\ValueObject\FirstName;
+use UserManagement\Domain\ValueObject\UserStatus;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\UserSessionManager;
@@ -26,7 +28,7 @@ class UserLoginTest extends TestCase
      */
     public function it_should_load_user_login_class()
     {
-        $loginData = [
+        $loginRequestData = [
             'username' => '',
             'password' => ''
         ];
@@ -36,7 +38,7 @@ class UserLoginTest extends TestCase
         $userSessionManager = Mockery::mock(UserSessionManager::class);
 
         $userLogin = new UserLogin(
-            $loginData, 
+            $loginRequestData, 
             $userRepository, 
             $passwordEncoder, 
             $userSessionManager
@@ -53,7 +55,7 @@ class UserLoginTest extends TestCase
         $this->expectException(RequiredFieldException::class);
         $this->expectExceptionCode(RequiredFieldException::REQUIRED_FIELD_IS_EMPTY);
 
-        $loginData = [
+        $loginRequestData = [
             'username' => '',
             'password' => ''
         ];
@@ -63,7 +65,7 @@ class UserLoginTest extends TestCase
         $userSessionManager = Mockery::mock(UserSessionManager::class);
 
         $userLogin = new UserLogin(
-            $loginData, 
+            $loginRequestData, 
             $userRepository, 
             $passwordEncoder, 
             $userSessionManager
@@ -80,7 +82,7 @@ class UserLoginTest extends TestCase
         $this->expectException(LoginFailedException::class);
         $this->expectExceptionCode(LoginFailedException::INVALID_ACCOUNT);
 
-        $loginData = [
+        $loginRequestData = [
             'username' => 'null',
             'password' => 'P@ss0wrd!'
         ];
@@ -93,7 +95,7 @@ class UserLoginTest extends TestCase
         $userSessionManager = Mockery::mock(UserSessionManager::class);
 
         $userLogin = new UserLogin(
-            $loginData, 
+            $loginRequestData, 
             $userRepository, 
             $passwordEncoder, 
             $userSessionManager
@@ -110,7 +112,7 @@ class UserLoginTest extends TestCase
         $this->expectException(LoginFailedException::class);
         $this->expectExceptionCode(LoginFailedException::USER_STATUS_IS_NOT_ACTIVE);
 
-        $loginData = [
+        $loginRequestData = [
             'username' => 'johhdoe123',
             'password' => 'P@ss0wrd!'
         ];
@@ -128,7 +130,7 @@ class UserLoginTest extends TestCase
         $userSessionManager = Mockery::mock(UserSessionManager::class);
 
         $userLogin = new UserLogin(
-            $loginData, 
+            $loginRequestData, 
             $userRepository, 
             $passwordEncoder, 
             $userSessionManager
@@ -142,7 +144,7 @@ class UserLoginTest extends TestCase
      */
     public function it_should_login_user_account()
     {
-        $loginData = [
+        $loginRequestData = [
             'username' => 'johndoe123',
             'password' => 'P@ss0wrd!'
         ];
@@ -159,12 +161,12 @@ class UserLoginTest extends TestCase
 
         $userSessionManager = Mockery::mock(UserSessionManager::class);
         $userSessionManager->shouldReceive('getUserEntitySessionName')
-                           ->andReturn('session_user_entity');
+                           ->andReturn('sessionUserEntity');
         $userSessionManager->shouldReceive('set')
                            ->andReturn(null);
 
         $userLogin = new UserLogin(
-            $loginData, 
+            $loginRequestData, 
             $userRepository, 
             $passwordEncoder, 
             $userSessionManager
@@ -184,7 +186,8 @@ class UserLoginTest extends TestCase
             new Email('john.doe@provider.com'),
             new UserName('johndoe123'),
             new Password('P@ssw0rd!'),
-            User::STATUS_ACTIVE,
+            new UserStatus(User::STATUS_ACTIVE),
+            new UserRole(User::ROLE_MEMBER),
             new CreatedAt
         );
     }

@@ -11,7 +11,9 @@ use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\UserRole;
 use UserManagement\Domain\ValueObject\FirstName;
+use UserManagement\Domain\ValueObject\UserStatus;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\ValueObject\ConfirmPassword;
@@ -20,12 +22,12 @@ use UserManagement\Domain\Exception\RegistrationFailedException;
 class UserRegistration implements UseCaseInterface
 {
     private $requiredFields = [
-        'first_name' => 'First Name',
-        'last_name' => 'Last Name',
+        'firstName' => 'First Name',
+        'lastName' => 'Last Name',
         'email' => 'Email',
         'username' => 'Username',
         'password' => 'Password',
-        'confirm_password' => 'Confirm Password'
+        'confirmPassword' => 'Confirm Password'
     ];
 
     private $userRegistrationData = [];
@@ -84,7 +86,7 @@ class UserRegistration implements UseCaseInterface
         }
         
         $confirmPassword = new ConfirmPassword(
-            $password, $this->userRegistrationData['confirm_password']
+            $password, $this->userRegistrationData['confirmPassword']
         );
 
         if (! $confirmPassword->isEqual()) {
@@ -112,12 +114,13 @@ class UserRegistration implements UseCaseInterface
     {
         return new User(
             new UserId(),
-            new FirstName($this->userRegistrationData['first_name']),
-            new LastName($this->userRegistrationData['last_name']),
+            new FirstName($this->userRegistrationData['firstName']),
+            new LastName($this->userRegistrationData['lastName']),
             $this->userRegistrationData['email'],
             $this->userRegistrationData['username'],
             $this->userRegistrationData['password'],
-            User::STATUS_INACTIVE,
+            new UserStatus(),
+            new UserRole(),
             new CreatedAt()
         );
     }

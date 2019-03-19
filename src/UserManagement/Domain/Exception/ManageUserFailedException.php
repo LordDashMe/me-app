@@ -4,7 +4,7 @@ namespace UserManagement\Domain\Exception;
 
 use Exception;
 
-class UserManageFailedException extends Exception
+class ManageUserFailedException extends Exception
 {
     const USER_ID_IS_EMPTY = 1;
 

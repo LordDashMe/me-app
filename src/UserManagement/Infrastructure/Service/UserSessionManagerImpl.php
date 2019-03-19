@@ -7,7 +7,7 @@ use UserManagement\Domain\Service\UserSessionManager;
 
 class UserSessionManagerImpl implements UserSessionManager
 {
-    const USER_ENTITY_SESSION_NAME = 'session_user_entity';
+    const USER_ENTITY_SESSION_NAME = 'sessionUserEntity';
 
     private $session;
 

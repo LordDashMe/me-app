@@ -17,13 +17,13 @@ class Version20190127093239 extends AbstractMigration
     {
         $table = $schema->createTable('expenses');
 
-        $table->addColumn('id', 'guid');
-        $table->addColumn('user_id', 'text');
-        $table->addColumn('label', 'text');
-        $table->addColumn('cost', 'integer');
-        $table->addColumn('created_at', 'datetime', array('default' => '2000-01-01 01:01:01'));
+        $table->addColumn('ID', 'guid');
+        $table->addColumn('UserID', 'text');
+        $table->addColumn('Label', 'text');
+        $table->addColumn('Cost', 'integer');
+        $table->addColumn('CreatedAt', 'datetime', ['default' => '2000-01-01 01:01:01']);
         
-        $table->setPrimaryKey(array('id'));
+        $table->setPrimaryKey(['ID']);
     }
 
     /**

@@ -17,9 +17,9 @@ class UserRegistrationTest extends TestCase
      */
     public function it_should_load_user_registration_class()
     {
-        $registrationData = [
-            'first_name' => '',
-            'last_name' => '',
+        $registrationRequestData = [
+            'firstName' => '',
+            'lastName' => '',
             'email' => '',
             'username' => '',
             'password' => ''
@@ -30,7 +30,7 @@ class UserRegistrationTest extends TestCase
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
         $userRegistration = new UserRegistration(
-            $registrationData, $userRepository, $passwordEncoder
+            $registrationRequestData, $userRepository, $passwordEncoder
         );
 
         $this->assertInstanceOf(UserRegistration::class, $userRegistration);
@@ -44,13 +44,13 @@ class UserRegistrationTest extends TestCase
         $this->expectException(RequiredFieldException::class);
         $this->expectExceptionCode(RequiredFieldException::REQUIRED_FIELD_IS_EMPTY);
 
-        $registrationData = [
-            'first_name' => '',
-            'last_name' => '',
+        $registrationRequestData = [
+            'firstName' => '',
+            'lastName' => '',
             'email' => '',
             'username' => '',
             'password' => '',
-            'confirm_password' => ''
+            'confirmPassword' => ''
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
@@ -60,7 +60,7 @@ class UserRegistrationTest extends TestCase
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
         $userRegistration = new UserRegistration(
-            $registrationData, $userRepository, $passwordEncoder
+            $registrationRequestData, $userRepository, $passwordEncoder
         );
         
         $userRegistration->validate();
@@ -74,13 +74,13 @@ class UserRegistrationTest extends TestCase
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::INVALID_EMAIL_FORMAT);
 
-        $registrationData = [
-            'first_name' => 'John',
-            'last_name' => 'Doe',
+        $registrationRequestData = [
+            'firstName' => 'John',
+            'lastName' => 'Doe',
             'email' => 'invalid_format',
             'username' => 'johndoe123',
             'password' => 'weak',
-            'confirm_password' => 'weak'
+            'confirmPassword' => 'weak'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
@@ -90,7 +90,7 @@ class UserRegistrationTest extends TestCase
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
         $userRegistration = new UserRegistration(
-            $registrationData, $userRepository, $passwordEncoder
+            $registrationRequestData, $userRepository, $passwordEncoder
         );
 
         $userRegistration->validate();
@@ -104,13 +104,13 @@ class UserRegistrationTest extends TestCase
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::USERNAME_ALREADY_REGISTERED);
 
-        $registrationData = [
-            'first_name' => 'John',
-            'last_name' => 'Doe',
+        $registrationRequestData = [
+            'firstName' => 'John',
+            'lastName' => 'Doe',
             'email' => 'john.doe@provider.com',
             'username' => 'johndoe123_already_registered',
             'password' => 'P@ssw0rd!',
-            'confirm_password' => 'P@ssw0rd!'
+            'confirmPassword' => 'P@ssw0rd!'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
@@ -120,7 +120,7 @@ class UserRegistrationTest extends TestCase
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
         $userRegistration = new UserRegistration(
-            $registrationData, $userRepository, $passwordEncoder
+            $registrationRequestData, $userRepository, $passwordEncoder
         );
         
         $userRegistration->validate();
@@ -134,13 +134,13 @@ class UserRegistrationTest extends TestCase
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::INVALID_PASSWORD_FORMAT);
 
-        $registrationData = [
-            'first_name' => 'John',
-            'last_name' => 'Doe',
+        $registrationRequestData = [
+            'firstName' => 'John',
+            'lastName' => 'Doe',
             'email' => 'john.doe@provider.com',
             'username' => 'johndoe123',
             'password' => 'weak_format',
-            'confirm_password' => 'weak_format'
+            'confirmPassword' => 'weak_format'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
@@ -150,7 +150,7 @@ class UserRegistrationTest extends TestCase
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
         $userRegistration = new UserRegistration(
-            $registrationData, $userRepository, $passwordEncoder
+            $registrationRequestData, $userRepository, $passwordEncoder
         );
 
         $userRegistration->validate();
@@ -164,13 +164,13 @@ class UserRegistrationTest extends TestCase
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::CONFIRMATION_PASSWORD_NOT_MATCHED);
 
-        $registrationData = [
-            'first_name' => 'John',
-            'last_name' => 'Doe',
+        $registrationRequestData = [
+            'firstName' => 'John',
+            'lastName' => 'Doe',
             'email' => 'john.doe@provider.com',
             'username' => 'johndoe123',
             'password' => 'P@ssw0rd!',
-            'confirm_password' => 'wrong_confirm_password'
+            'confirmPassword' => 'wrong_confirmPassword'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
@@ -180,7 +180,7 @@ class UserRegistrationTest extends TestCase
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
         $userRegistration = new UserRegistration(
-            $registrationData, $userRepository, $passwordEncoder
+            $registrationRequestData, $userRepository, $passwordEncoder
         );
 
         $userRegistration->validate();
@@ -191,13 +191,13 @@ class UserRegistrationTest extends TestCase
      */
     public function it_should_register_user()
     {
-        $registrationData = [
-            'first_name' => 'John',
-            'last_name' => 'Doe',
+        $registrationRequestData = [
+            'firstName' => 'John',
+            'lastName' => 'Doe',
             'email' => 'john.doe@provider.com',
             'username' => 'johndoe123',
             'password' => 'P@ssw0rd!',
-            'confirm_password' => 'P@ssw0rd!'
+            'confirmPassword' => 'P@ssw0rd!'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
@@ -211,7 +211,7 @@ class UserRegistrationTest extends TestCase
                        ->andReturn('This are some hashed content!');
 
         $userRegistration = new UserRegistration(
-            $registrationData, $userRepository, $passwordEncoder
+            $registrationRequestData, $userRepository, $passwordEncoder
         );
         
         $userRegistration->validate();

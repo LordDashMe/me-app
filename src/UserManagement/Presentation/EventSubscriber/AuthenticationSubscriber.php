@@ -58,7 +58,7 @@ class AuthenticationSubscriber implements EventSubscriberInterface
 
         if (! $this->userSessionManager->isUserSessionAvailable()) {
             $url = $this->container->get('router')->generate(
-                'user_management_login', array(), UrlGeneratorInterface::ABSOLUTE_PATH
+                'user_management_login', [], UrlGeneratorInterface::ABSOLUTE_PATH
             );
             $event->setController(function() use ($url) {
                 return new RedirectResponse($url);
@@ -74,7 +74,7 @@ class AuthenticationSubscriber implements EventSubscriberInterface
 
         if ($this->userSessionManager->isUserSessionAvailable()) {
             $url = $this->container->get('router')->generate(
-                'user_management_home', array(), UrlGeneratorInterface::ABSOLUTE_PATH
+                'user_management_home', [], UrlGeneratorInterface::ABSOLUTE_PATH
             );
             $event->setController(function() use ($url) {
                 return new RedirectResponse($url);

@@ -3,6 +3,7 @@
 namespace UserManagement\Infrastructure\Repository\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
+use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
@@ -25,27 +26,69 @@ class UserRepositoryImpl implements UserRepository
 
     public function update(User $user)
     {
-
+        $this->entityManager->merge($user);
+        $this->entityManager->flush();
     }
 
     public function get(UserId $id)
     {
-
+        $criteria = [
+            'deletedAt' => '',
+            'id' => $id->get()
+        ];
+        
+        $userEntity = $this->entityManager->getRepository(User::class)->findBy($criteria);
+        
+        return $userEntity[0];
     }
 
     public function getDataTable($options) 
     {
+        $total = $this->entityManager->getRepository(User::class)->createQueryBuilder('u')
+            ->select('COUNT(u.ID)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $queryBuilder = $this->entityManager->getRepository(User::class)->createQueryBuilder('u');
+        $queryBuilder->where("u.DeletedAt = ''");
+        $queryBuilder->andWhere("u.ID LIKE :id OR u.FirstName LIKE :firstName OR u.LastName LIKE :lastName");
+        $queryBuilder->setParameter('id', "%{$options['search']}%");
+        $queryBuilder->setParameter('firstName', "%{$options['search']}%");
+        $queryBuilder->setParameter('lastName', "%{$options['search']}%");
+        $queryBuilder->orderBy("u.{$options['order_column']}", \strtoupper($options['order_by']));
         
+        if ($options['length'] > 0) {
+            $queryBuilder->setMaxResults($options['length']);
+        }
+        
+        $queryBuilder->setFirstResult($options['start']);
+        
+        $data = $queryBuilder->getQuery()->getResult();
+        
+        return [
+            'totalRecords' => $total,
+            'totalRecordsFiltered' => \count($data),
+            'data' => $data
+        ];   
     }
 
     public function softDelete(UserId $id)
     {
+        $userEntity = $this->entityManager->getRepository(User::class)->findBy(['id' => $id->get()]);
 
+        $userEntity[0]->setDeletedAt((new CreatedAt())->get());
+
+        $this->entityManager->flush();
+
+        return $id->get();
     }
 
     public function getByUsername(Username $username)
     {
-        $criteria = ['username' => $username->get()];
+        $criteria = [
+            'deletedAt' => '',
+            'username' => $username->get()
+        ];
 
         $repository = $this->entityManager->getRepository(User::class);
         
@@ -55,6 +98,7 @@ class UserRepositoryImpl implements UserRepository
     public function isApproved(Username $username)
     {
         $criteria = [
+            'deletedAt' => '',
             'username' => $username->get(),
             'status' => User::STATUS_ACTIVE
         ];
@@ -63,17 +107,20 @@ class UserRepositoryImpl implements UserRepository
         
         $userRecord = $repository->findOneBy($criteria);
 
-        return (count($userRecord) > 0);
+        return (\count($userRecord) > 0);
     }
 
     public function isRegistered(Username $username)
     {
-        $criteria = ['username' => $username->get()];
+        $criteria = [
+            'deletedAt' => '',
+            'username' => $username->get(),
+        ];
 
         $repository = $this->entityManager->getRepository(User::class);
         
         $userRecord = $repository->findOneBy($criteria);
 
-        return (count($userRecord) > 0);
+        return (\count($userRecord) > 0);
     }
 }

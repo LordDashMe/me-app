@@ -6,17 +6,19 @@ use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\Entity\User;
-use UserManagement\Domain\UseCase\UserEdit;
+use UserManagement\Domain\UseCase\EditUser;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\Username;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\UserRole;
 use UserManagement\Domain\ValueObject\FirstName;
+use UserManagement\Domain\ValueObject\UserStatus;
 use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\Exception\UserManageFailedException;
+use UserManagement\Domain\Exception\ManageUserFailedException;
 
-class UserEditTest extends TestCase
+class EditUserTest extends TestCase
 {
     /**
      * @test
@@ -24,11 +26,11 @@ class UserEditTest extends TestCase
     public function it_should_load_user_edit_class()
     {
         $userId = '';
-        $userData = [];
+        $editUserRequestData = [];
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $this->assertInstanceOf(UserEdit::class, new UserEdit($userId, $userData, $userRepository));
+        $this->assertInstanceOf(EditUser::class, new EditUser($userId, $editUserRequestData, $userRepository));
     }
 
     /**
@@ -36,19 +38,19 @@ class UserEditTest extends TestCase
      */
     public function it_should_throw_user_manage_failed_exception_when_user_id_is_empty()
     {
-        $this->expectException(UserManageFailedException::class);
-        $this->expectExceptionCode(UserManageFailedException::USER_ID_IS_EMPTY);
+        $this->expectException(ManageUserFailedException::class);
+        $this->expectExceptionCode(ManageUserFailedException::USER_ID_IS_EMPTY);
         
         $userId = '';
-        $userData = [
-            'first_name' => 'John',
-            'last_name' => 'Doe'
+        $editUserRequestData = [
+            'firstName' => 'John',
+            'lastName' => 'Doe'
         ];
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $userEdit = new UserEdit($userId, $userData, $userRepository);
-        $userEdit->validate();
+        $editUser = new EditUser($userId, $editUserRequestData, $userRepository);
+        $editUser->validate();
     }
 
     /**
@@ -57,10 +59,11 @@ class UserEditTest extends TestCase
     public function it_should_perform_user_edit()
     {
         $userId = 'fhqwer1o5';
-        $userData = [
-            'first_name' => 'Johnny',
-            'last_name' => 'Doe',
-            'status' => User::STATUS_ACTIVE
+        $editUserRequestData = [
+            'firstName' => 'Johnny',
+            'lastName' => 'Doe',
+            'status' => User::STATUS_ACTIVE,
+            'role' => User::ROLE_MEMBER
         ];
 
         $userRepository = Mockery::mock(UserRepository::class);
@@ -71,10 +74,10 @@ class UserEditTest extends TestCase
         $userRepository->shouldReceive('update')
                        ->andReturn($userId);
 
-        $userEdit = new UserEdit($userId, $userData, $userRepository);
-        $userEdit->validate();
+        $editUser = new EditUser($userId, $editUserRequestData, $userRepository);
+        $editUser->validate();
         
-        $this->assertEquals($userId, $userEdit->perform());
+        $this->assertEquals($userId, $editUser->perform());
     }
 
     private function mockUserEntity()
@@ -86,7 +89,8 @@ class UserEditTest extends TestCase
             new Email('john.doe@provider.com'),
             new UserName('johndoe123'),
             new Password('P@ssw0rd!'),
-            User::STATUS_ACTIVE,
+            new UserStatus(User::STATUS_ACTIVE),
+            new UserRole(User::ROLE_MEMBER),
             new CreatedAt
         );
     }

@@ -4,11 +4,11 @@ namespace Tests\Unit\UserManagement\Domain\UseCase;
 
 use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
-use UserManagement\Domain\UseCase\UserDelete;
+use UserManagement\Domain\UseCase\DeleteUser;
 use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\Exception\UserManageFailedException;
+use UserManagement\Domain\Exception\ManageUserFailedException;
 
-class UserDeleteTest extends TestCase
+class DeleteUserTest extends TestCase
 {
     /**
      * @test
@@ -19,7 +19,7 @@ class UserDeleteTest extends TestCase
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $this->assertInstanceOf(UserDelete::class, new UserDelete($userId, $userRepository));
+        $this->assertInstanceOf(DeleteUser::class, new DeleteUser($userId, $userRepository));
     }
 
     /**
@@ -27,15 +27,15 @@ class UserDeleteTest extends TestCase
      */
     public function it_should_throw_user_manage_failed_exception_when_user_id_is_empty()
     {
-        $this->expectException(UserManageFailedException::class);
-        $this->expectExceptionCode(UserManageFailedException::USER_ID_IS_EMPTY);
+        $this->expectException(ManageUserFailedException::class);
+        $this->expectExceptionCode(ManageUserFailedException::USER_ID_IS_EMPTY);
         
         $userId = '';
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $userDelete = new UserDelete($userId, $userRepository);
-        $userDelete->validate();
+        $deleteUser = new DeleteUser($userId, $userRepository);
+        $deleteUser->validate();
     }
 
     /**
@@ -50,9 +50,9 @@ class UserDeleteTest extends TestCase
         $userRepository->shouldReceive('softDelete')
                        ->andReturn($userId);
 
-        $userDelete = new UserDelete($userId, $userRepository);
-        $userDelete->validate();
+        $deleteUser = new DeleteUser($userId, $userRepository);
+        $deleteUser->validate();
         
-        $this->assertEquals($userId, $userDelete->perform());
+        $this->assertEquals($userId, $deleteUser->perform());
     }
 }

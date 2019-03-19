@@ -12,38 +12,38 @@ use ExpenseManagement\Domain\ValueObject\Cost;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="expense")
+ * @ORM\Table(name="expenses")
  */
 class Expense
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="guid")
+     * @ORM\Column(type="guid", name="ID")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="UserID")
      */
     private $userId;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="Label")
      */
     private $label;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="Cost")
      */
     private $cost;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="Date")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="CreatedAt")
      */
     private $createdAt;
 
