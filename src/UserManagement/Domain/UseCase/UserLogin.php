@@ -46,8 +46,6 @@ class UserLogin implements UseCaseInterface
         (new ValidateRequireFields($this->requiredFields, $this->userLoginData))->perform();
 
         $this->validateUserCredentialsAndStatus();
-
-        return $this;
     }
 
     private function validateUserCredentialsAndStatus()

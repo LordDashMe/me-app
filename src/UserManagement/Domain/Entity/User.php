@@ -99,7 +99,7 @@ class User
         $this->createdAt = $createdAt->get();
     }
 
-    public function setDeletedAt(CreatedAt $deletedAt)
+    public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
     }

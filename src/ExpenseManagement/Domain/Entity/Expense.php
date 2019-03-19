@@ -6,9 +6,10 @@ use Doctrine\ORM\Mapping AS ORM;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\ValueObject\UserId;
-use ExpenseManagement\Domain\ValueObject\ExpenseId;
-use ExpenseManagement\Domain\ValueObject\Label;
 use ExpenseManagement\Domain\ValueObject\Cost;
+use ExpenseManagement\Domain\ValueObject\Date;
+use ExpenseManagement\Domain\ValueObject\Label;
+use ExpenseManagement\Domain\ValueObject\ExpenseId;
 
 /**
  * @ORM\Entity
@@ -47,6 +48,11 @@ class Expense
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", name="DeletedAt")
+     */
+    private $deletedAt;
+
     public function __construct(
         ExpenseId $id,
         UserId $userId,
@@ -61,6 +67,11 @@ class Expense
         $this->cost = $cost->get();
         $this->date = $date->get();
         $this->createdAt = $createdAt->get();
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 
     public function getId()

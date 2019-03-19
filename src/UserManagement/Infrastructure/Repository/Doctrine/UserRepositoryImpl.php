@@ -32,12 +32,12 @@ class UserRepositoryImpl implements UserRepository
 
     public function get(UserId $id)
     {
-        $criteria = [
+        $entityPropertyCriteria = [
             'deletedAt' => '',
             'id' => $id->get()
         ];
         
-        $userEntity = $this->entityManager->getRepository(User::class)->findBy($criteria);
+        $userEntity = $this->entityManager->getRepository(User::class)->findBy($entityPropertyCriteria);
         
         return $userEntity[0];
     }
@@ -55,7 +55,7 @@ class UserRepositoryImpl implements UserRepository
         $queryBuilder->setParameter('id', "%{$options['search']}%");
         $queryBuilder->setParameter('firstName', "%{$options['search']}%");
         $queryBuilder->setParameter('lastName', "%{$options['search']}%");
-        $queryBuilder->orderBy("u.{$options['order_column']}", \strtoupper($options['order_by']));
+        $queryBuilder->orderBy("u.{$options['orderColumn']}", \strtoupper($options['orderBy']));
         
         if ($options['length'] > 0) {
             $queryBuilder->setMaxResults($options['length']);
@@ -85,19 +85,19 @@ class UserRepositoryImpl implements UserRepository
 
     public function getByUsername(Username $username)
     {
-        $criteria = [
+        $entityPropertyCriteria = [
             'deletedAt' => '',
             'username' => $username->get()
         ];
 
         $repository = $this->entityManager->getRepository(User::class);
         
-        return $repository->findOneBy($criteria);
+        return $repository->findOneBy($entityPropertyCriteria);
     }
 
     public function isApproved(Username $username)
     {
-        $criteria = [
+        $entityPropertyCriteria = [
             'deletedAt' => '',
             'username' => $username->get(),
             'status' => User::STATUS_ACTIVE
@@ -105,21 +105,21 @@ class UserRepositoryImpl implements UserRepository
 
         $repository = $this->entityManager->getRepository(User::class);
         
-        $userRecord = $repository->findOneBy($criteria);
+        $userRecord = $repository->findOneBy($entityPropertyCriteria);
 
         return (\count($userRecord) > 0);
     }
 
     public function isRegistered(Username $username)
     {
-        $criteria = [
+        $entityPropertyCriteria = [
             'deletedAt' => '',
             'username' => $username->get(),
         ];
 
         $repository = $this->entityManager->getRepository(User::class);
         
-        $userRecord = $repository->findOneBy($criteria);
+        $userRecord = $repository->findOneBy($entityPropertyCriteria);
 
         return (\count($userRecord) > 0);
     }

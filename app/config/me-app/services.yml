@@ -65,3 +65,9 @@ services:
     ExpenseManagement\Domain\ValueObject\:
         public: true
         resource: '../../../src/ExpenseManagement/Domain/ValueObject/*'
+
+    LogManagement\:
+        autowire: true
+        public: true
+        resource: '../../../src/LogManagement/*'
+        # exclude: '../../../src/LogManagement/Domain/{Entity,UseCase,ValueObject}'

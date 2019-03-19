@@ -7,7 +7,7 @@ use UserManagement\Domain\ValueObject\UserId;
 use ExpenseManagement\Domain\UseCase\ManageUserExpense;
 use ExpenseManagement\Domain\Repository\ExpenseRepository;
 
-class CalculateUserTotalExpenses extends ManageUserExpense implements UseCaseInterface 
+class CalculateUserTotalDaysEntries extends ManageUserExpense implements UseCaseInterface
 {
     private $userId;
     private $expenseRepository;
@@ -25,6 +25,6 @@ class CalculateUserTotalExpenses extends ManageUserExpense implements UseCaseInt
 
     public function perform()
     {
-        return $this->expenseRepository->getUserTotalExpenses(new UserId($this->userId));
+        return $this->expenseRepository->getUserTotalDaysEntries(new UserId($this->userId));
     }
 }

@@ -22,8 +22,6 @@ class DeleteUser extends ManageUser implements UseCaseInterface
     public function validate()
     {
         $this->validateUserIdIsNotEmpty($this->userId);
-
-        return $this;
     }
 
     public function perform()

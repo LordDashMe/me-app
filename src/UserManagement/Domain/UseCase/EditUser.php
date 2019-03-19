@@ -41,8 +41,6 @@ class EditUser extends ManageUser implements UseCaseInterface
         (new ValidateRequireFields($this->requiredFields, $this->editUserData))->perform();
 
         $this->validateUserIdIsNotEmpty($this->userId);
-
-        return $this;
     }
 
     public function perform()

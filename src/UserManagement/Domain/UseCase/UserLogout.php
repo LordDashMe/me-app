@@ -20,8 +20,6 @@ class UserLogout implements UseCaseInterface
         if (! $this->userSessionManager->isUserSessionAvailable()) {
             throw LogoutFailedException::noUserSessionFound();     
         }
-
-        return $this;
     }
 
     public function perform()

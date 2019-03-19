@@ -2,10 +2,10 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use DomainCommon\Domain\UseCase\ValidateRequireFields;
+use DomainCommon\Domain\UseCase\UseCaseInterface;
 use UserManagement\Domain\Repository\UserRepository;
 
-class UsersDataTable
+class UsersDataTable implements UseCaseInterface
 {
     private $dataTableOptionsDefault = [
         'start' => 0,
@@ -28,6 +28,8 @@ class UsersDataTable
     {
         return \array_merge($this->dataTableOptionsDefault, $usersDataTableData);
     }
+
+    public function validate() {}
 
     public function perform()
     {

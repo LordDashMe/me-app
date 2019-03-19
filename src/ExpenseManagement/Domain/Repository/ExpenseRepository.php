@@ -10,11 +10,13 @@ interface ExpenseRepository
 {
     public function create(Expense $expenseEntity);
 
-    public function update(ExpenseId $expenseId, Expense $expenseEntity);
+    public function update(Expense $expenseEntity);
 
-    public function findUserExpenses(UserId $userId);
-
-    public function getDataTable();
+    public function getDataTable(UserId $userId, $options);
 
     public function softDelete(ExpenseId $expenseId);
+
+    public function getUserTotalDaysEntries(UserId $userId);
+
+    public function getUserTotalExpenses(UserId $userId);
 }

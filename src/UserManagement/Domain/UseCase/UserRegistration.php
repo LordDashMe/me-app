@@ -51,8 +51,6 @@ class UserRegistration implements UseCaseInterface
         $this->validateEmail();
         $this->validateUsername();
         $this->validatePassword();
-
-        return $this;
     }
 
     private function validateEmail()
