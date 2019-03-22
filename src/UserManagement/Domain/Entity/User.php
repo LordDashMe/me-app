@@ -28,9 +28,17 @@ class User
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="guid", name="ID")
+     * @ORM\Column(type="integer", name="ID", unique=true)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var \Ramsey\Uuid\UuidInterface
+     *
+     * @ORM\Column(type="uuid", name="UUID", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @ORM\Column(type="text", name="FirstName")
@@ -88,7 +96,8 @@ class User
         UserRole $role,
         CreatedAt $createdAt
     ) {
-        $this->id = $id->get();
+        // $this->id = $id->get();
+        $this->uuid = \Ramsey\Uuid\Uuid::uuid4();
         $this->firstName = $firstName->get();
         $this->lastName = $lastName->get();
         $this->email = $email->get();
@@ -107,6 +116,11 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     public function getFirstName()
