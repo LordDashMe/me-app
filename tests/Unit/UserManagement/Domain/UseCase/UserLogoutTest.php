@@ -13,7 +13,7 @@ class UserLogoutTest extends TestCase
     /**
      * @test
      */
-    public function it_should_load_user_logout_class()
+    public function it_should_load_the_main_class()
     {
         $userSessionManager = Mockery::mock(UserSessionManager::class);
 

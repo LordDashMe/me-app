@@ -26,7 +26,7 @@ class UserLoginTest extends TestCase
     /**
      * @test
      */
-    public function it_should_load_user_login_class()
+    public function it_should_load_the_main_class()
     {
         $loginRequestData = [
             'username' => '',
@@ -183,12 +183,12 @@ class UserLoginTest extends TestCase
             new UserId(),
             new FirstName('John'),
             new LastName('Doe'),
-            new Email('john.doe@provider.com'),
+            new Email('john.doe@example.com'),
             new UserName('johndoe123'),
             new Password('P@ssw0rd!'),
             new UserStatus(User::STATUS_ACTIVE),
             new UserRole(User::ROLE_MEMBER),
-            new CreatedAt
+            new CreatedAt()
         );
     }
 }

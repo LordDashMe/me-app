@@ -13,7 +13,7 @@ class DeleteUserTest extends TestCase
     /**
      * @test
      */
-    public function it_should_load_user_delete_class()
+    public function it_should_load_the_main_class()
     {
         $userId = '';
 
@@ -25,7 +25,7 @@ class DeleteUserTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_user_manage_failed_exception_when_user_id_is_empty()
+    public function it_should_throw_manage_user_failed_exception_when_user_id_is_empty()
     {
         $this->expectException(ManageUserFailedException::class);
         $this->expectExceptionCode(ManageUserFailedException::USER_ID_IS_EMPTY);
@@ -43,7 +43,7 @@ class DeleteUserTest extends TestCase
      */
     public function it_should_perform_delete_user()
     {
-        $userId = 'fhqwer1o5';
+        $userId = 'UUID001';
 
         $userRepository = Mockery::mock(UserRepository::class);
 

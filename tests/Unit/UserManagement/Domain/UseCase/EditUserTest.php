@@ -23,7 +23,7 @@ class EditUserTest extends TestCase
     /**
      * @test
      */
-    public function it_should_load_user_edit_class()
+    public function it_should_load_the_main_class()
     {
         $userId = '';
         $editUserRequestData = [];
@@ -36,7 +36,7 @@ class EditUserTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_user_manage_failed_exception_when_user_id_is_empty()
+    public function it_should_throw_manage_user_failed_exception_when_user_id_is_empty()
     {
         $this->expectException(ManageUserFailedException::class);
         $this->expectExceptionCode(ManageUserFailedException::USER_ID_IS_EMPTY);
@@ -58,7 +58,7 @@ class EditUserTest extends TestCase
      */
     public function it_should_perform_user_edit()
     {
-        $userId = 'fhqwer1o5';
+        $userId = 'UUID001';
         $editUserRequestData = [
             'firstName' => 'Johnny',
             'lastName' => 'Doe',
@@ -83,7 +83,7 @@ class EditUserTest extends TestCase
     private function mockUserEntity()
     {
         return new User(
-            new UserId('fhqwer1o5'),
+            new UserId('UUID001'),
             new FirstName('John'),
             new LastName('Doe'),
             new Email('john.doe@provider.com'),

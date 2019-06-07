@@ -15,7 +15,7 @@ class UserRegistrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_load_user_registration_class()
+    public function it_should_load_the_main_class()
     {
         $registrationRequestData = [
             'firstName' => '',
@@ -39,7 +39,7 @@ class UserRegistrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_required_field_is_empty()
+    public function it_should_throw_required_field_exception_when_required_field_is_empty()
     {
         $this->expectException(RequiredFieldException::class);
         $this->expectExceptionCode(RequiredFieldException::REQUIRED_FIELD_IS_EMPTY);
@@ -69,7 +69,7 @@ class UserRegistrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_invalid_email_format_given()
+    public function it_should_throw_registration_failed_exception_when_invalid_email_format_given()
     {
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::INVALID_EMAIL_FORMAT);
@@ -99,7 +99,7 @@ class UserRegistrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_username_already_registered()
+    public function it_should_throw_registration_failed_exception_when_username_already_registered()
     {
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::USERNAME_ALREADY_REGISTERED);
@@ -129,7 +129,7 @@ class UserRegistrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_invalid_password_format_given()
+    public function it_should_throw_registration_failed_exception_when_invalid_password_format_given()
     {
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::INVALID_PASSWORD_FORMAT);
@@ -159,7 +159,7 @@ class UserRegistrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_password_not_matched()
+    public function it_should_throw_registration_failed_exception_when_password_not_matched()
     {
         $this->expectException(RegistrationFailedException::class);
         $this->expectExceptionCode(RegistrationFailedException::CONFIRMATION_PASSWORD_NOT_MATCHED);

@@ -18,7 +18,8 @@
             <directory suffix="Test.php">tests/Integration/</directory>
         </testsuite> -->
         <testsuite name="Unit Tests">
-            <directory suffix="Test.php">tests/Unit/</directory>
+            <directory suffix="Test.php">tests/Unit/UserManagement</directory>
+            <!-- <directory suffix="Test.php">tests/Unit/ExpenseManagement</directory> -->
         </testsuite>
     </testsuites>
 

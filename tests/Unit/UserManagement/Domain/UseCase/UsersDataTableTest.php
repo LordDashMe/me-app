@@ -12,7 +12,7 @@ class UsersDataTableTest extends TestCase
     /**
      * @test
      */
-    public function it_should_load_users_data_table_class()
+    public function it_should_load_the_main_class()
     {
         $dataTableRequestData = [];
 
