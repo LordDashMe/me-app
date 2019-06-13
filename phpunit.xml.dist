@@ -25,7 +25,7 @@
 
     <filter>
         <whitelist>
-            <directory>src</directory>
+            <directory>src/UserManagement/</directory>
             <exclude>
                 <directory>src/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Resources</directory>
