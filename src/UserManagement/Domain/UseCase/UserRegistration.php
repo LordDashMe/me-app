@@ -4,7 +4,6 @@ namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use DomainCommon\Domain\UseCase\UseCaseInterface;
-use DomainCommon\Domain\UseCase\ValidateRequireFields;
 
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
@@ -117,9 +116,11 @@ class UserRegistration implements UseCaseInterface
     {
         $currentPlainTextPassword = $this->password->get();
 
+        $salt = $currentPlainTextPassword . '-salt';
+
         $this->password = new Password(
             $this->passwordEncoder->encodePlainText(
-                $currentPlainTextPassword, $currentPlainTextPassword . '-salt'
+                $currentPlainTextPassword, $salt
             )
         );
     }
