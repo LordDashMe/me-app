@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping AS ORM;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\ValueObject\Username;
+use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\UserRole;
@@ -57,9 +57,9 @@ class User
     private $email;
 
     /**
-     * @ORM\Column(type="text", name="Username")
+     * @ORM\Column(type="text", name="UserName")
      */
-    private $username;
+    private $userName;
 
     /**
      * @ORM\Column(type="text", name="Password")
@@ -91,7 +91,7 @@ class User
         FirstName $firstName,
         LastName $lastName,
         Email $email,
-        UserName $username,
+        UserName $userName,
         Password $password,
         UserStatus $status,
         UserRole $role,
@@ -102,7 +102,7 @@ class User
         $this->firstName = $firstName->get();
         $this->lastName = $lastName->get();
         $this->email = $email->get();
-        $this->username = $username->get();
+        $this->userName = $userName->get();
         $this->password = $password->get();
         $this->status = $status->get();
         $this->role = $role->get();
@@ -139,9 +139,9 @@ class User
         return $this->email;
     }
 
-    public function getUsername()
+    public function getUserName()
     {
-        return $this->username;
+        return $this->userName;
     }
 
     public function getPassword()

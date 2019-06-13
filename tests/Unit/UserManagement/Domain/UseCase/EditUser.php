@@ -9,7 +9,7 @@ use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\UseCase\EditUser;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\ValueObject\Username;
+use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\UserRole;

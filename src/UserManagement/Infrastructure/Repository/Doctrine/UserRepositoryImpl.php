@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\ValueObject\Username;
+use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\Repository\UserRepository;
 
 class UserRepositoryImpl implements UserRepository
@@ -83,11 +83,11 @@ class UserRepositoryImpl implements UserRepository
         return $id->get();
     }
 
-    public function getByUsername(Username $username)
+    public function getByUserName(UserName $userName)
     {
         $entityPropertyCriteria = [
             'deletedAt' => '',
-            'username' => $username->get()
+            'userName' => $userName->get()
         ];
 
         $repository = $this->entityManager->getRepository(User::class);
@@ -95,11 +95,11 @@ class UserRepositoryImpl implements UserRepository
         return $repository->findOneBy($entityPropertyCriteria);
     }
 
-    public function isApproved(Username $username)
+    public function isApproved(UserName $userName)
     {
         $entityPropertyCriteria = [
             'deletedAt' => '',
-            'username' => $username->get(),
+            'userName' => $userName->get(),
             'status' => User::STATUS_ACTIVE
         ];
 
@@ -110,11 +110,11 @@ class UserRepositoryImpl implements UserRepository
         return (\count($userRecord) > 0);
     }
 
-    public function isRegistered(Username $username)
+    public function isRegistered(UserName $userName)
     {
         $entityPropertyCriteria = [
             'deletedAt' => '',
-            'username' => $username->get(),
+            'userName' => $userName->get(),
         ];
 
         $repository = $this->entityManager->getRepository(User::class);

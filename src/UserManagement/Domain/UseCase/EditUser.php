@@ -9,7 +9,7 @@ use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\UseCase\ManageUser;
-use UserManagement\Domain\ValueObject\Username;
+use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\UserRole;
@@ -57,7 +57,7 @@ class EditUser extends ManageUser implements UseCaseInterface
             new FirstName($this->editUserData['firstName']),
             new LastName($this->editUserData['lastName']),
             new Email($currentUserEntity->getEmail()),
-            new Username($currentUserEntity->getUsername()),
+            new UserName($currentUserEntity->getUserName()),
             new Password($currentUserEntity->getPassword()),
             new UserStatus($this->editUserData['status']),
             new UserRole($this->editUserData['role']),

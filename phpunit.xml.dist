@@ -8,7 +8,7 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <env name="SYMFONY_PHPUNIT_VERSION" value="5.7.27" />
+        <env name="SYMFONY_PHPUNIT_VERSION" value="6.5" />
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
     </php>
@@ -33,4 +33,10 @@
             </exclude>
         </whitelist>
     </filter>
+
+    <!-- <logging>
+        <log type="coverage-html" target="build/logs/html/"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
+    </logging> -->
 </phpunit>

@@ -4,7 +4,7 @@ namespace UserManagement\Domain\Repository;
 
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\ValueObject\Username;
+use UserManagement\Domain\ValueObject\UserName;
 
 interface UserRepository
 {
@@ -18,9 +18,9 @@ interface UserRepository
 
     public function softDelete(UserId $id);
 
-    public function getByUsername(Username $username);
+    public function getByUserName(UserName $userName);
 
-    public function isApproved(Username $username);
+    public function isApproved(UserName $userName);
 
-    public function isRegistered(Username $username);
+    public function isRegistered(UserName $userName);
 }

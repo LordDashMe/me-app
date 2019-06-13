@@ -10,7 +10,7 @@ use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\UseCase\UserLogin;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\ValueObject\Username;
+use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\UserRole;
@@ -29,7 +29,7 @@ class UserLoginTest extends TestCase
     public function it_should_load_the_main_class()
     {
         $loginRequestData = [
-            'username' => '',
+            'userName' => '',
             'password' => ''
         ];
         
@@ -56,7 +56,7 @@ class UserLoginTest extends TestCase
         $this->expectExceptionCode(RequiredFieldException::REQUIRED_FIELD_IS_EMPTY);
 
         $loginRequestData = [
-            'username' => '',
+            'userName' => '',
             'password' => ''
         ];
         
@@ -83,12 +83,12 @@ class UserLoginTest extends TestCase
         $this->expectExceptionCode(LoginFailedException::INVALID_ACCOUNT);
 
         $loginRequestData = [
-            'username' => 'null',
+            'userName' => 'null',
             'password' => 'P@ss0wrd!'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
-        $userRepository->shouldReceive('getByUsername')
+        $userRepository->shouldReceive('getByUserName')
                        ->andReturn(null);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
@@ -113,12 +113,12 @@ class UserLoginTest extends TestCase
         $this->expectExceptionCode(LoginFailedException::USER_STATUS_IS_NOT_ACTIVE);
 
         $loginRequestData = [
-            'username' => 'johhdoe123',
+            'userName' => 'johhdoe123',
             'password' => 'P@ss0wrd!'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
-        $userRepository->shouldReceive('getByUsername')
+        $userRepository->shouldReceive('getByUserName')
                        ->andReturn($this->mockUserEntity());
         $userRepository->shouldReceive('isApproved')
                        ->andReturn(false);
@@ -145,12 +145,12 @@ class UserLoginTest extends TestCase
     public function it_should_login_user_account()
     {
         $loginRequestData = [
-            'username' => 'johndoe123',
+            'userName' => 'johndoe123',
             'password' => 'P@ss0wrd!'
         ];
         
         $userRepository = Mockery::mock(UserRepository::class);
-        $userRepository->shouldReceive('getByUsername')
+        $userRepository->shouldReceive('getByUserName')
                        ->andReturn($this->mockUserEntity());
         $userRepository->shouldReceive('isApproved')
                        ->andReturn(true);
