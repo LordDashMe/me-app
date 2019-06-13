@@ -5,121 +5,122 @@ namespace UserManagement\Domain\UseCase;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use DomainCommon\Domain\UseCase\UseCaseInterface;
 use DomainCommon\Domain\UseCase\ValidateRequireFields;
+
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\ValueObject\Username;
+use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\UserRole;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\UserStatus;
+use UserManagement\Domain\ValueObject\ConfirmPassword;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\ValueObject\ConfirmPassword;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 
 class UserRegistration implements UseCaseInterface
 {
-    private $requiredFields = [
-        'firstName' => 'First Name',
-        'lastName' => 'Last Name',
-        'email' => 'Email',
-        'username' => 'Username',
-        'password' => 'Password',
-        'confirmPassword' => 'Confirm Password'
-    ];
+    private $firstName;
+    private $lastName;
+    private $email;
+    private $userName;
+    private $password;
+    private $confirmPassword;
 
-    private $userRegistrationData = [];
     private $userRepository;
     private $passwordEncoder;
 
-    public function __construct(
-        $userRegistrationData, 
-        UserRepository $userRepository, 
-        PasswordEncoder $passwordEncoder
-    ) {
-        $this->userRegistrationData = $userRegistrationData;
+    public function __construct(UserRepository $userRepository, PasswordEncoder $passwordEncoder) 
+    {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
     }
 
+    public function build(
+        FirstName $firstName,
+        LastName $lastName,
+        Email $email,
+        UserName $userName,
+        Password $password,
+        ConfirmPassword $confirmPassword
+    ) {
+
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->userName = $userName;
+        $this->password = $password;
+        $this->confirmPassword = $confirmPassword;
+    }
+
     public function validate()
     {
-        (new ValidateRequireFields($this->requiredFields, $this->userRegistrationData))->perform();
-
+        $this->validateRequiredFields();
         $this->validateEmail();
-        $this->validateUsername();
+        $this->validateUserName();
         $this->validatePassword();
+    }
+
+    private function validateRequiredFields()
+    {
+        $this->firstName->required();
+        $this->lastName->required();
+        $this->email->required();
+        $this->userName->required();
+        $this->password->required();
+        $this->confirmPassword->required();
     }
 
     private function validateEmail()
     {
-        $email = new Email($this->userRegistrationData['email']);
-
-        if (! $email->isValid()) {
-            throw RegistrationFailedException::invalidEmailFormat();
-        }
-
-        $this->userRegistrationData['email'] = $email;
+        $this->email->validateFormat();
+        $this->email->validateCharacterLength();
     }
 
-    private function validateUsername()
+    private function validateUserName()
     {
-        $username = new Username($this->userRegistrationData['username']);
+        $this->userName->validateCharacterLength();
 
-        if ($this->userRepository->isRegistered($username)) {
-            throw RegistrationFailedException::usernameAlreadyRegistered();
+        if ($this->userRepository->isRegistered($this->userName)) {
+            throw RegistrationFailedException::userNameAlreadyRegistered();
         }
-
-        $this->userRegistrationData['username'] = $username;
     }
 
     private function validatePassword()
     {
-        $password = new Password($this->userRegistrationData['password']);
-
-        if (! $password->isValid()) {
-            throw RegistrationFailedException::invalidPasswordFormat();
-        }
-        
-        $confirmPassword = new ConfirmPassword(
-            $password, $this->userRegistrationData['confirmPassword']
-        );
-
-        if (! $confirmPassword->isEqual()) {
-            throw RegistrationFailedException::confirmationPasswordNotMatched();
-        }
-
-        $this->generateSecurePasswordContent($password);
-    }
-
-    private function generateSecurePasswordContent($password)
-    {
-        $salt = $password->get();
-
-        $this->userRegistrationData['password'] = new Password(
-            $this->passwordEncoder->encodePlainText($password->get(), $salt)
-        );
+        $this->password->validateStandardFormat();
+        $this->confirmPassword->validateIsMatch();
     }
 
     public function perform() 
-    {
-        $this->userRepository->create($this->composeUserEntity());
+    {   
+        $this->generateSecurePassword();
+
+        $this->userRepository->create(
+            new User(
+                new UserId(),
+                $this->firstName,
+                $this->lastName,
+                $this->email,
+                $this->userName,
+                $this->password,
+                new UserStatus(),
+                new UserRole(),
+                new CreatedAt()
+            )
+        );
     }
 
-    private function composeUserEntity()
+    private function generateSecurePassword()
     {
-        return new User(
-            new UserId(),
-            new FirstName($this->userRegistrationData['firstName']),
-            new LastName($this->userRegistrationData['lastName']),
-            $this->userRegistrationData['email'],
-            $this->userRegistrationData['username'],
-            $this->userRegistrationData['password'],
-            new UserStatus(),
-            new UserRole(),
-            new CreatedAt()
+        $currentPlainTextPassword = $this->password->get();
+
+        $this->password = new Password(
+            $this->passwordEncoder->encodePlainText(
+                $currentPlainTextPassword, $currentPlainTextPassword . '-salt'
+            )
         );
     }
 }

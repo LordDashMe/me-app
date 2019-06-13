@@ -2,6 +2,10 @@
 
 namespace UserManagement\Domain\ValueObject;
 
+use DomainCommon\Domain\Exception\RequiredFieldException;
+
+use UserManagement\Domain\Exception\PasswordException;
+
 class Password
 {
     /** 
@@ -17,9 +21,18 @@ class Password
         $this->password = $password;
     }
 
-    public function isValid()
+    public function required()
     {
-        return \preg_match(Password::STANDARD_FORMAT, $this->password);
+        if (empty($this->password)) {
+            throw RequiredFieldException::requiredFieldIsEmpty('Password');
+        }      
+    }
+
+    public function validateStandardFormat()
+    {
+        if (! \preg_match(Password::STANDARD_FORMAT, $this->password)) {
+            throw PasswordException::invalidFormat();
+        }
     }
 
     public function get()

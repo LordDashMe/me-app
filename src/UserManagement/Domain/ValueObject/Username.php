@@ -2,24 +2,37 @@
 
 namespace UserManagement\Domain\ValueObject;
 
-class Username
+use DomainCommon\Domain\Exception\RequiredFieldException;
+
+use UserManagement\Domain\Exception\UserNameException;
+
+class UserName
 {
     const MAX_CHARACTER_LENGTH = 255;
 
-    private $username;
+    private $userName;
     
-    public function __construct($username)
+    public function __construct($userName)
     {
-        $this->username = $username;
+        $this->userName = $userName;
     }
 
-    public function isValidCharacterMaxLength()
+    public function required()
     {
-        return (\strlen($this->username) === self::MAX_CHARACTER_LENGTH);
+        if (empty($this->userName)) {
+            throw RequiredFieldException::requiredFieldIsEmpty('User Name');
+        }      
+    }
+
+    public function validateCharacterLength()
+    {
+        if (\strlen($this->userName) > self::MAX_CHARACTER_LENGTH) {
+            throw UserNameException::exceededTheMaxCharacterLength();
+        }
     }
 
     public function get()
     {
-        return $this->username;
+        return $this->userName;
     }
 }

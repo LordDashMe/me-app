@@ -22,6 +22,7 @@ class User
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
+    
     const ROLE_ADMIN = 1;
     const ROLE_EDITOR = 2;
     const ROLE_MEMBER = 3;
