@@ -7,6 +7,7 @@ use DomainCommon\Domain\UseCase\ValidateRequireFields;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 
 use UserManagement\Domain\Aggregate\EditUserData;
+use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\Exception\ManageUserFailedException;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\UseCase\ManageUser;
@@ -28,7 +29,7 @@ class EditUser extends ManageUser implements UseCaseInterface
         $this->userRepository = $userRepository;
     }
 
-    public function validate()
+    public function validate(): void
     {
         $this->editUserData->firstName->required();
         $this->editUserData->lastName->required();

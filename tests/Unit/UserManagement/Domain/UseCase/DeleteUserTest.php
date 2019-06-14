@@ -53,11 +53,11 @@ class DeleteUserTest extends TestCase
         $userRepository = Mockery::mock(UserRepository::class);
 
         $userRepository->shouldReceive('softDelete')
-                       ->andReturn($userId);
+                       ->andReturn($userId->get());
 
         $useCase = new DeleteUser($userId, $userRepository);
         $useCase->validate();
         
-        $this->assertEquals($userId, $useCase->perform());
+        $this->assertEquals($userId->get(), $useCase->perform());
     }
 }

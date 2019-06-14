@@ -13,7 +13,7 @@ class MatchPassword
     
     public function __construct(
         PasswordEncoder $passwordEncoder, 
-        $encodedPassword, 
+        string $encodedPassword, 
         Password $password
     ) {
         $this->passwordEncoder = $passwordEncoder;
@@ -21,7 +21,7 @@ class MatchPassword
         $this->password = $password->get();
     }
 
-    public function isMatch()
+    public function isMatch(): bool
     {
         return $this->passwordEncoder->verifyEncodedText(
             $this->encodedPassword, $this->password, $this->password

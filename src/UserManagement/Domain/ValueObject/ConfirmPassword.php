@@ -12,7 +12,7 @@ class ConfirmPassword
     private $password;
     private $confirmPassword;
     
-    public function __construct(Password $password, $confirmPassword)
+    public function __construct(Password $password, string $confirmPassword)
     {
         $this->password = $password->get();
         $this->confirmPassword = $confirmPassword;

@@ -9,19 +9,19 @@ class LoginFailedException extends Exception
     const INVALID_ACCOUNT = 1;
     const USER_STATUS_IS_NOT_ACTIVE = 2;
 
-    public static function invalidAccount($previous = null) 
+    public static function invalidAccount(): LoginFailedException
     {
         $message = 'Invalid account.';
         $code = self::INVALID_ACCOUNT;
 
-        return new self($message, $code, $previous);
+        return new self($message, $code, null);
     }
 
-    public static function userStatusIsNotActive($previous = null) 
+    public static function userStatusIsNotActive(): LoginFailedException
     {
         $message = 'The account status is inactived.';
         $code = self::USER_STATUS_IS_NOT_ACTIVE;
 
-        return new self($message, $code, $previous);
+        return new self($message, $code, null);
     }
 }

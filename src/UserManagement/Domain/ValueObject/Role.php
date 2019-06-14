@@ -8,24 +8,24 @@ class Role
 {
     private $role;
     
-    public function __construct($role = '')
+    public function __construct(string $role = '')
     {
         $this->role = $this->getUserRole($role);
     }
 
-    private function getUserRole()
+    private function getUserRole(string $role): string
     {
-        switch ($this->role) {
+        switch ($role) {
             case User::ROLE_ADMIN:
             case User::ROLE_EDITOR:
             case User::ROLE_MEMBER:
-                return $this->role;
+                return $role;
             default:
                 return User::ROLE_MEMBER;
         }
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->role;
     }

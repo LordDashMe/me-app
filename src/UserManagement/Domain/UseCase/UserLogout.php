@@ -16,7 +16,7 @@ class UserLogout implements UseCaseInterface
         $this->userSessionManager = $userSessionManager;
     }
 
-    public function validate()
+    public function validate(): void
     {
         if (! $this->userSessionManager->isUserSessionAvailable()) {
             throw LogoutFailedException::noUserSessionFound();     

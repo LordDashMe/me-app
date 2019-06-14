@@ -88,12 +88,12 @@ class EditUserTest extends TestCase
                        ->andReturn($this->mockUserEntity());
 
         $userRepository->shouldReceive('update')
-                       ->andReturn($userId);
+                       ->andReturn(null);
 
         $useCase = new EditUser($userId, $editUserData, $userRepository);
         $useCase->validate();
         
-        $this->assertEquals($userId, $useCase->perform());
+        $this->assertEquals(null, $useCase->perform());
     }
 
     private function mockUserEntity()

@@ -18,7 +18,10 @@ class UsersDataTable implements UseCaseInterface
         $this->userRepository = $userRepository;
     }
 
-    public function validate() {}
+    public function validate(): void 
+    {
+        // No Operation
+    }
 
     public function perform()
     {

@@ -16,7 +16,7 @@ class Password
 
     private $password;
     
-    public function __construct($password)
+    public function __construct(string $password)
     {
         $this->password = $password;
     }
@@ -35,7 +35,7 @@ class Password
         }
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->password;
     }

@@ -21,13 +21,13 @@ class UserRepositoryImpl implements UserRepository
         $this->entityManager = $entityManager;
     }
 
-    public function create(User $user)
+    public function create(User $user): void
     {
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 
-    public function update(User $user)
+    public function update(User $user): void
     {
         $this->entityManager->merge($user);
         $this->entityManager->flush();
@@ -45,7 +45,7 @@ class UserRepositoryImpl implements UserRepository
         return $userEntity[0];
     }
 
-    public function getDataTable(DataTable $userDataTable) 
+    public function getDataTable(DataTable $userDataTable): array
     {
         $total = $this->entityManager->getRepository(User::class)->createQueryBuilder('u')
             ->select('COUNT(u.ID)')
@@ -75,7 +75,7 @@ class UserRepositoryImpl implements UserRepository
         ];   
     }
 
-    public function softDelete(UserId $id)
+    public function softDelete(UserId $id): string
     {
         $userEntity = $this->entityManager->getRepository(User::class)->findBy(['id' => $id->get()]);
 
@@ -98,7 +98,7 @@ class UserRepositoryImpl implements UserRepository
         return $repository->findOneBy($entityPropertyCriteria);
     }
 
-    public function isApproved(UserName $userName)
+    public function isApproved(UserName $userName): bool
     {
         $entityPropertyCriteria = [
             'deletedAt' => '',
@@ -113,7 +113,7 @@ class UserRepositoryImpl implements UserRepository
         return (\count($userRecord) > 0);
     }
 
-    public function isRegistered(UserName $userName)
+    public function isRegistered(UserName $userName): bool
     {
         $entityPropertyCriteria = [
             'deletedAt' => '',

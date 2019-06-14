@@ -8,7 +8,7 @@ class FirstName
 {
     private $firstName;
     
-    public function __construct($firstName)
+    public function __construct(string $firstName)
     {
         $this->firstName = $firstName;
     }
@@ -20,7 +20,7 @@ class FirstName
         }      
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->firstName;
     }

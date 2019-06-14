@@ -8,12 +8,12 @@ class CreatedAt
 
     private $createdAt;
     
-    public function __construct($createdAt = '')
+    public function __construct(string $createdAt = '')
     {
         $this->createdAt = $createdAt ?: \date(self::MYSQL_DATETIME_FORMAT);
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->createdAt;
     }

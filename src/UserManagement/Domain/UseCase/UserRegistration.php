@@ -2,10 +2,9 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use Ramsey\Uuid\Uuid;
-
-use DomainCommon\Domain\ValueObject\CreatedAt;
+use DomainCommon\Domain\Service\UniqueIDResolver;
 use DomainCommon\Domain\UseCase\UseCaseInterface;
+use DomainCommon\Domain\ValueObject\CreatedAt;
 
 use UserManagement\Domain\Aggregate\UserRegistrationData;
 use UserManagement\Domain\Entity\User;
@@ -27,18 +26,21 @@ class UserRegistration implements UseCaseInterface
     private $userRegistrationData;
     private $userRepository;
     private $passwordEncoder;
+    private $uniqueIDResolver;
 
     public function __construct(
         UserRegistrationData $userRegistrationData,
         UserRepository $userRepository, 
-        PasswordEncoder $passwordEncoder
+        PasswordEncoder $passwordEncoder,
+        UniqueIDResolver $uniqueIDResolver
     ) {
         $this->userRegistrationData = $userRegistrationData;
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
+        $this->uniqueIDResolver = $uniqueIDResolver;
     }
 
-    public function validate()
+    public function validate(): void
     {
         $this->validateRequiredFields();
         $this->validateEmail();
@@ -83,7 +85,7 @@ class UserRegistration implements UseCaseInterface
 
         $this->userRepository->create(
             new User(
-                new UserId(Uuid::uuid4()),
+                new UserId($this->uniqueIDResolver->generate()),
                 $this->userRegistrationData->firstName,
                 $this->userRegistrationData->lastName,
                 $this->userRegistrationData->email,
@@ -96,7 +98,7 @@ class UserRegistration implements UseCaseInterface
         );
     }
 
-    private function generateSecurePassword()
+    private function generateSecurePassword(): void
     {
         $currentPlainTextPassword = $this->userRegistrationData->password->get();
 

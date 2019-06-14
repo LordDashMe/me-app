@@ -34,7 +34,7 @@ class UserLogin implements UseCaseInterface
         $this->userSessionManager = $userSessionManager;
     }
 
-    public function validate()
+    public function validate(): void
     {
         $this->userLoginData->userName->required();
         $this->userLoginData->password->required();

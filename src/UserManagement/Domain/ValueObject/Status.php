@@ -8,12 +8,12 @@ class Status
 {
     private $status;
     
-    public function __construct($status = '')
+    public function __construct(string $status = '')
     {
         $this->status = $this->getUserStatus($status);
     }
 
-    private function getUserStatus()
+    private function getUserStatus(string $status): string
     {
         switch ($this->status) {
             case User::STATUS_ACTIVE:
@@ -24,7 +24,7 @@ class Status
         }
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->status;
     }

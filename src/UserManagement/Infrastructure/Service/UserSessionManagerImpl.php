@@ -16,12 +16,12 @@ class UserSessionManagerImpl implements UserSessionManager
         $this->session = $session;
     }
 
-    public function getUserEntitySessionName()
+    public function getUserEntitySessionName(): string
     {
         return self::USER_ENTITY_SESSION_NAME;
     }
 
-    public function set($attribute, $value)
+    public function set(string $attribute, string $value): void
     {
         $this->session->set($attribute, $value);
     }
@@ -31,12 +31,12 @@ class UserSessionManagerImpl implements UserSessionManager
         return $this->session->get($attribute);
     }
 
-    public function forget()
+    public function forget(): void
     {
         $this->session->clear();
     }
 
-    public function isUserSessionAvailable()
+    public function isUserSessionAvailable(): bool
     {
         return (! empty($this->get($this->getUserEntitySessionName())));
     }

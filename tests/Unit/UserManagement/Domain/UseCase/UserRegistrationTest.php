@@ -7,6 +7,7 @@ use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
 
 use DomainCommon\Domain\Exception\RequiredFieldException;
+use DomainCommon\Domain\Service\UniqueIDResolver;
 
 use UserManagement\Domain\Aggregate\UserRegistrationData;
 use UserManagement\Domain\Exception\EmailException;
@@ -32,10 +33,19 @@ class UserRegistrationTest extends TestCase
     public function it_should_load_the_main_class()
     {
         $userRegistrationData = Mockery::mock(UserRegistrationData::class);
+
         $userRepository = Mockery::mock(UserRepository::class);
+
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
-        $useCase = new UserRegistration($userRegistrationData, $userRepository, $passwordEncoder);
+        $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
+
+        $useCase = new UserRegistration(
+            $userRegistrationData, 
+            $userRepository, 
+            $passwordEncoder,
+            $uniqueIDResolver
+        );
 
         $this->assertInstanceOf(UserRegistration::class, $useCase);
     }
@@ -63,7 +73,14 @@ class UserRegistrationTest extends TestCase
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
-        $useCase = new UserRegistration($userRegistrationData, $userRepository, $passwordEncoder);
+        $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
+
+        $useCase = new UserRegistration(
+            $userRegistrationData, 
+            $userRepository, 
+            $passwordEncoder,
+            $uniqueIDResolver
+        );
         $useCase->validate();
     }
 
@@ -90,7 +107,14 @@ class UserRegistrationTest extends TestCase
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
-        $useCase = new UserRegistration($userRegistrationData, $userRepository, $passwordEncoder);
+        $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
+
+        $useCase = new UserRegistration(
+            $userRegistrationData, 
+            $userRepository, 
+            $passwordEncoder,
+            $uniqueIDResolver
+        );
         $useCase->validate();
     }
 
@@ -117,7 +141,14 @@ class UserRegistrationTest extends TestCase
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
-        $useCase = new UserRegistration($userRegistrationData, $userRepository, $passwordEncoder);
+        $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
+
+        $useCase = new UserRegistration(
+            $userRegistrationData, 
+            $userRepository, 
+            $passwordEncoder,
+            $uniqueIDResolver
+        );
         $useCase->validate();
     }
 
@@ -144,7 +175,14 @@ class UserRegistrationTest extends TestCase
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
-        $useCase = new UserRegistration($userRegistrationData, $userRepository, $passwordEncoder);
+        $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
+
+        $useCase = new UserRegistration(
+            $userRegistrationData, 
+            $userRepository, 
+            $passwordEncoder,
+            $uniqueIDResolver
+        );
         $useCase->validate();
     }
 
@@ -171,7 +209,14 @@ class UserRegistrationTest extends TestCase
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
 
-        $useCase = new UserRegistration($userRegistrationData, $userRepository, $passwordEncoder);
+        $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
+
+        $useCase = new UserRegistration(
+            $userRegistrationData, 
+            $userRepository, 
+            $passwordEncoder,
+            $uniqueIDResolver
+        );
         $useCase->validate();
     }
 
@@ -199,7 +244,16 @@ class UserRegistrationTest extends TestCase
         $passwordEncoder->shouldReceive('encodePlainText')
                        ->andReturn('This are some hashed content!');
 
-        $useCase = new UserRegistration($userRegistrationData, $userRepository, $passwordEncoder);
+        $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
+        $uniqueIDResolver->shouldReceive('generate')
+                        ->andReturn('UUID001');
+
+        $useCase = new UserRegistration(
+            $userRegistrationData, 
+            $userRepository, 
+            $passwordEncoder,
+            $uniqueIDResolver
+        );
         $useCase->validate();
 
         $this->assertEquals(null, $useCase->perform());

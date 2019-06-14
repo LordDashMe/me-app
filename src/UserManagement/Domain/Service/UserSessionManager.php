@@ -4,13 +4,13 @@ namespace UserManagement\Domain\Service;
 
 interface UserSessionManager
 {
-    public function getUserEntitySessionName();
+    public function getUserEntitySessionName(): string;
 
-    public function set($attribute, $value);
+    public function set(string $attribute, $value): void;
 
-    public function get($attribute);
+    public function get(string $attribute);
 
-    public function forget();
+    public function forget(): void;
 
-    public function isUserSessionAvailable();
+    public function isUserSessionAvailable(): bool;
 }

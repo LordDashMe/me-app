@@ -12,7 +12,7 @@ class Email
 
     private $email;
     
-    public function __construct($email)
+    public function __construct(string $email)
     {
         $this->email = $email;
     }
@@ -38,7 +38,7 @@ class Email
         }
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->email;
     }

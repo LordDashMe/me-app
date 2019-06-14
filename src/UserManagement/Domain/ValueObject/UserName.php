@@ -12,7 +12,7 @@ class UserName
 
     private $userName;
     
-    public function __construct($userName)
+    public function __construct(string $userName)
     {
         $this->userName = $userName;
     }
@@ -31,7 +31,7 @@ class UserName
         }
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->userName;
     }

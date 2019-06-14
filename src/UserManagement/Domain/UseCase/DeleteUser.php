@@ -20,7 +20,7 @@ class DeleteUser extends ManageUser implements UseCaseInterface
         $this->userRepository = $userRepository;
     }
 
-    public function validate()
+    public function validate(): void
     {
         $this->validateUserIdIsNotEmpty($this->userId);
     }
