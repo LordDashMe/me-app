@@ -3,36 +3,25 @@
 namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\UseCase\UseCaseInterface;
+use DomainCommon\Domain\ValueObject\DataTable;
+
 use UserManagement\Domain\Repository\UserRepository;
 
 class UsersDataTable implements UseCaseInterface
 {
-    private $dataTableOptionsDefault = [
-        'start' => 0,
-        'length' => 10,
-        'search' => '',
-        'orderColumn' => 'ID',
-        'orderBy' => 'DESC'
-    ];
-    
-    private $usersDataTableData;
+    private $userDataTable;
     private $userRepository;
 
-    public function __construct($usersDataTableData, UserRepository $userRepository) 
+    public function __construct(DataTable $userDataTable, UserRepository $userRepository) 
     {
-        $this->usersDataTableData = $this->mergeOptionsDefault($usersDataTableData);
+        $this->userDataTable = $userDataTable;
         $this->userRepository = $userRepository;
-    }
-
-    private function mergeOptionsDefault($usersDataTableData)
-    {
-        return \array_merge($this->dataTableOptionsDefault, $usersDataTableData);
     }
 
     public function validate() {}
 
     public function perform()
     {
-        return $this->userRepository->getDataTable($this->usersDataTableData);   
+        return $this->userRepository->getDataTable($this->userDataTable);   
     }
 }

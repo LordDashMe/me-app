@@ -2,35 +2,27 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use DomainCommon\Domain\ValueObject\CreatedAt;
 use DomainCommon\Domain\UseCase\UseCaseInterface;
 use DomainCommon\Domain\UseCase\ValidateRequireFields;
-use UserManagement\Domain\Entity\User;
-use UserManagement\Domain\ValueObject\Email;
-use UserManagement\Domain\ValueObject\UserId;
-use UserManagement\Domain\UseCase\ManageUser;
-use UserManagement\Domain\ValueObject\UserName;
-use UserManagement\Domain\ValueObject\Password;
-use UserManagement\Domain\ValueObject\LastName;
-use UserManagement\Domain\ValueObject\UserRole;
-use UserManagement\Domain\ValueObject\FirstName;
-use UserManagement\Domain\ValueObject\UserStatus;
-use UserManagement\Domain\Repository\UserRepository;
+use DomainCommon\Domain\ValueObject\CreatedAt;
+
+use UserManagement\Domain\Aggregate\EditUserData;
 use UserManagement\Domain\Exception\ManageUserFailedException;
+use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\UseCase\ManageUser;
+use UserManagement\Domain\ValueObject\UserId;
 
 class EditUser extends ManageUser implements UseCaseInterface
 {
-    private $requiredFields = [
-        'firstName' => 'First Name',
-        'lastName' => 'Last Name'
-    ];
-
     private $userId;
-    private $editUserData = [];
+    private $editUserData;
     private $userRepository;
 
-    public function __construct($userId, $editUserData, UserRepository $userRepository) 
-    {
+    public function __construct(
+        UserId $userId, 
+        EditUserData $editUserData, 
+        UserRepository $userRepository
+    ) {
         $this->userId = $userId;
         $this->editUserData = $editUserData;
         $this->userRepository = $userRepository;
@@ -38,35 +30,26 @@ class EditUser extends ManageUser implements UseCaseInterface
 
     public function validate()
     {
-        (new ValidateRequireFields($this->requiredFields, $this->editUserData))->perform();
+        $this->editUserData->firstName->required();
+        $this->editUserData->lastName->required();
 
         $this->validateUserIdIsNotEmpty($this->userId);
     }
 
     public function perform()
     {
-        return $this->userRepository->update($this->composeUserEntity());
-    }
-
-    private function composeUserEntity()
-    {
         $currentUserEntity = $this->getCurrentUserEntityUsingId();
 
-        return new User(
-            new UserId($this->userId),
-            new FirstName($this->editUserData['firstName']),
-            new LastName($this->editUserData['lastName']),
-            new Email($currentUserEntity->getEmail()),
-            new UserName($currentUserEntity->getUserName()),
-            new Password($currentUserEntity->getPassword()),
-            new UserStatus($this->editUserData['status']),
-            new UserRole($this->editUserData['role']),
-            new CreatedAt($currentUserEntity->getCreatedAt())
-        );  
+        $currentUserEntity->setFirstName($this->editUserData->firstName);
+        $currentUserEntity->setLastName($this->editUserData->lastName);
+        $currentUserEntity->setStatus($this->editUserData->status);
+        $currentUserEntity->setRole($this->editUserData->role);
+
+        return $this->userRepository->update($currentUserEntity);
     }
 
     private function getCurrentUserEntityUsingId()
     {
-        return $this->userRepository->get(new UserId($this->userId));
+        return $this->userRepository->get($this->userId);
     }
 }

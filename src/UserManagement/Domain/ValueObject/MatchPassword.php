@@ -2,8 +2,8 @@
 
 namespace UserManagement\Domain\ValueObject;
 
-use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\Service\PasswordEncoder;
+use UserManagement\Domain\ValueObject\Password;
 
 class MatchPassword
 {

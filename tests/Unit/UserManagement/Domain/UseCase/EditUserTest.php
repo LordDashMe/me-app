@@ -3,20 +3,24 @@
 namespace Tests\Unit\UserManagement\Domain\UseCase;
 
 use Mockery as Mockery;
+
 use PHPUnit\Framework\TestCase;
+
 use DomainCommon\Domain\ValueObject\CreatedAt;
+
+use UserManagement\Domain\Aggregate\EditUserData;
 use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\Exception\ManageUserFailedException;
+use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\UseCase\EditUser;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
-use UserManagement\Domain\ValueObject\UserRole;
+use UserManagement\Domain\ValueObject\Role;
 use UserManagement\Domain\ValueObject\FirstName;
-use UserManagement\Domain\ValueObject\UserStatus;
-use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\Exception\ManageUserFailedException;
+use UserManagement\Domain\ValueObject\Status;
 
 class EditUserTest extends TestCase
 {
@@ -25,12 +29,20 @@ class EditUserTest extends TestCase
      */
     public function it_should_load_the_main_class()
     {
-        $userId = '';
-        $editUserRequestData = [];
+        $userId = new UserId('');
+
+        $editUserData = new EditUserData(
+            new FirstName(''),
+            new LastName(''),
+            new Status(''),
+            new Role('')
+        );
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $this->assertInstanceOf(EditUser::class, new EditUser($userId, $editUserRequestData, $userRepository));
+        $useCase = new EditUser($userId, $editUserData, $userRepository);
+
+        $this->assertInstanceOf(EditUser::class, $useCase);
     }
 
     /**
@@ -41,16 +53,19 @@ class EditUserTest extends TestCase
         $this->expectException(ManageUserFailedException::class);
         $this->expectExceptionCode(ManageUserFailedException::USER_ID_IS_EMPTY);
         
-        $userId = '';
-        $editUserRequestData = [
-            'firstName' => 'John',
-            'lastName' => 'Doe'
-        ];
+        $userId = new UserId('');
+
+        $editUserData = new EditUserData(
+            new FirstName('John'),
+            new LastName('Doe'),
+            new Status(),
+            new Role()
+        );
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $editUser = new EditUser($userId, $editUserRequestData, $userRepository);
-        $editUser->validate();
+        $useCase = new EditUser($userId, $editUserData, $userRepository);
+        $useCase->validate();
     }
 
     /**
@@ -58,13 +73,14 @@ class EditUserTest extends TestCase
      */
     public function it_should_perform_user_edit()
     {
-        $userId = 'UUID001';
-        $editUserRequestData = [
-            'firstName' => 'Johnny',
-            'lastName' => 'Doe',
-            'status' => User::STATUS_ACTIVE,
-            'role' => User::ROLE_MEMBER
-        ];
+        $userId = new UserId('UUID001');
+
+        $editUserData = new EditUserData(
+            new FirstName('John'),
+            new LastName('Doe'),
+            new Status(User::STATUS_ACTIVE),
+            new Role(User::ROLE_MEMBER)
+        );
 
         $userRepository = Mockery::mock(UserRepository::class);
 
@@ -74,10 +90,10 @@ class EditUserTest extends TestCase
         $userRepository->shouldReceive('update')
                        ->andReturn($userId);
 
-        $editUser = new EditUser($userId, $editUserRequestData, $userRepository);
-        $editUser->validate();
+        $useCase = new EditUser($userId, $editUserData, $userRepository);
+        $useCase->validate();
         
-        $this->assertEquals($userId, $editUser->perform());
+        $this->assertEquals($userId, $useCase->perform());
     }
 
     private function mockUserEntity()
@@ -89,9 +105,9 @@ class EditUserTest extends TestCase
             new Email('john.doe@provider.com'),
             new UserName('johndoe123'),
             new Password('P@ssw0rd!'),
-            new UserStatus(User::STATUS_ACTIVE),
-            new UserRole(User::ROLE_MEMBER),
-            new CreatedAt
+            new Status(User::STATUS_ACTIVE),
+            new Role(User::ROLE_MEMBER),
+            new CreatedAt()
         );
     }
 }

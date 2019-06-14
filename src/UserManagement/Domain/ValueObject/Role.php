@@ -4,22 +4,22 @@ namespace UserManagement\Domain\ValueObject;
 
 use UserManagement\Domain\Entity\User;
 
-class UserRole
+class Role
 {
-    private $userRole;
+    private $role;
     
-    public function __construct($userRole = '')
+    public function __construct($role = '')
     {
-        $this->userRole = $this->evaluateStatus($userRole);
+        $this->role = $this->getUserRole($role);
     }
 
-    private function evaluateStatus()
+    private function getUserRole()
     {
-        switch ($this->userRole) {
+        switch ($this->role) {
             case User::ROLE_ADMIN:
             case User::ROLE_EDITOR:
             case User::ROLE_MEMBER:
-                return $this->userRole;
+                return $this->role;
             default:
                 return User::ROLE_MEMBER;
         }
@@ -27,6 +27,6 @@ class UserRole
 
     public function get()
     {
-        return $this->userRole;
+        return $this->role;
     }
 }

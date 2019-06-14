@@ -3,7 +3,10 @@
 namespace UserManagement\Infrastructure\Repository\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
+
 use DomainCommon\Domain\ValueObject\CreatedAt;
+use DomainCommon\Domain\ValueObject\DataTable;
+
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\UserName;
@@ -42,7 +45,7 @@ class UserRepositoryImpl implements UserRepository
         return $userEntity[0];
     }
 
-    public function getDataTable($options) 
+    public function getDataTable(DataTable $userDataTable) 
     {
         $total = $this->entityManager->getRepository(User::class)->createQueryBuilder('u')
             ->select('COUNT(u.ID)')
@@ -52,16 +55,16 @@ class UserRepositoryImpl implements UserRepository
         $queryBuilder = $this->entityManager->getRepository(User::class)->createQueryBuilder('u');
         $queryBuilder->where("u.DeletedAt = ''");
         $queryBuilder->andWhere("u.ID LIKE :id OR u.FirstName LIKE :firstName OR u.LastName LIKE :lastName");
-        $queryBuilder->setParameter('id', "%{$options['search']}%");
-        $queryBuilder->setParameter('firstName', "%{$options['search']}%");
-        $queryBuilder->setParameter('lastName', "%{$options['search']}%");
-        $queryBuilder->orderBy("u.{$options['orderColumn']}", \strtoupper($options['orderBy']));
+        $queryBuilder->setParameter('id', "%{$userDataTable->getSearch()}%");
+        $queryBuilder->setParameter('firstName', "%{$userDataTable->getSearch()}%");
+        $queryBuilder->setParameter('lastName', "%{$userDataTable->getSearch()}%");
+        $queryBuilder->orderBy("u.{$userDataTable->getOrderColumn()}", \strtoupper($userDataTable->getOrderBy()));
         
-        if ($options['length'] > 0) {
-            $queryBuilder->setMaxResults($options['length']);
+        if ($userDataTable->getLength() > 0) {
+            $queryBuilder->setMaxResults($userDataTable->getLength());
         }
         
-        $queryBuilder->setFirstResult($options['start']);
+        $queryBuilder->setFirstResult($userDataTable->getStart());
         
         $data = $queryBuilder->getQuery()->getResult();
         

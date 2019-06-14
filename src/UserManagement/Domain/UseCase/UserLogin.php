@@ -4,19 +4,18 @@ namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\UseCase\UseCaseInterface;
 
+use UserManagement\Domain\Aggregate\UserLoginData;
+use UserManagement\Domain\Exception\LoginFailedException;
+use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\Service\PasswordEncoder;
+use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\MatchPassword;
-use UserManagement\Domain\Service\PasswordEncoder;
-use UserManagement\Domain\Service\UserSessionManager;
-use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\Exception\LoginFailedException;
 
 class UserLogin implements UseCaseInterface
 {    
-    private $userName;
-    private $password;
-
+    private $userLoginData;
     private $userRepository;
     private $passwordEncoder;
     private $userSessionManager;
@@ -24,29 +23,23 @@ class UserLogin implements UseCaseInterface
     private $userEntity;
 
     public function __construct(
+        UserLoginData $userLoginData,
         UserRepository $userRepository, 
         PasswordEncoder $passwordEncoder,
         UserSessionManager $userSessionManager
     ) {
+        $this->userLoginData = $userLoginData;
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
         $this->userSessionManager = $userSessionManager;
     }
 
-    public function build(
-        UserName $userName,
-        Password $password
-    ) {
-        $this->userName = $userName;
-        $this->password = $password;
-    }
-
     public function validate()
     {
-        $this->userName->required();
-        $this->password->required();
+        $this->userLoginData->userName->required();
+        $this->userLoginData->password->required();
 
-        $this->userEntity = $this->userRepository->getByUserName($this->userName);
+        $this->userEntity = $this->userRepository->getByUserName($this->userLoginData->userName);
         
         $this->validateUserAccount();
         $this->validateUserCredentials();
@@ -65,7 +58,7 @@ class UserLogin implements UseCaseInterface
         $matchPassword = new MatchPassword(
             $this->passwordEncoder, 
             $this->userEntity->getPassword(), 
-            $this->password
+            $this->userLoginData->password
         );
 
         if (! $matchPassword->isMatch()) {
@@ -75,7 +68,7 @@ class UserLogin implements UseCaseInterface
 
     private function validateUserStatus()
     {
-        if (! $this->userRepository->isApproved($this->userName)) {
+        if (! $this->userRepository->isApproved($this->userLoginData->userName)) {
             throw LoginFailedException::userStatusIsNotActive();
         }
     }

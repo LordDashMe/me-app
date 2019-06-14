@@ -4,21 +4,21 @@ namespace UserManagement\Domain\ValueObject;
 
 use UserManagement\Domain\Entity\User;
 
-class UserStatus
+class Status
 {
-    private $userStatus;
+    private $status;
     
-    public function __construct($userStatus = '')
+    public function __construct($status = '')
     {
-        $this->userStatus = $this->evaluateStatus($userStatus);
+        $this->status = $this->getUserStatus($status);
     }
 
-    private function evaluateStatus()
+    private function getUserStatus()
     {
-        switch ($this->userStatus) {
+        switch ($this->status) {
             case User::STATUS_ACTIVE:
             case User::STATUS_INACTIVE:
-                return $this->userStatus;
+                return $this->status;
             default:
                 return User::STATUS_INACTIVE;
         }
@@ -26,6 +26,6 @@ class UserStatus
 
     public function get()
     {
-        return $this->userStatus;
+        return $this->status;
     }
 }

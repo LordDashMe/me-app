@@ -3,10 +3,12 @@
 namespace Tests\Unit\UserManagement\Domain\UseCase;
 
 use Mockery as Mockery;
+
 use PHPUnit\Framework\TestCase;
+
 use UserManagement\Domain\UseCase\UserLogout;
-use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LogoutFailedException;
+use UserManagement\Domain\Service\UserSessionManager;
 
 class UserLogoutTest extends TestCase
 {
@@ -32,8 +34,8 @@ class UserLogoutTest extends TestCase
         $userSessionManager->shouldReceive('isUserSessionAvailable')
                            ->andReturn(false);
 
-        $userLogout = new UserLogout($userSessionManager);
-        $userLogout->validate();
+        $useCase = new UserLogout($userSessionManager);
+        $useCase->validate();
     }
 
     /**
@@ -42,11 +44,14 @@ class UserLogoutTest extends TestCase
     public function it_should_perform_user_logout()
     {
         $userSessionManager = Mockery::mock(UserSessionManager::class);
+        $userSessionManager->shouldReceive('isUserSessionAvailable')
+                           ->andReturn(true);
         $userSessionManager->shouldReceive('forget')
                            ->andReturn(null);
 
-        $userLogout = new UserLogout($userSessionManager);
+        $useCase = new UserLogout($userSessionManager);
+        $useCase->validate();
 
-        $this->assertEquals(null, $userLogout->perform());
+        $this->assertEquals(null, $useCase->perform());
     }
 }

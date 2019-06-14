@@ -3,8 +3,9 @@
 namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\UseCase\UseCaseInterface;
-use UserManagement\Domain\Service\UserSessionManager;
+
 use UserManagement\Domain\Exception\LogoutFailedException;
+use UserManagement\Domain\Service\UserSessionManager;
 
 class UserLogout implements UseCaseInterface
 {

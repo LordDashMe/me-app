@@ -3,9 +3,12 @@
 namespace Tests\Unit\UserManagement\Domain\UseCase;
 
 use Mockery as Mockery;
+
 use PHPUnit\Framework\TestCase;
-use UserManagement\Domain\UseCase\UsersDataTable;
+
 use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\UseCase\UsersDataTable;
+use DomainCommon\Domain\ValueObject\DataTable;
 
 class UsersDataTableTest extends TestCase
 {
@@ -14,11 +17,13 @@ class UsersDataTableTest extends TestCase
      */
     public function it_should_load_the_main_class()
     {
-        $dataTableRequestData = [];
+        $userDataTable = new DataTable();
 
         $userRepository = Mockery::mock(UserRepository::class);
 
-        $this->assertInstanceOf(UsersDataTable::class, new UsersDataTable($dataTableRequestData, $userRepository));
+        $useCase = new UsersDataTable($userDataTable, $userRepository);
+
+        $this->assertInstanceOf(UsersDataTable::class, $useCase);
     }
 
     /**
@@ -26,13 +31,11 @@ class UsersDataTableTest extends TestCase
      */
     public function it_should_perform_users_data_table()
     {
-        $dataTableRequestData = [
-            'start' => 0,
-            'length' => 10,
-            'search' => '',
-            'orderColumn' => 'id',
-            'orderBy' => 'DESC'
-        ];
+        $userDataTable = new DataTable();
+        $userDataTable->setStart(0);
+        $userDataTable->setLength(10);
+        $userDataTable->setOrderColumn('id');
+        $userDataTable->setOrderBy('DESC');
         
         $userRepository = Mockery::mock(UserRepository::class);
 
@@ -43,12 +46,14 @@ class UsersDataTableTest extends TestCase
                            'data' => []
                        ]);
 
-        $usersDataTable = new UsersDataTable($dataTableRequestData, $userRepository);
+        $useCase = new UsersDataTable($userDataTable, $userRepository);
 
-        $this->assertEquals([
-            'totalRecords' => 0,
-            'totalRecordsFiltered' => 0,
-            'data' => []
-        ], $usersDataTable->perform());
+        $this->assertEquals(
+            [
+                'totalRecords' => 0,
+                'totalRecordsFiltered' => 0,
+                'data' => []
+            ], 
+        $useCase->perform());
     }
 }

@@ -5,14 +5,15 @@ namespace UserManagement\Domain\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
+
+use UserManagement\Domain\ValueObject\Role;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserId;
+use UserManagement\Domain\ValueObject\Status;
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\LastName;
-use UserManagement\Domain\ValueObject\UserRole;
 use UserManagement\Domain\ValueObject\FirstName;
-use UserManagement\Domain\ValueObject\UserStatus;
 
 /**
  * @ORM\Entity
@@ -28,18 +29,11 @@ class User
     const ROLE_MEMBER = 3;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="ID", unique=true)
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
+     * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
-
-    /**
-     * @var \Ramsey\Uuid\UuidInterface
-     *
-     * @ORM\Column(type="uuid", name="UUID", unique=true)
-     */
-    protected $uuid;
 
     /**
      * @ORM\Column(type="text", name="FirstName")
@@ -87,26 +81,25 @@ class User
     private $deletedAt = '';
 
     public function __construct(
-        UserId $id,
+        UserId $userId,
         FirstName $firstName,
         LastName $lastName,
         Email $email,
         UserName $userName,
         Password $password,
-        UserStatus $status,
-        UserRole $role,
+        Status $status,
+        Role $role,
         CreatedAt $createdAt
     ) {
-        // $this->id = $id->get();
-        $this->uuid = \Ramsey\Uuid\Uuid::uuid4();
-        $this->firstName = $firstName->get();
-        $this->lastName = $lastName->get();
-        $this->email = $email->get();
-        $this->userName = $userName->get();
-        $this->password = $password->get();
-        $this->status = $status->get();
-        $this->role = $role->get();
-        $this->createdAt = $createdAt->get();
+        $this->setId($userId);
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
+        $this->setEmail($email);
+        $this->setUserName($userName);
+        $this->setPassword($password);
+        $this->setStatus($status);
+        $this->setRole($role);
+        $this->setCreatedAt($createdAt);
     }
 
     public function setDeletedAt($deletedAt)
@@ -114,14 +107,19 @@ class User
         $this->deletedAt = $deletedAt;
     }
 
+    public function setId(UserId $userId)
+    {
+        $this->id = $userId->get();
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    public function getUuid()
+    public function setFirstName(FirstName $firstName)
     {
-        return $this->uuid;
+        $this->firstName = $firstName->get();
     }
 
     public function getFirstName()
@@ -129,9 +127,19 @@ class User
         return $this->firstName;
     }
 
+    public function setLastName(LastName $lastName)
+    {
+        $this->lastName = $lastName->get();
+    }
+
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    public function setEmail(Email $email) 
+    {
+        $this->email = $email->get();
     }
 
     public function getEmail()
@@ -139,9 +147,19 @@ class User
         return $this->email;
     }
 
+    public function setUserName(UserName $userName)
+    {
+        $this->userName = $userName->get();
+    }
+
     public function getUserName()
     {
         return $this->userName;
+    }
+
+    public function setPassword(Password $password)
+    {
+        $this->password = $password->get();
     }
 
     public function getPassword()
@@ -149,14 +167,29 @@ class User
         return $this->password;
     }
 
+    public function setStatus(Status $status)
+    {
+        $this->status = $status->get();
+    }
+
     public function getStatus()
     {
         return $this->status;
     }
 
+    public function setRole(Role $role)
+    {
+        $this->role = $role->get();
+    }
+
     public function getRole()
     {
         return $this->role;
+    }
+
+    public function setCreatedAt(CreatedAt $createdAt)
+    {
+        $this->createdAt = $createdAt->get();
     }
 
     public function getCreatedAt()

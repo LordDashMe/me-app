@@ -8,7 +8,7 @@ class UserId
     
     public function __construct($userId = '')
     {
-        $this->userId = $userId ?: \uniqid();
+        $this->userId = $userId;
     }
 
     public function get()

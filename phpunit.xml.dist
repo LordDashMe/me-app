@@ -12,7 +12,6 @@
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
     </php>
-
     <testsuites>
         <!-- <testsuite name="Integration Tests">
             <directory suffix="Test.php">tests/Integration/</directory>
@@ -22,10 +21,9 @@
             <!-- <directory suffix="Test.php">tests/Unit/ExpenseManagement</directory> -->
         </testsuite>
     </testsuites>
-
     <filter>
         <whitelist>
-            <directory>src/UserManagement/</directory>
+            <directory>src/UserManagement/Domain</directory>
             <exclude>
                 <directory>src/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Resources</directory>
@@ -33,7 +31,6 @@
             </exclude>
         </whitelist>
     </filter>
-
     <!-- <logging>
         <log type="coverage-html" target="build/logs/html/"/>
         <log type="coverage-clover" target="build/logs/clover.xml"/>

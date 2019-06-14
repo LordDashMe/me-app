@@ -4,8 +4,8 @@ namespace UserManagement\Domain\ValueObject;
 
 use DomainCommon\Domain\Exception\RequiredFieldException;
 
-use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\Exception\ConfirmPasswordException;
+use UserManagement\Domain\ValueObject\Password;
 
 class ConfirmPassword
 {
