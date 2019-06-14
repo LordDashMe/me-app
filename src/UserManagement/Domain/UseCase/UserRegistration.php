@@ -100,7 +100,7 @@ class UserRegistration implements UseCaseInterface
     {
         $currentPlainTextPassword = $this->userRegistrationData->password->get();
 
-        $salt = $currentPlainTextPassword . '-salt';
+        $salt = uniqid() . '-salt';
 
         $this->userRegistrationData->password = new Password(
             $this->passwordEncoder->encodePlainText(
