@@ -1,6 +1,6 @@
 <?php
 
-namespace UserManagement\Domain\Aggregate;
+namespace UserManagement\Domain\DataTransferObject;
 
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;

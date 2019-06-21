@@ -1,6 +1,6 @@
 <?php
 
-namespace UserManagement\Domain\Aggregate;
+namespace UserManagement\Domain\DataTransferObject;
 
 use UserManagement\Domain\ValueObject\Role;
 use UserManagement\Domain\ValueObject\Status;

@@ -6,7 +6,7 @@ use DomainCommon\Domain\Service\UniqueIDResolver;
 use DomainCommon\Domain\UseCase\UseCaseInterface;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 
-use UserManagement\Domain\Aggregate\UserRegistrationData;
+use UserManagement\Domain\DataTransferObject\UserRegistrationData;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 use UserManagement\Domain\Repository\UserRepository;

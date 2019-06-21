@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use DomainCommon\Domain\Exception\RequiredFieldException;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 
-use UserManagement\Domain\Aggregate\UserLoginData;
+use UserManagement\Domain\DataTransferObject\UserLoginData;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\Exception\LoginFailedException;
 use UserManagement\Domain\Repository\UserRepository;

@@ -4,7 +4,7 @@ namespace UserManagement\Domain\UseCase;
 
 use DomainCommon\Domain\UseCase\UseCaseInterface;
 
-use UserManagement\Domain\Aggregate\UserLoginData;
+use UserManagement\Domain\DataTransferObject\UserLoginData;
 use UserManagement\Domain\Exception\LoginFailedException;
 use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;

@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new DomainCommon\DomainCommon(),
             new UserManagement\UserManagement(),
             new ExpenseManagement\ExpenseManagement(),
-            new LogManagement\LogManagement(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         ];
 

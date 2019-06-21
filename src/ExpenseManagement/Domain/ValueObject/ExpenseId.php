@@ -6,12 +6,12 @@ class ExpenseId
 {
     private $expenseId;
     
-    public function __construct($expenseId = '')
+    public function __construct(string $expenseId = '')
     {
-        $this->expenseId = $expenseId ?: \uniqid();
+        $this->expenseId = $expenseId;
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->expenseId;
     }

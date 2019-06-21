@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
 
-use UserManagement\Domain\Aggregate\EditUserData;
+use UserManagement\Domain\DataTransferObject\EditUserData;
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\Exception\ManageUserFailedException;
 use UserManagement\Domain\Repository\UserRepository;

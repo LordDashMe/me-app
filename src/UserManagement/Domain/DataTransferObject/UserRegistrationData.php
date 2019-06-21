@@ -1,6 +1,6 @@
 <?php
 
-namespace UserManagement\Domain\Aggregate;
+namespace UserManagement\Domain\DataTransferObject;
 
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserName;

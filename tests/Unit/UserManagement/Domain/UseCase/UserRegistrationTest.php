@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use DomainCommon\Domain\Exception\RequiredFieldException;
 use DomainCommon\Domain\Service\UniqueIDResolver;
 
-use UserManagement\Domain\Aggregate\UserRegistrationData;
+use UserManagement\Domain\DataTransferObject\UserRegistrationData;
 use UserManagement\Domain\Exception\EmailException;
 use UserManagement\Domain\Exception\UserNameException;
 use UserManagement\Domain\Exception\PasswordException;
