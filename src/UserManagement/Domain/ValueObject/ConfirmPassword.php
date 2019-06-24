@@ -14,15 +14,8 @@ class ConfirmPassword
     
     public function __construct(Password $password, string $confirmPassword)
     {
-        $this->password = $password->get();
+        $this->password = $password;
         $this->confirmPassword = $confirmPassword;
-    }
-
-    public function required()
-    {
-        if (empty($this->confirmPassword)) {
-            throw RequiredFieldException::requiredFieldIsEmpty('Confirm Password');
-        }      
     }
 
     public function validateIsMatch()

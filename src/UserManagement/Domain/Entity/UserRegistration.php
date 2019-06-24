@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping AS ORM;
 
 use DomainCommon\Domain\ValueObject\CreatedAt;
 
+use UserManagement\Domain\Exception\RegistrationFailedException;
+use UserManagement\Domain\Repository\UserRegistrationRepository;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
@@ -18,11 +20,8 @@ use UserManagement\Domain\ValueObject\Status;
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
-class User
+class UserRegistration
 {
-    const STATUS_ACTIVE = '1';
-    const STATUS_INACTIVE = '2';
-
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
@@ -65,49 +64,36 @@ class User
      */
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="string", name="DeletedAt")
-     */
-    private $deletedAt = '';
+    private $repository;
 
-
-    public function getId(): string
-    {
-        return $this->id;
+    public function __construct(
+        UserId $userId,
+        FirstName $firstName,
+        LastName $lastName,
+        Email $email,
+        UserName $userName,
+        Password $password,
+        CreatedAt $createdAt
+    ) {
+        $this->id = $userId;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->userName = $userName;
+        $this->password = $password;
+        $this->status = $this->defaultStatus();
+        $this->createdAt = $createdAt;
     }
 
-    public function getFirstName(): string
+    private function defaultStatus()
     {
-        return $this->firstName;
+        return User::STATUS_INACTIVE;
     }
 
-    public function getLastName(): string
+    public function validateUsernameExistence(UserRegistrationRepository $repository)
     {
-        return $this->lastName;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function getUserName(): string
-    {
-        return $this->userName;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function getStatus(): string
-    {
-        return $this->status;
-    }
-
-    public function getCreatedAt(): string
-    {
-        return $this->createdAt;
+        if ($repository->isRegistered($this->userName)) {
+            throw RegistrationFailedException::userNameAlreadyRegistered();
+        }
     }
 }

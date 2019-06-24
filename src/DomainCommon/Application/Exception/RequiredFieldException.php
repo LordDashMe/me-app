@@ -1,6 +1,6 @@
 <?php
 
-namespace DomainCommon\Domain\Exception;
+namespace DomainCommon\Application\Exception;
 
 use Exception;
 
