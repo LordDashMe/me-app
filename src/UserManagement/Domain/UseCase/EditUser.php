@@ -2,55 +2,41 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use DomainCommon\Domain\UseCase\UseCaseInterface;
-use DomainCommon\Domain\UseCase\ValidateRequireFields;
-use DomainCommon\Domain\ValueObject\CreatedAt;
+use AppCommon\Domain\UseCase\UseCaseInterface;
+use AppCommon\Domain\ValueObject\CreatedAt;
 
-use UserManagement\Domain\DataTransferObject\EditUserData;
-use UserManagement\Domain\Entity\User;
-use UserManagement\Domain\Exception\ManageUserFailedException;
-use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\UseCase\ManageUser;
+use UserManagement\Domain\Entity\ModifyUser;
+use UserManagement\Domain\Message\EditUserData;
+use UserManagement\Domain\Repository\ModifyUserRepository;
 use UserManagement\Domain\ValueObject\UserId;
+use UserManagement\Domain\ValueObject\FirstName;
+use UserManagement\Domain\ValueObject\LastName;
+use UserManagement\Domain\ValueObject\Email;
 
-class EditUser extends ManageUser implements UseCaseInterface
+class EditUser implements UseCaseInterface
 {
-    private $userId;
     private $editUserData;
-    private $userRepository;
+    private $modifyUserRepository;
 
     public function __construct(
-        UserId $userId, 
-        EditUserData $editUserData, 
-        UserRepository $userRepository
+        EditUserData $editUserData,
+        ModifyUserRepository $modifyUserRepository
     ) {
-        $this->userId = $userId;
         $this->editUserData = $editUserData;
-        $this->userRepository = $userRepository;
-    }
-
-    public function validate(): void
-    {
-        $this->editUserData->firstName->required();
-        $this->editUserData->lastName->required();
-
-        $this->validateUserIdIsNotEmpty($this->userId);
+        $this->modifyUserRepository = $modifyUserRepository;
     }
 
     public function perform()
     {
-        $currentUserEntity = $this->getCurrentUserEntityUsingId();
+        $modifyUserEntity = new ModifyUser(
+            new UserId($this->editUserData->userId)
+        );
+        
+        $modifyUserEntity->changeFirstName(new FirstName($this->editUserData->firstName));
+        $modifyUserEntity->changeLastName(new LastName($this->editUserData->lastName));
+        $modifyUserEntity->changeEmail(new Email($this->editUserData->email));
+        $modifyUserEntity->changeStatus($this->editUserData->status);
 
-        $currentUserEntity->setFirstName($this->editUserData->firstName);
-        $currentUserEntity->setLastName($this->editUserData->lastName);
-        $currentUserEntity->setStatus($this->editUserData->status);
-        $currentUserEntity->setRole($this->editUserData->role);
-
-        return $this->userRepository->update($currentUserEntity);
-    }
-
-    private function getCurrentUserEntityUsingId()
-    {
-        return $this->userRepository->get($this->userId);
+        return $this->modifyUserRepository->save($modifyUserEntity);
     }
 }

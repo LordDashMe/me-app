@@ -2,7 +2,7 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use DomainCommon\Domain\UseCase\UseCaseInterface;
+use AppCommon\Domain\UseCase\UseCaseInterface;
 
 use UserManagement\Domain\Exception\LogoutFailedException;
 use UserManagement\Domain\Service\UserSessionManager;
@@ -16,15 +16,17 @@ class UserLogout implements UseCaseInterface
         $this->userSessionManager = $userSessionManager;
     }
 
-    public function validate(): void
+    public function perform()
+    {
+        $this->validateUserSessionExistence();
+
+        $this->userSessionManager->forget();
+    }
+
+    private function validateUserSessionExistence()
     {
         if (! $this->userSessionManager->isUserSessionAvailable()) {
             throw LogoutFailedException::noUserSessionFound();     
         }
-    }
-
-    public function perform()
-    {
-        $this->userSessionManager->forget();
     }
 }

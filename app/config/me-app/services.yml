@@ -4,14 +4,14 @@ services:
         arguments:
             $cost: 8
 
-    DomainCommon\:
+    AppCommon\:
         autowire: true
         public: true
-        resource: '../../../src/DomainCommon/*'
-        exclude: '../../../src/DomainCommon/Domain/{Entity,UseCase,ValueObject}'
-    DomainCommon\Domain\ValueObject\:
+        resource: '../../../src/AppCommon/*'
+        exclude: '../../../src/AppCommon/Domain/{Entity,UseCase,ValueObject}'
+    AppCommon\Domain\ValueObject\:
         public: true
-        resource: '../../../src/DomainCommon/Domain/ValueObject/*'
+        resource: '../../../src/AppCommon/Domain/ValueObject/*'
 
     UserManagement\:
         autowire: true

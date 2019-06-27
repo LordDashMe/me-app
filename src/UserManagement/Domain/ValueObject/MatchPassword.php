@@ -3,28 +3,28 @@
 namespace UserManagement\Domain\ValueObject;
 
 use UserManagement\Domain\Service\PasswordEncoder;
-use UserManagement\Domain\ValueObject\Password;
 
 class MatchPassword
 {
     private $passwordEncoder;
-    private $password;
+
     private $encodedPassword;
+    private $plainTextPassword;
     
     public function __construct(
         PasswordEncoder $passwordEncoder, 
         string $encodedPassword, 
-        Password $password
+        string $plainTextPassword
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->encodedPassword = $encodedPassword;
-        $this->password = $password->get();
+        $this->plainTextPassword = $plainTextPassword;
     }
 
     public function isMatch(): bool
     {
         return $this->passwordEncoder->verifyEncodedText(
-            $this->encodedPassword, $this->password, $this->password
+            $this->encodedPassword, $this->plainTextPassword, $this->plainTextPassword
         );
     }
 }

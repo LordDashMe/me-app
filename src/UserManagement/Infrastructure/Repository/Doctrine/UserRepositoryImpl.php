@@ -4,8 +4,8 @@ namespace UserManagement\Infrastructure\Repository\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-use DomainCommon\Domain\ValueObject\CreatedAt;
-use DomainCommon\Domain\ValueObject\DataTable;
+use AppCommon\Domain\ValueObject\CreatedAt;
+use AppCommon\Domain\ValueObject\DataTable;
 
 use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\UserId;

@@ -6,9 +6,10 @@ use Mockery as Mockery;
 
 use PHPUnit\Framework\TestCase;
 
-use UserManagement\Domain\Repository\UserRepository;
+use AppCommon\Domain\Message\DataTable;
+
+use UserManagement\Domain\Repository\UserDataTableRepository;
 use UserManagement\Domain\UseCase\UsersDataTable;
-use DomainCommon\Domain\ValueObject\DataTable;
 
 class UsersDataTableTest extends TestCase
 {
@@ -17,11 +18,10 @@ class UsersDataTableTest extends TestCase
      */
     public function it_should_load_the_main_class()
     {
-        $userDataTable = new DataTable();
-
-        $userRepository = Mockery::mock(UserRepository::class);
-
-        $useCase = new UsersDataTable($userDataTable, $userRepository);
+        $useCase = new UsersDataTable(
+            Mockery::mock(DataTable::class),
+            Mockery::mock(UserDataTableRepository::class)
+        );
 
         $this->assertInstanceOf(UsersDataTable::class, $useCase);
     }
@@ -31,29 +31,29 @@ class UsersDataTableTest extends TestCase
      */
     public function it_should_perform_users_data_table()
     {
-        $userDataTable = new DataTable();
-        $userDataTable->setStart(0);
-        $userDataTable->setLength(10);
-        $userDataTable->setOrderColumn('id');
-        $userDataTable->setOrderBy('DESC');
-        
-        $userRepository = Mockery::mock(UserRepository::class);
+        $dataTable = new DataTable(0, 10, 'id', 'DESC');
 
-        $userRepository->shouldReceive('getDataTable')
-                       ->andReturn([
-                           'totalRecords' => 0,
-                           'totalRecordsFiltered' => 0,
-                           'data' => []
-                       ]);
+        $userDataTableRepository = Mockery::mock(UserDataTableRepository::class);
+        $userDataTableRepository->shouldReceive('start');
+        $userDataTableRepository->shouldReceive('length');
+        $userDataTableRepository->shouldReceive('search');
+        $userDataTableRepository->shouldReceive('orderColumn');
+        $userDataTableRepository->shouldReceive('orderBy');
+        $userDataTableRepository->shouldReceive('get')
+                            ->andReturn([
+                                'totalRecords' => 0,
+                                'totalRecordsFiltered' => 0,
+                                'data' => []
+                            ]);
 
-        $useCase = new UsersDataTable($userDataTable, $userRepository);
+        $useCase = new UsersDataTable($dataTable, $userDataTableRepository);
 
-        $this->assertEquals(
-            [
-                'totalRecords' => 0,
-                'totalRecordsFiltered' => 0,
-                'data' => []
-            ], 
-        $useCase->perform());
+        $expectedResult = [
+            'totalRecords' => 0,
+            'totalRecordsFiltered' => 0,
+            'data' => []
+        ];
+
+        $this->assertEquals($expectedResult, $useCase->perform());
     }
 }

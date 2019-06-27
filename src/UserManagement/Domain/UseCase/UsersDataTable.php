@@ -2,26 +2,30 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use DomainCommon\Domain\UseCase\UseCaseInterface;
-use DomainCommon\Domain\ValueObject\DataTable;
+use AppCommon\Domain\Message\DataTable;
+use AppCommon\Domain\UseCase\UseCaseInterface;
 
-use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\Repository\UserDataTableRepository;
 
 class UsersDataTable implements UseCaseInterface
 {
-    private $userDataTable;
-    private $userRepository;
+    private $dataTable;
+    private $userDataTableRepository;
 
-    public function __construct(DataTable $userDataTable, UserRepository $userRepository) 
+    public function __construct(DataTable $dataTable, UserDataTableRepository $userDataTableRepository) 
     {
-        $this->userDataTable = $userDataTable;
-        $this->userRepository = $userRepository;
+        $this->dataTable = $dataTable;
+        $this->userDataTableRepository = $userDataTableRepository;
     }
-
-    public function validate(): void {}
 
     public function perform()
     {
-        return $this->userRepository->getDataTable($this->userDataTable);   
+        $this->userDataTableRepository->start($this->dataTable->start);
+        $this->userDataTableRepository->length($this->dataTable->length);
+        $this->userDataTableRepository->search($this->dataTable->search);
+        $this->userDataTableRepository->orderColumn($this->dataTable->orderColumn);
+        $this->userDataTableRepository->orderBy($this->dataTable->orderBy);
+
+        return $this->userDataTableRepository->get();   
     }
 }

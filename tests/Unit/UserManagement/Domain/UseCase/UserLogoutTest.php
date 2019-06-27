@@ -6,8 +6,8 @@ use Mockery as Mockery;
 
 use PHPUnit\Framework\TestCase;
 
-use UserManagement\Domain\UseCase\UserLogout;
 use UserManagement\Domain\Exception\LogoutFailedException;
+use UserManagement\Domain\UseCase\UserLogout;
 use UserManagement\Domain\Service\UserSessionManager;
 
 class UserLogoutTest extends TestCase
@@ -17,9 +17,9 @@ class UserLogoutTest extends TestCase
      */
     public function it_should_load_the_main_class()
     {
-        $userSessionManager = Mockery::mock(UserSessionManager::class);
+        $useCase = new UserLogout(Mockery::mock(UserSessionManager::class));
 
-        $this->assertInstanceOf(UserLogout::class, new UserLogout($userSessionManager));
+        $this->assertInstanceOf(UserLogout::class, $useCase);
     }
 
     /**
@@ -35,7 +35,8 @@ class UserLogoutTest extends TestCase
                            ->andReturn(false);
 
         $useCase = new UserLogout($userSessionManager);
-        $useCase->validate();
+        
+        $useCase->perform();
     }
 
     /**
@@ -50,7 +51,6 @@ class UserLogoutTest extends TestCase
                            ->andReturn(null);
 
         $useCase = new UserLogout($userSessionManager);
-        $useCase->validate();
 
         $this->assertEquals(null, $useCase->perform());
     }

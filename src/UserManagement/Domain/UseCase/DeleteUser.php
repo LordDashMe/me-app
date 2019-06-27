@@ -2,31 +2,25 @@
 
 namespace UserManagement\Domain\UseCase;
 
-use DomainCommon\Domain\UseCase\UseCaseInterface;
+use AppCommon\Domain\UseCase\UseCaseInterface;
 
-use UserManagement\Domain\Exception\ManageUserFailedException;
-use UserManagement\Domain\Repository\UserRepository;
-use UserManagement\Domain\UseCase\ManageUser;
+use UserManagement\Domain\Message\DeleteUserData;
+use UserManagement\Domain\Repository\ModifyUserRepository;
 use UserManagement\Domain\ValueObject\UserId;
 
-class DeleteUser extends ManageUser implements UseCaseInterface
+class DeleteUser implements UseCaseInterface
 {
-    private $userId;
-    private $userRepository;
+    private $deleteUserData;
+    private $modifyUserRepository;
 
-    public function __construct(UserId $userId, UserRepository $userRepository) 
+    public function __construct(DeleteUserData $deleteUserData, ModifyUserRepository $modifyUserRepository) 
     {
-        $this->userId = $userId;
-        $this->userRepository = $userRepository;
-    }
-
-    public function validate(): void
-    {
-        $this->validateUserIdIsNotEmpty($this->userId);
+        $this->deleteUserData = $deleteUserData;
+        $this->modifyUserRepository = $modifyUserRepository;
     }
 
     public function perform()
     {
-        return $this->userRepository->softDelete($this->userId);      
+        return $this->modifyUserRepository->softDelete(new UserId($this->deleteUserData->userId));      
     }
 }
