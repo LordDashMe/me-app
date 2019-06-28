@@ -19,7 +19,7 @@ use UserManagement\Domain\ValueObject\Status;
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
-class RegisterUser
+class UserRegistration
 {
     /**
      * @var \Ramsey\Uuid\UuidInterface

@@ -15,23 +15,23 @@ use UserManagement\Domain\Exception\RegistrationFailedException;
 use UserManagement\Domain\Message\UserRegistrationData;
 use UserManagement\Domain\Repository\UserRegistrationRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
-use UserManagement\Domain\UseCase\UserRegistration;
+use UserManagement\Domain\UseCase\UserRegistrationAction;
 
-class UserRegistrationTest extends TestCase
+class UserRegistrationActionTest extends TestCase
 {
     /**
      * @test
      */
     public function it_should_load_the_main_class()
     {
-        $useCase = new UserRegistration(
+        $useCase = new UserRegistrationAction(
             Mockery::mock(UserRegistrationData::class), 
             Mockery::mock(UserRegistrationRepository::class), 
             Mockery::mock(PasswordEncoder::class),
             Mockery::mock(UniqueIDResolver::class)
         );
 
-        $this->assertInstanceOf(UserRegistration::class, $useCase);
+        $this->assertInstanceOf(UserRegistrationAction::class, $useCase);
     }
 
     /**
@@ -48,9 +48,9 @@ class UserRegistrationTest extends TestCase
         
         $userRegistrationRepository = Mockery::mock(UserRegistrationRepository::class);
         $userRegistrationRepository->shouldReceive('isUserNameAlreadyRegistered')
-                   ->andReturn(false);
+                                   ->andReturn(false);
 
-        $useCase = new UserRegistration(
+        $useCase = new UserRegistrationAction(
             $userRegistrationData, 
             $userRegistrationRepository, 
             Mockery::mock(PasswordEncoder::class),
@@ -74,9 +74,9 @@ class UserRegistrationTest extends TestCase
         
         $userRegistrationRepository = Mockery::mock(UserRegistrationRepository::class);
         $userRegistrationRepository->shouldReceive('isUserNameAlreadyRegistered')
-                    ->andReturn(false);
+                                   ->andReturn(false);
 
-        $useCase = new UserRegistration(
+        $useCase = new UserRegistrationAction(
             $userRegistrationData, 
             $userRegistrationRepository, 
             Mockery::mock(PasswordEncoder::class),
@@ -100,9 +100,9 @@ class UserRegistrationTest extends TestCase
         
         $userRegistrationRepository = Mockery::mock(UserRegistrationRepository::class);
         $userRegistrationRepository->shouldReceive('isUserNameAlreadyRegistered')
-                    ->andReturn(false);
+                                   ->andReturn(false);
 
-        $useCase = new UserRegistration(
+        $useCase = new UserRegistrationAction(
             $userRegistrationData, 
             $userRegistrationRepository, 
             Mockery::mock(PasswordEncoder::class),
@@ -126,9 +126,9 @@ class UserRegistrationTest extends TestCase
         
         $userRegistrationRepository = Mockery::mock(UserRegistrationRepository::class);
         $userRegistrationRepository->shouldReceive('isUserNameAlreadyRegistered')
-                   ->andReturn(true);
+                                   ->andReturn(true);
 
-        $useCase = new UserRegistration(
+        $useCase = new UserRegistrationAction(
             $userRegistrationData, 
             $userRegistrationRepository, 
             Mockery::mock(PasswordEncoder::class),
@@ -149,9 +149,9 @@ class UserRegistrationTest extends TestCase
 
         $userRegistrationRepository = Mockery::mock(UserRegistrationRepository::class);
         $userRegistrationRepository->shouldReceive('isUserNameAlreadyRegistered')
-                   ->andReturn(false);
+                                   ->andReturn(false);
         $userRegistrationRepository->shouldReceive('save')
-                   ->andReturn(null);
+                                   ->andReturn(null);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
         $passwordEncoder->shouldReceive('encodePlainText')
@@ -161,7 +161,7 @@ class UserRegistrationTest extends TestCase
         $uniqueIDResolver->shouldReceive('generate')
                          ->andReturn('UUID001');
 
-        $useCase = new UserRegistration(
+        $useCase = new UserRegistrationAction(
             $userRegistrationData, 
             $userRegistrationRepository, 
             $passwordEncoder,

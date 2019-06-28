@@ -5,30 +5,30 @@ namespace UserManagement\Domain\UseCase;
 use AppCommon\Domain\UseCase\UseCaseInterface;
 use AppCommon\Domain\ValueObject\CreatedAt;
 
-use UserManagement\Domain\Entity\ModifyUser;
+use UserManagement\Domain\Entity\UserModification;
 use UserManagement\Domain\Message\EditUserData;
-use UserManagement\Domain\Repository\ModifyUserRepository;
+use UserManagement\Domain\Repository\UserModificationRepository;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\Email;
 
-class EditUser implements UseCaseInterface
+class EditUserAction implements UseCaseInterface
 {
     private $editUserData;
-    private $modifyUserRepository;
+    private $userModificationRepository;
 
     public function __construct(
         EditUserData $editUserData,
-        ModifyUserRepository $modifyUserRepository
+        UserModificationRepository $userModificationRepository
     ) {
         $this->editUserData = $editUserData;
-        $this->modifyUserRepository = $modifyUserRepository;
+        $this->userModificationRepository = $userModificationRepository;
     }
 
     public function perform()
     {
-        $modifyUserEntity = new ModifyUser(
+        $modifyUserEntity = new UserModification(
             new UserId($this->editUserData->userId)
         );
         
@@ -37,6 +37,6 @@ class EditUser implements UseCaseInterface
         $modifyUserEntity->changeEmail(new Email($this->editUserData->email));
         $modifyUserEntity->changeStatus($this->editUserData->status);
 
-        return $this->modifyUserRepository->save($modifyUserEntity);
+        return $this->userModificationRepository->save($modifyUserEntity);
     }
 }

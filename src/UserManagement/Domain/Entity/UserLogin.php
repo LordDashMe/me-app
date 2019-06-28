@@ -11,7 +11,7 @@ use UserManagement\Domain\ValueObject\Password;
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
-class LoginUser
+class UserLogin
 {
     /**
      * @ORM\Column(type="text", name="UserName")
@@ -23,10 +23,8 @@ class LoginUser
      */
     private $password;
 
-    public function __construct(
-        UserName $userName,
-        Password $password
-    ) {
+    public function __construct(UserName $userName, Password $password) 
+    {
         $this->userName = $userName;
         $this->password = $password;
     }

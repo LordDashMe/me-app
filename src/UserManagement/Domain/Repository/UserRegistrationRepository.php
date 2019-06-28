@@ -2,11 +2,11 @@
 
 namespace UserManagement\Domain\Repository;
 
-use UserManagement\Domain\Entity\RegisterUser;
+use UserManagement\Domain\Entity\UserRegistration;
 
 interface UserRegistrationRepository
 {
     public function isUserNameAlreadyRegistered(string $userName): bool;
     
-    public function save(RegisterUser $user): void;
+    public function save(UserRegistration $user): void;
 }

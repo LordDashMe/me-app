@@ -7,7 +7,7 @@ use AppCommon\Domain\UseCase\UseCaseInterface;
 use UserManagement\Domain\Exception\LogoutFailedException;
 use UserManagement\Domain\Service\UserSessionManager;
 
-class UserLogout implements UseCaseInterface
+class UserLogoutAction implements UseCaseInterface
 {
     private $userSessionManager;
 

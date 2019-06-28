@@ -7,7 +7,7 @@ use AppCommon\Domain\UseCase\UseCaseInterface;
 use AppCommon\Domain\ValueObject\CreatedAt;
 
 use UserManagement\Domain\Message\UserRegistrationData;
-use UserManagement\Domain\Entity\RegisterUser;
+use UserManagement\Domain\Entity\UserRegistration;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 use UserManagement\Domain\Repository\UserRegistrationRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
@@ -20,14 +20,14 @@ use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\ConfirmPassword;
 use UserManagement\Domain\ValueObject\Status;
 
-class UserRegistration implements UseCaseInterface
+class UserRegistrationAction implements UseCaseInterface
 {
     private $userRegistrationData;
     private $userRegistrationRepository;
     private $passwordEncoder;
     private $uniqueIDResolver;
 
-    private $registerUserEntity;
+    private $userRegistrationEntity;
 
     public function __construct(
         UserRegistrationData $userRegistrationData,
@@ -43,7 +43,7 @@ class UserRegistration implements UseCaseInterface
 
     public function perform()
     {
-        $this->prepareRegisterUserEntity();
+        $this->prepareUserRegistrationEntity();
 
         $this->validateConfirmationPassword();
         $this->validateUserNameExistence();
@@ -51,12 +51,12 @@ class UserRegistration implements UseCaseInterface
         $this->generateUniqueId();
         $this->generateSecuredPassword();
         
-        $this->userRegistrationRepository->save($this->registerUserEntity);
+        $this->userRegistrationRepository->save($this->userRegistrationEntity);
     }
 
-    private function prepareRegisterUserEntity()
+    private function prepareUserRegistrationEntity()
     {
-        $this->registerUserEntity = new RegisterUser(
+        $this->userRegistrationEntity = new UserRegistration(
             new FirstName($this->userRegistrationData->firstName),
             new LastName($this->userRegistrationData->lastName),
             new Email($this->userRegistrationData->email),
@@ -69,19 +69,19 @@ class UserRegistration implements UseCaseInterface
     private function validateConfirmationPassword()
     {
         $confirmPassword = new ConfirmPassword($this->userRegistrationData->confirmPassword);
-        $confirmPassword->isMatch($this->registerUserEntity->password());
+        $confirmPassword->isMatch($this->userRegistrationEntity->password());
     }
 
     private function validateUserNameExistence()
     {
-        if ($this->userRegistrationRepository->isUserNameAlreadyRegistered($this->registerUserEntity->userName())) {
+        if ($this->userRegistrationRepository->isUserNameAlreadyRegistered($this->userRegistrationEntity->userName())) {
             throw RegistrationFailedException::userNameAlreadyRegistered();
         }
     }
 
     private function generateUniqueId()
     {
-        $this->registerUserEntity->provideUniqueId(
+        $this->userRegistrationEntity->provideUniqueId(
             new UserId($this->uniqueIDResolver->generate())
         );
     }
@@ -90,9 +90,9 @@ class UserRegistration implements UseCaseInterface
     {
         $salt = uniqid() . '-salt';
 
-        $this->registerUserEntity->provideSecuredPassword(
+        $this->userRegistrationEntity->provideSecuredPassword(
             $this->passwordEncoder->encodePlainText(
-                $this->registerUserEntity->password(), $salt
+                $this->userRegistrationEntity->password(), $salt
             )
         );
     }

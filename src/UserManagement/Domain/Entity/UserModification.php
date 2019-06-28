@@ -15,7 +15,7 @@ use UserManagement\Domain\ValueObject\Email;
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
-class ModifyUser
+class UserModification
 {
     /**
      * @ORM\Column(type="text", name="FirstName")

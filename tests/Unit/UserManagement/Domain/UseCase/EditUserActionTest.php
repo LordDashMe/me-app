@@ -7,25 +7,24 @@ use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
 
 use UserManagement\Domain\Entity\User;
-use UserManagement\Domain\Entity\ModifyUser;
 use UserManagement\Domain\Exception\ManageUserFailedException;
 use UserManagement\Domain\Message\EditUserData;
-use UserManagement\Domain\Repository\ModifyUserRepository;
-use UserManagement\Domain\UseCase\EditUser;
+use UserManagement\Domain\Repository\UserModificationRepository;
+use UserManagement\Domain\UseCase\EditUserAction;
 
-class EditUserTest extends TestCase
+class EditUserActionTest extends TestCase
 {
     /**
      * @test
      */
     public function it_should_load_the_main_class()
     {
-        $useCase = new EditUser(
+        $useCase = new EditUserAction(
             Mockery::mock(EditUserData::class),
-            Mockery::mock(ModifyUserRepository::class)
+            Mockery::mock(UserModificationRepository::class)
         );
 
-        $this->assertInstanceOf(EditUser::class, $useCase);
+        $this->assertInstanceOf(EditUserAction::class, $useCase);
     }
 
     /**
@@ -41,11 +40,11 @@ class EditUserTest extends TestCase
             User::STATUS_ACTIVE
         );
 
-        $modifyUserRepository = Mockery::mock(ModifyUserRepository::class);
-        $modifyUserRepository->shouldReceive('save')
-                             ->andReturn(null);
+        $userModificationRepository = Mockery::mock(UserModificationRepository::class);
+        $userModificationRepository->shouldReceive('save')
+                                  ->andReturn(null);
 
-        $useCase = new EditUser($editUserData, $modifyUserRepository);
+        $useCase = new EditUserAction($editUserData, $userModificationRepository);
         
         $this->assertEquals(null, $useCase->perform());
     }

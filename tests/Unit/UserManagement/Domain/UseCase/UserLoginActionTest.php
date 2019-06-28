@@ -14,7 +14,7 @@ use UserManagement\Domain\Message\UserLoginData;
 use UserManagement\Domain\Repository\UserLoginRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Service\UserSessionManager;
-use UserManagement\Domain\UseCase\UserLogin;
+use UserManagement\Domain\UseCase\UserLoginAction;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
@@ -22,21 +22,21 @@ use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 
-class UserLoginTest extends TestCase
+class UserLoginActionTest extends TestCase
 {
     /**
      * @test
      */
     public function it_should_load_the_main_class()
     {
-        $useCase = new UserLogin(
+        $useCase = new UserLoginAction(
             Mockery::mock(UserLoginData::class), 
             Mockery::mock(UserLoginRepository::class), 
             Mockery::mock(PasswordEncoder::class), 
             Mockery::mock(UserSessionManager::class)
         );
 
-        $this->assertInstanceOf(UserLogin::class, $useCase);
+        $this->assertInstanceOf(UserLoginAction::class, $useCase);
     }
 
     /**
@@ -53,7 +53,7 @@ class UserLoginTest extends TestCase
         $userLoginRepository->shouldReceive('getByUserName')
                             ->andReturn(null);
 
-        $useCase = new UserLogin(
+        $useCase = new UserLoginAction(
             $userLoginData, 
             $userLoginRepository, 
             Mockery::mock(PasswordEncoder::class), 
@@ -83,7 +83,7 @@ class UserLoginTest extends TestCase
         $passwordEncoder->shouldReceive('verifyEncodedText')
                         ->andReturn(true);
 
-        $useCase = new UserLogin(
+        $useCase = new UserLoginAction(
             $userLoginData, 
             $userLoginRepository, 
             $passwordEncoder, 
@@ -116,7 +116,7 @@ class UserLoginTest extends TestCase
         $userSessionManager->shouldReceive('set')
                            ->andReturn(null);
 
-        $useCase = new UserLogin(
+        $useCase = new UserLoginAction(
             $userLoginData, 
             $userLoginRepository, 
             $passwordEncoder, 
