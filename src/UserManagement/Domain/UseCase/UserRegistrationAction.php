@@ -88,11 +88,9 @@ class UserRegistrationAction implements UseCaseInterface
 
     private function generateSecuredPassword()
     {
-        $salt = uniqid() . '-salt';
-
         $this->userRegistrationEntity->provideSecuredPassword(
             $this->passwordEncoder->encodePlainText(
-                $this->userRegistrationEntity->password(), $salt
+                $this->userRegistrationEntity->password()
             )
         );
     }

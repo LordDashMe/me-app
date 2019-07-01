@@ -1,13 +1,13 @@
 <?php
 
-namespace UserManagement\Presentation\Controller;
+namespace UserManagement\Application\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use AppCommon\Presentation\Controller\Security\AuthenticatedController;
+use AppCommon\Application\Controller\Security\AuthenticatedController;
 
 use UserManagement\Domain\UseCase\UserLogoutAction;
 use UserManagement\Domain\Service\UserSessionManager;

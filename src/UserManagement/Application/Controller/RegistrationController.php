@@ -1,12 +1,12 @@
 <?php
 
-namespace UserManagement\Presentation\Controller;
+namespace UserManagement\Application\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Common\Presentation\Controller\Security\UnauthenticatedController;
+use Common\Application\Controller\Security\UnauthenticatedController;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\UseCase\UserRegistration;
 use UserManagement\Domain\Repository\UserRepository;

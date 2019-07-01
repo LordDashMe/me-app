@@ -4,5 +4,5 @@ namespace AppCommon\Domain\Service;
 
 interface UniqueIDResolver
 {
-    public function generate();
+    public function generate(): string;
 }

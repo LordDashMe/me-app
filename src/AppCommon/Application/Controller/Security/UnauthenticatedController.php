@@ -1,5 +1,5 @@
 <?php
 
-namespace AppCommon\Presentation\Controller\Security;
+namespace AppCommon\Application\Controller\Security;
 
 interface UnauthenticatedController {}

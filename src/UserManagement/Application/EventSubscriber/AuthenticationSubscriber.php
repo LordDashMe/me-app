@@ -1,6 +1,6 @@
 <?php
 
-namespace UserManagement\Presentation\EventSubscriber;
+namespace UserManagement\Application\EventSubscriber;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -10,8 +10,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use UserManagement\Domain\Service\UserSessionManager;
-use Common\Presentation\Controller\Security\AuthenticatedController;
-use Common\Presentation\Controller\Security\UnauthenticatedController;
+use AppCommon\Application\Controller\Security\AuthenticatedController;
+use AppCommon\Application\Controller\Security\UnauthenticatedController;
 
 class AuthenticationSubscriber implements EventSubscriberInterface
 {

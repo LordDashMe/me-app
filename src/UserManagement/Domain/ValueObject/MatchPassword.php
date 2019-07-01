@@ -24,7 +24,7 @@ class MatchPassword
     public function isMatch(): bool
     {
         return $this->passwordEncoder->verifyEncodedText(
-            $this->encodedPassword, $this->plainTextPassword, $this->plainTextPassword
+            $this->encodedPassword, $this->plainTextPassword
         );
     }
 }
