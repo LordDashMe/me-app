@@ -6,6 +6,8 @@ use AppCommon\Domain\Service\UniqueIDResolver;
 use AppCommon\Domain\UseCase\UseCaseInterface;
 use AppCommon\Domain\ValueObject\CreatedAt;
 
+use UserManagement\Domain\ValueObject\UserId;
+
 use ExpenseManagement\Domain\Entity\AddExpense;
 use ExpenseManagement\Domain\Message\AddExpenseData;
 use ExpenseManagement\Domain\Repository\AddExpenseRepository;
@@ -36,6 +38,7 @@ class AddExpenseAction implements UseCaseInterface
     public function perform()
     {
         $this->addExpenseEntity = new AddExpense(
+            new UserId($this->addExpenseData->userId),
             new Type($this->addExpenseData->type),
             new Label($this->addExpenseData->label),
             new Cost($this->addExpenseData->cost),

@@ -38,7 +38,7 @@ class AddExpenseTest extends TestCase
      */
     public function it_should_perform_add_expense()
     {
-        $addExpenseData = new AddExpenseData('4', 'Brewed Coffee', 22, '2019-07-01');
+        $addExpenseData = new AddExpenseData('UUID001', '4', 'Brewed Coffee', 22, '2019-07-01');
 
         $addExpenseRepository = Mockery::mock(AddExpenseRepository::class);
         $addExpenseRepository->shouldReceive('save')

@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping AS ORM;
 
 use AppCommon\Domain\ValueObject\CreatedAt;
 
+use UserManagement\Domain\ValueObject\UserId;
+
 use ExpenseManagement\Domain\ValueObject\ExpenseId;
 use ExpenseManagement\Domain\ValueObject\Type;
 use ExpenseManagement\Domain\ValueObject\Label;
@@ -19,10 +21,18 @@ use ExpenseManagement\Domain\ValueObject\Date;
 class Expense
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="guid", name="ID")
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
+     * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
+
+    /**
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
+     * @ORM\Column(type="text", name="UserID")
+     */
+    private $userId;
 
     /**
      * @ORM\Column(type="smallint", name="Type", options={"comment":"1 = Communication | 2 = Transportation | 3 = Representation | 4 = Sundries"})
@@ -56,6 +66,7 @@ class Expense
 
     public function __construct(
         ExpenseId $id,
+        UserId $userId,
         Type $type,
         Label $label,
         Cost $cost,
@@ -63,6 +74,7 @@ class Expense
         CreatedAt $createdAt
     ) {
         $this->id = $id;
+        $this->userId = $userId;
         $this->type = $type;
         $this->label = $label;
         $this->cost = $cost;
@@ -73,6 +85,11 @@ class Expense
     public function id(): string
     {
         return $this->id;
+    }
+
+    public function userId(): string
+    {
+        return $this->userId;
     }
 
     public function type(): string
