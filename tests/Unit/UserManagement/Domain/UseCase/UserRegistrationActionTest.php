@@ -141,7 +141,7 @@ class UserRegistrationActionTest extends TestCase
     /**
      * @test
      */
-    public function it_should_register_user()
+    public function it_should_perform_user_registration()
     {
         $userRegistrationData = new UserRegistrationData(
             'John', 'Doe', 'registered@example.com', 'johndoe123', 'P@ssw0rd!', 'P@ssw0rd!'

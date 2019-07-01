@@ -61,11 +61,6 @@ class User
     private $status;
 
     /**
-     * @ORM\Column(type="smallint", name="Role", options={"comment":"1 = Admin | 2 = Editor | 3 = Member"})
-     */
-    private $role;
-
-    /**
      * @ORM\Column(type="string", name="CreatedAt")
      */
     private $createdAt;

@@ -16,11 +16,12 @@ use ExpenseManagement\Domain\ValueObject\Date;
  * @ORM\Entity
  * @ORM\Table(name="expenses")
  */
-class Expense
+class AddExpense
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="guid", name="ID")
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
+     * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
 
@@ -55,17 +56,15 @@ class Expense
     private $deletedAt;
 
     public function __construct(
-        ExpenseId $id,
         Type $type,
         Label $label,
         Cost $cost,
         Date $date,
         CreatedAt $createdAt
     ) {
-        $this->id = $id;
         $this->type = $type;
         $this->label = $label;
-        $this->cost = $cost;
+        $this->cost = $cost->get();
         $this->date = $date;
         $this->createdAt = $createdAt;
     }
@@ -98,5 +97,10 @@ class Expense
     public function createdAt(): string
     {
         return $this->createdAt;
+    }
+
+    public function provideUniqueId(ExpenseId $expenseId): void
+    {
+        $this->id = $expenseId;
     }
 }

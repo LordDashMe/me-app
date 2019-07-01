@@ -11,7 +11,7 @@ class Label
         $this->label = $label;
     }
 
-    public function get()
+    public function __toString()
     {
         return $this->label;
     }

@@ -86,7 +86,7 @@ class UserRegistration
         $this->status = $this->provideDefaultStatus();
     }
 
-    private function provideDefaultStatus()
+    private function provideDefaultStatus(): string
     {
         return User::STATUS_INACTIVE;
     }
@@ -131,12 +131,12 @@ class UserRegistration
         return $this->createdAt;
     }
 
-    public function provideUniqueId(UserId $userId)
+    public function provideUniqueId(UserId $userId): void
     {
         $this->id = $userId;
     }
 
-    public function provideSecuredPassword(string $securedPassword)
+    public function provideSecuredPassword(string $securedPassword): void
     {
         $this->password = $securedPassword;
     }

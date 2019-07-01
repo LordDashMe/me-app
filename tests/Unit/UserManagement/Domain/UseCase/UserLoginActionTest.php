@@ -96,7 +96,7 @@ class UserLoginActionTest extends TestCase
     /**
      * @test
      */
-    public function it_should_login_user_account()
+    public function it_should_perform_user_login()
     {
         $userLoginData = new UserLoginData('johndoe123', 'P@ss0wrd!');
 

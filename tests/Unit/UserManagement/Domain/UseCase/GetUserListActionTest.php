@@ -29,7 +29,7 @@ class GetUserListActionTest extends TestCase
     /**
      * @test
      */
-    public function it_should_perform_users_data_table()
+    public function it_should_perform_get_user_list()
     {
         $dataTable = new DataTable(0, 10, 'id', 'DESC');
 

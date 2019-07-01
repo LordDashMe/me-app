@@ -30,7 +30,7 @@ class EditUserActionTest extends TestCase
     /**
      * @test
      */
-    public function it_should_perform_user_edit()
+    public function it_should_perform_edit_user()
     {
         $editUserData = new EditUserData(
             'UUID001',

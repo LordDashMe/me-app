@@ -68,27 +68,27 @@ class UserModification
         return $this->deletedAt;
     }
 
-    public function changeFirstName(FirstName $firstName)
+    public function changeFirstName(FirstName $firstName): void
     {
         $this->firstName = $firstName;
     }
 
-    public function changeLastName(LastName $lastName)
+    public function changeLastName(LastName $lastName): void
     {
         $this->lastName = $lastName;
     }
 
-    public function changeEmail(Email $email)
+    public function changeEmail(Email $email): void
     {
         $this->email = $email;
     }
 
-    public function changeStatus(string $status)
+    public function changeStatus(string $status): void
     {
         $this->status = $status;
     }
     
-    public function delete(CreatedAt $deletedAt)
+    public function delete(CreatedAt $deletedAt): void
     {
         $this->deletedAt = $deletedAt;
     }
