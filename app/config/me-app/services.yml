@@ -4,14 +4,14 @@ services:
         arguments:
             $cost: 8
 
-    DomainCommon\:
+    AppCommon\:
         autowire: true
         public: true
-        resource: '../../../src/DomainCommon/*'
-        exclude: '../../../src/DomainCommon/Domain/{Entity,UseCase,ValueObject}'
-    DomainCommon\Domain\ValueObject\:
+        resource: '../../../src/AppCommon/*'
+        exclude: '../../../src/AppCommon/Domain/{Entity,UseCase,ValueObject}'
+    AppCommon\Domain\ValueObject\:
         public: true
-        resource: '../../../src/DomainCommon/Domain/ValueObject/*'
+        resource: '../../../src/AppCommon/Domain/ValueObject/*'
 
     UserManagement\:
         autowire: true
@@ -33,19 +33,19 @@ services:
     UserManagement\Infrastructure\Service\UserSessionManagerImpl:
         bind:
             Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
-    UserManagement\Presentation\Controller\LoginController:
+    UserManagement\Application\Controller\LoginController:
         bind:
             UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
             UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
             UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
-    UserManagement\Presentation\Controller\RegistrationController:
+    UserManagement\Application\Controller\RegistrationController:
         bind:
             UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
             UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
-    UserManagement\Presentation\Controller\HomeController:
+    UserManagement\Application\Controller\HomeController:
         bind:
             UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
-    UserManagement\Presentation\EventSubscriber\AuthenticationSubscriber:
+    UserManagement\Application\EventSubscriber\AuthenticationSubscriber:
         autowire: true
         bind:
             UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'

@@ -2,8 +2,6 @@
 
 namespace UserManagement\Domain\ValueObject;
 
-use DomainCommon\Domain\Exception\RequiredFieldException;
-
 use UserManagement\Domain\Exception\EmailException;
 
 class Email
@@ -15,30 +13,26 @@ class Email
     public function __construct(string $email)
     {
         $this->email = $email;
+
+        $this->validateFormat();
+        $this->validateCharacterMaxLength();
     }
 
-    public function required()
-    {
-        if (empty($this->email)) {
-            throw RequiredFieldException::requiredFieldIsEmpty('Email');
-        }      
-    }
-
-    public function validateFormat()
+    private function validateFormat(): void
     {
         if (! \filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             throw EmailException::invalidFormat();
         }
     }
 
-    public function validateCharacterLength() 
+    private function validateCharacterMaxLength(): void
     {
         if (\strlen($this->email) > self::MAX_CHARACTER_LENGTH) {
             throw EmailException::exceededTheMaxCharacterLength();
         }
     }
 
-    public function get(): string
+    public function __toString()
     {
         return $this->email;
     }

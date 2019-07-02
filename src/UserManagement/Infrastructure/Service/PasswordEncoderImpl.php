@@ -14,13 +14,13 @@ class PasswordEncoderImpl implements PasswordEncoder
         $this->encoder = $encoder;
     }
 
-    public function encodePlainText(string $plainText, string $salt): string
+    public function encodePlainText(string $plainText): string
     {
-        return $this->encoder->encodePassword($plainText, $salt);
+        return $this->encoder->encodePassword($plainText, uniqid());
     }
 
-    public function verifyEncodedText(string $encodedText, string $plainText, string $salt): bool
+    public function verifyEncodedText(string $encodedText, string $plainText): bool
     {
-        return $this->encoder->isPasswordValid($encodedText, $plainText, $salt);
+        return $this->encoder->isPasswordValid($encodedText, $plainText, uniqid());
     }
 }

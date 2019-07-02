@@ -2,8 +2,6 @@
 
 namespace UserManagement\Domain\ValueObject;
 
-use DomainCommon\Domain\Exception\RequiredFieldException;
-
 class FirstName
 {
     private $firstName;
@@ -13,14 +11,7 @@ class FirstName
         $this->firstName = $firstName;
     }
 
-    public function required()
-    {
-        if (empty($this->firstName)) {
-            throw RequiredFieldException::requiredFieldIsEmpty('First Name');
-        }      
-    }
-
-    public function get(): string
+    public function __toString()
     {
         return $this->firstName;
     }

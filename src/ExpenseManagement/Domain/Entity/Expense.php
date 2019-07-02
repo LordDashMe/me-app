@@ -4,12 +4,15 @@ namespace ExpenseManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 
-use DomainCommon\Domain\ValueObject\CreatedAt;
+use AppCommon\Domain\ValueObject\CreatedAt;
+
 use UserManagement\Domain\ValueObject\UserId;
+
+use ExpenseManagement\Domain\ValueObject\ExpenseId;
+use ExpenseManagement\Domain\ValueObject\Type;
+use ExpenseManagement\Domain\ValueObject\Label;
 use ExpenseManagement\Domain\ValueObject\Cost;
 use ExpenseManagement\Domain\ValueObject\Date;
-use ExpenseManagement\Domain\ValueObject\Label;
-use ExpenseManagement\Domain\ValueObject\ExpenseId;
 
 /**
  * @ORM\Entity
@@ -18,15 +21,23 @@ use ExpenseManagement\Domain\ValueObject\ExpenseId;
 class Expense
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="guid", name="ID")
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
+     * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
 
     /**
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
      * @ORM\Column(type="text", name="UserID")
      */
     private $userId;
+
+    /**
+     * @ORM\Column(type="smallint", name="Type", options={"comment":"1 = Communication | 2 = Transportation | 3 = Representation | 4 = Sundries"})
+     */
+    private $type;
 
     /**
      * @ORM\Column(type="text", name="Label")
@@ -34,7 +45,7 @@ class Expense
     private $label;
 
     /**
-     * @ORM\Column(type="integer", name="Cost")
+     * @ORM\Column(type="float", name="Cost", scale=2)
      */
     private $cost;
 
@@ -56,50 +67,52 @@ class Expense
     public function __construct(
         ExpenseId $id,
         UserId $userId,
+        Type $type,
         Label $label,
         Cost $cost,
         Date $date,
         CreatedAt $createdAt
     ) {
-        $this->id = $id->get();
-        $this->userId = $userId->get();
-        $this->label = $label->get();
-        $this->cost = $cost->get();
-        $this->date = $date->get();
-        $this->createdAt = $createdAt->get();
+        $this->id = $id;
+        $this->userId = $userId;
+        $this->type = $type;
+        $this->label = $label;
+        $this->cost = $cost;
+        $this->date = $date;
+        $this->createdAt = $createdAt;
     }
 
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-    }
-
-    public function getId()
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function getUserId()
+    public function userId(): string
     {
         return $this->userId;
     }
 
-    public function getLabel()
+    public function type(): string
+    {
+        return $this->type;
+    }
+
+    public function label(): string
     {
         return $this->label;
     }
 
-    public function getCost()
+    public function cost(): float
     {
         return $this->cost;
     }
 
-    public function getDate()
+    public function date(): string
     {
         return $this->date;
     }
 
-    public function getCreatedAt()
+    public function createdAt(): string
     {
         return $this->createdAt;
     }
