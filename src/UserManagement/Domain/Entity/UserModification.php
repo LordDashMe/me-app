@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping AS ORM;
 use AppCommon\Domain\ValueObject\CreatedAt;
 
 use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\Email;
@@ -17,6 +18,13 @@ use UserManagement\Domain\ValueObject\Email;
  */
 class UserModification
 {
+    /**
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
+     * @ORM\Column(type="text", name="ID", unique=true)
+     */
+    private $id;
+
     /**
      * @ORM\Column(type="text", name="FirstName")
      */
@@ -42,6 +50,15 @@ class UserModification
      */
     private $deletedAt = '';
 
+    public function __construct(UserId $userId)
+    {
+        $this->id = $userId;
+    }
+
+    public function id(): string 
+    {
+        return $this->id;
+    }
 
     public function firstName(): string
     {

@@ -18,7 +18,7 @@ use ExpenseManagement\Domain\ValueObject\Date;
  * @ORM\Entity
  * @ORM\Table(name="expenses")
  */
-class AddExpense
+class SubmitExpense
 {
     /**
      * @var \Ramsey\Uuid\UuidInterface

@@ -2,8 +2,9 @@
 
 namespace ExpenseManagement\Domain\Message;
 
-class AddExpenseData 
+class EditExpenseData 
 {
+    public $expenseId;
     public $userId;
     public $type;
     public $label;
@@ -11,12 +12,14 @@ class AddExpenseData
     public $date;
 
     public function __construct(
-        string $userId,
+        string $expenseId,
+        string $userId, 
         string $type,
-        string $label, 
+        string $label,
         float $cost,
         string $date
     ) {
+        $this->expenseId = $expenseId;
         $this->userId = $userId;
         $this->type = $type;
         $this->label = $label;
