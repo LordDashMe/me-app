@@ -4,9 +4,6 @@ namespace UserManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 
-use AppCommon\Domain\ValueObject\CreatedAt;
-
-use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
@@ -45,11 +42,6 @@ class UserModification
      */
     private $status;
 
-    /**
-     * @ORM\Column(type="string", name="DeletedAt")
-     */
-    private $deletedAt = '';
-
     public function __construct(UserId $userId)
     {
         $this->id = $userId;
@@ -80,11 +72,6 @@ class UserModification
         return $this->status;
     }
 
-    public function deletedAt(): string
-    {
-        return $this->deletedAt;
-    }
-
     public function changeFirstName(FirstName $firstName): void
     {
         $this->firstName = $firstName;
@@ -103,10 +90,5 @@ class UserModification
     public function changeStatus(string $status): void
     {
         $this->status = $status;
-    }
-    
-    public function delete(CreatedAt $deletedAt): void
-    {
-        $this->deletedAt = $deletedAt;
     }
 }

@@ -7,7 +7,7 @@ use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
 
 use UserManagement\Domain\Message\DeleteUserData;
-use UserManagement\Domain\Repository\UserModificationRepository;
+use UserManagement\Domain\Repository\UserDeletionRepository;
 use UserManagement\Domain\UseCase\DeleteUserAction;
 
 class DeleteUserActionTest extends TestCase
@@ -19,7 +19,7 @@ class DeleteUserActionTest extends TestCase
     {
         $useCase = new DeleteUserAction(
             Mockery::mock(DeleteUserData::class), 
-            Mockery::mock(UserModificationRepository::class)
+            Mockery::mock(UserDeletionRepository::class)
         );
 
         $this->assertInstanceOf(DeleteUserAction::class, $useCase);
@@ -32,13 +32,13 @@ class DeleteUserActionTest extends TestCase
     {
         $deleteUserData = new DeleteUserData('UUID001');
 
-        $userModificationRepository = Mockery::mock(UserModificationRepository::class);
-        $userModificationRepository->shouldReceive('softDelete')
-                                   ->andReturn($deleteUserData->userId);
+        $userDeletionRepository = Mockery::mock(UserDeletionRepository::class);
+        $userDeletionRepository->shouldReceive('save')
+                               ->andReturn($deleteUserData->userId);
 
         $useCase = new DeleteUserAction(
             $deleteUserData, 
-            $userModificationRepository
+            $userDeletionRepository
         );
         
         $this->assertEquals($deleteUserData->userId, $useCase->perform());

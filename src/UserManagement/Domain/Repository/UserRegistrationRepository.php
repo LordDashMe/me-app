@@ -6,7 +6,7 @@ use UserManagement\Domain\Entity\UserRegistration;
 
 interface UserRegistrationRepository
 {
-    public function isUserNameAlreadyRegistered(string $userName): bool;
+    public function isUserNameAlreadyRegistered(UserRegistration $userRegistration): bool;
     
     public function save(UserRegistration $userRegistration): void;
 }

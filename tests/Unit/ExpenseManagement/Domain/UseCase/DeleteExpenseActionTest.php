@@ -7,7 +7,7 @@ use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
 
 use ExpenseManagement\Domain\Message\DeleteExpenseData;
-use ExpenseManagement\Domain\Repository\ExpenseModificationRepository;
+use ExpenseManagement\Domain\Repository\ExpenseDeletionRepository;
 use ExpenseManagement\Domain\UseCase\DeleteExpenseAction;
 
 class DeleteExpenseActionTest extends TestCase
@@ -19,7 +19,7 @@ class DeleteExpenseActionTest extends TestCase
     {
         $useCase = new DeleteExpenseAction(
             Mockery::mock(DeleteExpenseData::class), 
-            Mockery::mock(ExpenseModificationRepository::class)
+            Mockery::mock(ExpenseDeletionRepository::class)
         );
 
         $this->assertInstanceOf(DeleteExpenseAction::class, $useCase);
@@ -35,13 +35,13 @@ class DeleteExpenseActionTest extends TestCase
             'UUID001'
         );
 
-        $expenseModificationRepository = Mockery::mock(ExpenseModificationRepository::class);
-        $expenseModificationRepository->shouldReceive('softDelete')
-                                      ->andReturn($deleteExpenseData->expenseId);
+        $expenseDeletionRepository = Mockery::mock(ExpenseDeletionRepository::class);
+        $expenseDeletionRepository->shouldReceive('save')
+                                  ->andReturn($deleteExpenseData->expenseId);
 
         $useCase = new DeleteExpenseAction(
             $deleteExpenseData, 
-            $expenseModificationRepository
+            $expenseDeletionRepository
         );
         
         $this->assertEquals($deleteExpenseData->expenseId, $useCase->perform());

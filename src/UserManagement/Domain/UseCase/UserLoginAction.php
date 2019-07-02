@@ -39,19 +39,13 @@ class UserLoginAction implements UseCaseInterface
     public function perform()
     {
         $this->prepareUserLoginEntity();
-
-        $this->storedUserEntity = $this->userLoginRepository->getByUserName(
-            $this->userLoginEntity->userName()
-        );
-
+        $this->prepareStoredUserEntity();
+        
         $this->validateUserAccount();
         $this->validateUserCredentials();
         $this->validateUserStatus();
 
-        $this->userSessionManager->set(
-            $this->userSessionManager->getUserEntitySessionName(), 
-            $this->storedUserEntity
-        );
+        $this->storeUserEntityUsingSession();
     }
 
     private function prepareUserLoginEntity()
@@ -60,6 +54,11 @@ class UserLoginAction implements UseCaseInterface
             new UserName($this->userLoginData->userName),
             new Password($this->userLoginData->password) 
         );
+    }
+
+    private function prepareStoredUserEntity()
+    {
+        $this->storedUserEntity = $this->userLoginRepository->get($this->userLoginEntity);
     }
 
     private function validateUserAccount()
@@ -84,8 +83,16 @@ class UserLoginAction implements UseCaseInterface
 
     private function validateUserStatus()
     {
-        if (! $this->userLoginRepository->isApproved($this->userLoginEntity->userName())) {
+        if (! $this->userLoginRepository->isApproved($this->userLoginEntity)) {
             throw LoginFailedException::userStatusIsNotActive();
         }
+    }
+
+    private function storeUserEntityUsingSession()
+    {
+        $this->userSessionManager->set(
+            $this->userSessionManager->getUserEntitySessionName(), 
+            $this->storedUserEntity
+        );
     }
 }

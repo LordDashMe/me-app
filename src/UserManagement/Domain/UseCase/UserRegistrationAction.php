@@ -51,7 +51,7 @@ class UserRegistrationAction implements UseCaseInterface
         $this->generateUniqueId();
         $this->generateSecuredPassword();
         
-        $this->userRegistrationRepository->save($this->userRegistrationEntity);
+        $this->persistUserRegistrationEntity();
     }
 
     private function prepareUserRegistrationEntity()
@@ -74,7 +74,7 @@ class UserRegistrationAction implements UseCaseInterface
 
     private function validateUserNameExistence()
     {
-        if ($this->userRegistrationRepository->isUserNameAlreadyRegistered($this->userRegistrationEntity->userName())) {
+        if ($this->userRegistrationRepository->isUserNameAlreadyRegistered($this->userRegistrationEntity)) {
             throw RegistrationFailedException::userNameAlreadyRegistered();
         }
     }
@@ -93,5 +93,10 @@ class UserRegistrationAction implements UseCaseInterface
                 $this->userRegistrationEntity->password()
             )
         );
+    }
+
+    private function persistUserRegistrationEntity()
+    {
+        $this->userRegistrationRepository->save($this->userRegistrationEntity);
     }
 }

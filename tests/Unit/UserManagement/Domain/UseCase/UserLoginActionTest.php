@@ -50,7 +50,7 @@ class UserLoginActionTest extends TestCase
         $userLoginData = new UserLoginData('invalid_username', 'P@ss0wrd!');
 
         $userLoginRepository = Mockery::mock(UserLoginRepository::class);
-        $userLoginRepository->shouldReceive('getByUserName')
+        $userLoginRepository->shouldReceive('get')
                             ->andReturn(null);
 
         $useCase = new UserLoginAction(
@@ -74,7 +74,7 @@ class UserLoginActionTest extends TestCase
         $userLoginData = new UserLoginData('johndoe123', 'P@ss0wrd!');
 
         $userLoginRepository = Mockery::mock(UserLoginRepository::class);
-        $userLoginRepository->shouldReceive('getByUserName')
+        $userLoginRepository->shouldReceive('get')
                             ->andReturn($this->mockUserEntity());
         $userLoginRepository->shouldReceive('isApproved')
                             ->andReturn(false);
@@ -101,7 +101,7 @@ class UserLoginActionTest extends TestCase
         $userLoginData = new UserLoginData('johndoe123', 'P@ss0wrd!');
 
         $userLoginRepository = Mockery::mock(UserLoginRepository::class);
-        $userLoginRepository->shouldReceive('getByUserName')
+        $userLoginRepository->shouldReceive('get')
                             ->andReturn($this->mockUserEntity());
         $userLoginRepository->shouldReceive('isApproved')
                             ->andReturn(true);

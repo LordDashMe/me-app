@@ -4,8 +4,6 @@ namespace ExpenseManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 
-use AppCommon\Domain\ValueObject\CreatedAt;
-
 use UserManagement\Domain\ValueObject\UserId;
 
 use ExpenseManagement\Domain\ValueObject\ExpenseId;
@@ -53,11 +51,6 @@ class ExpenseModification
      * @ORM\Column(type="string", name="Date")
      */
     private $date;
-
-    /**
-     * @ORM\Column(type="string", name="DeletedAt")
-     */
-    private $deletedAt;
 
     public function __construct(ExpenseId $expenseId, UserId $userId) 
     {
@@ -113,10 +106,5 @@ class ExpenseModification
     public function changeDate(Date $date): void 
     {
         $this->date = $date;
-    }
-
-    public function delete(CreatedAt $deletedAt): void
-    {
-        $this->deletedAt = $deletedAt;
     }
 }

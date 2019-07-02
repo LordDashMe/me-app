@@ -36,7 +36,7 @@ class SubmitExpenseTest extends TestCase
     /**
      * @test
      */
-    public function it_should_perform_add_expense()
+    public function it_should_perform_submit_expense()
     {
         $submitExpenseData = new SubmitExpenseData('UUID001', '4', 'Brewed Coffee', 22, '2019-07-01');
 

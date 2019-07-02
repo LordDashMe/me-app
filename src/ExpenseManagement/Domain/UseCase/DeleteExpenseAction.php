@@ -3,31 +3,37 @@
 namespace ExpenseManagement\Domain\UseCase;
 
 use AppCommon\Domain\UseCase\UseCaseInterface;
+use AppCommon\Domain\ValueObject\CreatedAt;
 
 use UserManagement\Domain\ValueObject\UserId;
 
+use ExpenseManagement\Domain\Entity\ExpenseDeletion;
 use ExpenseManagement\Domain\Message\DeleteExpenseData;
-use ExpenseManagement\Domain\Repository\ExpenseModificationRepository;
+use ExpenseManagement\Domain\Repository\ExpenseDeletionRepository;
 use ExpenseManagement\Domain\ValueObject\ExpenseId;
 
 class DeleteExpenseAction implements UseCaseInterface
 {
     private $deleteExpenseData;
-    private $expenseModificationRepository;
+    private $expenseDeletionRepository;
 
     public function __construct(
         DeleteExpenseData $deleteExpenseData, 
-        ExpenseModificationRepository $expenseModificationRepository
+        ExpenseDeletionRepository $expenseDeletionRepository
     ) {
         $this->deleteExpenseData = $deleteExpenseData;
-        $this->expenseModificationRepository = $expenseModificationRepository;
+        $this->expenseDeletionRepository = $expenseDeletionRepository;
     }
 
     public function perform()
     {
-        return $this->expenseModificationRepository->softDelete(
+        $expenseDeletionEntity = new ExpenseDeletion(
             new ExpenseId($this->deleteExpenseData->expenseId),
             new UserId($this->deleteExpenseData->userId)
-        );      
+        );
+
+        $expenseDeletionEntity->softDelete(new CreatedAt());
+        
+        return $this->expenseDeletionRepository->save($expenseDeletionEntity);      
     }
 }

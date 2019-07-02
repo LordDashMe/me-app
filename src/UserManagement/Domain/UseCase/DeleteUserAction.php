@@ -4,27 +4,28 @@ namespace UserManagement\Domain\UseCase;
 
 use AppCommon\Domain\UseCase\UseCaseInterface;
 
+use UserManagement\Domain\Entity\UserDeletion;
 use UserManagement\Domain\Message\DeleteUserData;
-use UserManagement\Domain\Repository\UserModificationRepository;
+use UserManagement\Domain\Repository\UserDeletionRepository;
 use UserManagement\Domain\ValueObject\UserId;
 
 class DeleteUserAction implements UseCaseInterface
 {
     private $deleteUserData;
-    private $userModificationRepository;
+    private $userDeletionRepository;
 
     public function __construct(
         DeleteUserData $deleteUserData, 
-        UserModificationRepository $userModificationRepository
+        UserDeletionRepository $userDeletionRepository
     ) {
         $this->deleteUserData = $deleteUserData;
-        $this->userModificationRepository = $userModificationRepository;
+        $this->userDeletionRepository = $userDeletionRepository;
     }
 
     public function perform()
     {
-        return $this->userModificationRepository->softDelete(
-            new UserId($this->deleteUserData->userId)
+        return $this->userDeletionRepository->save(
+            new UserDeletion(new UserId($this->deleteUserData->userId))
         );      
     }
 }

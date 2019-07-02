@@ -2,9 +2,11 @@
 
 namespace UserManagement\Domain\Repository;
 
+use UserManagement\Domain\Entity\UserLogin;
+
 interface UserLoginRepository
 {
-    public function getByUserName(string $userName);
+    public function get(UserLogin $userLogin);
     
-    public function isApproved(string $userName): bool;
+    public function isApproved(UserLogin $userLogin): bool;
 }
