@@ -83,7 +83,7 @@ class UserLoginAction implements UseCaseInterface
 
     private function validateUserStatus()
     {
-        if (! $this->userLoginRepository->isApproved($this->userLoginEntity)) {
+        if (! $this->storedUserEntity->isApproved()) {
             throw LoginFailedException::userStatusIsNotActive();
         }
     }

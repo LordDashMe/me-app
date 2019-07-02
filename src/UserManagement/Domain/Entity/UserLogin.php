@@ -4,6 +4,7 @@ namespace UserManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 
+use UserManagement\Domain\Entity\User;
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 
@@ -23,6 +24,11 @@ class UserLogin
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="smallint", name="Status", options={"comment":"1 = Active | 2 = Inactive"})
+     */
+    private $status;
+
     public function __construct(UserName $userName, Password $password) 
     {
         $this->userName = $userName;
@@ -37,5 +43,10 @@ class UserLogin
     public function password(): string
     {
         return $this->password;
+    }
+
+    public function isApproved(): bool
+    {
+        return ($this->status === User::STATUS_ACTIVE ? true : false);
     }
 }

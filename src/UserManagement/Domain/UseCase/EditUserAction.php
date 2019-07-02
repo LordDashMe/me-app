@@ -12,6 +12,7 @@ use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\Email;
+use UserManagement\Domain\ValueObject\Status;
 
 class EditUserAction implements UseCaseInterface
 {
@@ -35,7 +36,7 @@ class EditUserAction implements UseCaseInterface
         $modifyUserEntity->changeFirstName(new FirstName($this->editUserData->firstName));
         $modifyUserEntity->changeLastName(new LastName($this->editUserData->lastName));
         $modifyUserEntity->changeEmail(new Email($this->editUserData->email));
-        $modifyUserEntity->changeStatus($this->editUserData->status);
+        $modifyUserEntity->changeStatus(new Status($this->editUserData->status));
 
         return $this->userModificationRepository->save($modifyUserEntity);
     }

@@ -8,6 +8,7 @@ use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\Email;
+use UserManagement\Domain\ValueObject\Status;
 
 /**
  * @ORM\Entity
@@ -87,7 +88,7 @@ class UserModification
         $this->email = $email;
     }
 
-    public function changeStatus(string $status): void
+    public function changeStatus(Status $status): void
     {
         $this->status = $status;
     }

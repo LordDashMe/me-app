@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use AppCommon\Domain\ValueObject\CreatedAt;
 
-use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\Entity\UserLogin;
 use UserManagement\Domain\Exception\LoginFailedException;
 use UserManagement\Domain\Message\UserLoginData;
 use UserManagement\Domain\Repository\UserLoginRepository;
@@ -73,11 +73,12 @@ class UserLoginActionTest extends TestCase
 
         $userLoginData = new UserLoginData('johndoe123', 'P@ss0wrd!');
 
+        $mockUserLoginEntity = Mockery::mock($this->mockUserLoginEntity());
+        $mockUserLoginEntity->shouldReceive('isApproved')
+                            ->andReturn(false);
         $userLoginRepository = Mockery::mock(UserLoginRepository::class);
         $userLoginRepository->shouldReceive('get')
-                            ->andReturn($this->mockUserEntity());
-        $userLoginRepository->shouldReceive('isApproved')
-                            ->andReturn(false);
+                            ->andReturn($mockUserLoginEntity);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
         $passwordEncoder->shouldReceive('verifyEncodedText')
@@ -100,11 +101,12 @@ class UserLoginActionTest extends TestCase
     {
         $userLoginData = new UserLoginData('johndoe123', 'P@ss0wrd!');
 
+        $mockUserLoginEntity = Mockery::mock($this->mockUserLoginEntity());
+        $mockUserLoginEntity->shouldReceive('isApproved')
+                            ->andReturn(true);
         $userLoginRepository = Mockery::mock(UserLoginRepository::class);
         $userLoginRepository->shouldReceive('get')
-                            ->andReturn($this->mockUserEntity());
-        $userLoginRepository->shouldReceive('isApproved')
-                            ->andReturn(true);
+                            ->andReturn($mockUserLoginEntity);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
         $passwordEncoder->shouldReceive('verifyEncodedText')
@@ -126,17 +128,11 @@ class UserLoginActionTest extends TestCase
         $this->assertEquals(null, $useCase->perform());
     }
 
-    private function mockUserEntity()
+    private function mockUserLoginEntity()
     {
-        return new User(
-            new UserId('UID001'),
-            new FirstName('John'),
-            new LastName('Doe'),
-            new Email('john.doe@example.com'),
+        return new UserLogin(
             new UserName('johndoe123'),
-            new Password('P@ssw0rd!'),
-            User::STATUS_ACTIVE,
-            new CreatedAt()
+            new Password('P@ssw0rd!')
         );
     }
 }
