@@ -90,9 +90,6 @@ class UserLoginAction implements UseCaseInterface
 
     private function storeUserEntityUsingSession()
     {
-        $this->userSessionManager->set(
-            $this->userSessionManager->getUserEntitySessionName(), 
-            $this->storedUserEntity
-        );
+        $this->userSessionManager->set($this->storedUserEntity);
     }
 }

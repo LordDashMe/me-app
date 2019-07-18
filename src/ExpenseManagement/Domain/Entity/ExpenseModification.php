@@ -21,6 +21,7 @@ class ExpenseModification
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -54,8 +55,8 @@ class ExpenseModification
 
     public function __construct(ExpenseId $expenseId, UserId $userId) 
     {
-        $this->id = $expenseId;
-        $this->userId = $userId;
+        $this->id = $expenseId->get();
+        $this->userId = $userId->get();
     }
 
     public function id(): string
@@ -90,21 +91,21 @@ class ExpenseModification
 
     public function changeType(Type $type): void 
     {
-        $this->type = $type;
+        $this->type = $type->get();
     }
 
     public function changeLabel(Label $label): void 
     {
-        $this->label = $label;
+        $this->label = $label->get();
     }
 
     public function changeCost(Cost $cost): void 
     {
-        $this->cost = $cost;
+        $this->cost = $cost->get();
     }
 
     public function changeDate(Date $date): void 
     {
-        $this->date = $date;
+        $this->date = $date->get();
     }
 }

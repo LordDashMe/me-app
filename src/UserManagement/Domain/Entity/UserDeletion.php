@@ -17,6 +17,7 @@ class UserDeletion
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -28,7 +29,7 @@ class UserDeletion
 
     public function __construct(UserId $userId)
     {
-        $this->id = $userId;
+        $this->id = $userId->get();
     }
 
     public function id(): string 
@@ -43,6 +44,6 @@ class UserDeletion
     
     public function softDelete(CreatedAt $deletedAt): void
     {
-        $this->deletedAt = $deletedAt;
+        $this->deletedAt = $deletedAt->get();
     }
 }

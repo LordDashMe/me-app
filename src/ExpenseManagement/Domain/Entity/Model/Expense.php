@@ -1,6 +1,6 @@
 <?php
 
-namespace ExpenseManagement\Domain\Entity;
+namespace ExpenseManagement\Domain\Entity\Model;
 
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -23,6 +23,7 @@ class Expense
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -73,13 +74,13 @@ class Expense
         Date $date,
         CreatedAt $createdAt
     ) {
-        $this->id = $id;
-        $this->userId = $userId;
-        $this->type = $type;
-        $this->label = $label;
-        $this->cost = $cost;
-        $this->date = $date;
-        $this->createdAt = $createdAt;
+        $this->id = $id->get();
+        $this->userId = $userId->get();
+        $this->type = $type->get();
+        $this->label = $label->get();
+        $this->cost = $cost->get();
+        $this->date = $date->get();
+        $this->createdAt = $createdAt->get();
     }
 
     public function id(): string

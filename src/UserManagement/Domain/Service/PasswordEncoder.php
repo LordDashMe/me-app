@@ -4,7 +4,7 @@ namespace UserManagement\Domain\Service;
 
 interface PasswordEncoder
 {
-    public function encodePlainText($plainText): string;
+    public function encodePlainText(string $plainText): string;
 
-    public function verifyEncodedText($encodedText, $plainText): bool;
+    public function verifyEncodedText(string $encodedText, string $plainText): bool;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace UserManagement\Domain\Entity;
+namespace UserManagement\Domain\Entity\Model;
 
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -25,7 +25,7 @@ class User
 
     /**
      * @var \Ramsey\Uuid\UuidInterface
-     * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -80,14 +80,14 @@ class User
         string $status,
         CreatedAt $createdAt
     ) {
-        $this->id = $userId;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->userName = $userName;
-        $this->password = $password;
+        $this->id = $userId->get();
+        $this->firstName = $firstName->get();
+        $this->lastName = $lastName->get();
+        $this->email = $email->get();
+        $this->userName = $userName->get();
+        $this->password = $password->get();
         $this->status = $status;
-        $this->createdAt = $createdAt;
+        $this->createdAt = $createdAt->get();
     }
 
     public function id(): string

@@ -8,23 +8,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppCommon\Application\Controller\Security\UnauthenticatedController;
 use UserManagement\Domain\UseCase\UserLogin;
-use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Exception\LoginFailedException;
 
 class LoginController extends Controller implements UnauthenticatedController
 {
-    private $userRepository;
     private $passwordEncoder;
     private $userSessionManager;
 
     public function __construct(
-        UserRepository $userRepository, 
         PasswordEncoder $passwordEncoder, 
         UserSessionManager $userSessionManager
     ) {
-        $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
         $this->userSessionManager = $userSessionManager;
     }

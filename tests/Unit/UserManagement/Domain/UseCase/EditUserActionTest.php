@@ -6,7 +6,7 @@ use Mockery as Mockery;
 
 use PHPUnit\Framework\TestCase;
 
-use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\Entity\Model\User;
 use UserManagement\Domain\Message\EditUserData;
 use UserManagement\Domain\Repository\UserModificationRepository;
 use UserManagement\Domain\UseCase\EditUserAction;

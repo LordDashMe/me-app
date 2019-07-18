@@ -13,7 +13,7 @@ class CreatedAt
         $this->createdAt = $createdAt ?: \date(self::MYSQL_DATETIME_FORMAT);
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->createdAt;
     }

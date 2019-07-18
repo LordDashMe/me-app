@@ -32,7 +32,7 @@ class Email
         }
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->email;
     }

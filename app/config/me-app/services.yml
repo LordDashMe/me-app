@@ -8,7 +8,7 @@ services:
         autowire: true
         public: true
         resource: '../../../src/AppCommon/*'
-        exclude: '../../../src/AppCommon/Domain/{Entity,UseCase,ValueObject}'
+        exclude: '../../../src/AppCommon/Domain/{Entity,UseCase,ValueObject,Message}'
     AppCommon\Domain\ValueObject\:
         public: true
         resource: '../../../src/AppCommon/Domain/ValueObject/*'
@@ -17,10 +17,13 @@ services:
         autowire: true
         public: true
         resource: '../../../src/UserManagement/*'
-        exclude: '../../../src/UserManagement/Domain/{Entity,UseCase,ValueObject}'
+        exclude: '../../../src/UserManagement/Domain/{Entity,UseCase,ValueObject,Message}'
     UserManagement\Domain\Entity\:
         public: true
         resource: '../../../src/UserManagement/Domain/Entity/*'
+    UserManagement\Domain\Message\:
+        public: true
+        resource: '../../../src/UserManagement/Domain/Message/*'
     UserManagement\Domain\UseCase\:
         public: true
         resource: '../../../src/UserManagement/Domain/UseCase/*'
@@ -33,15 +36,6 @@ services:
     UserManagement\Infrastructure\Service\UserSessionManagerImpl:
         bind:
             Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
-    UserManagement\Application\Controller\LoginController:
-        bind:
-            UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
-            UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
-            UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
-    UserManagement\Application\Controller\RegistrationController:
-        bind:
-            UserManagement\Domain\Repository\UserRepository: '@UserManagement\Infrastructure\Repository\Doctrine\UserRepositoryImpl'
-            UserManagement\Domain\Service\PasswordEncoder: '@UserManagement\Infrastructure\Service\PasswordEncoderImpl'
     UserManagement\Application\Controller\HomeController:
         bind:
             UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
@@ -55,10 +49,13 @@ services:
         autowire: true
         public: true
         resource: '../../../src/ExpenseManagement/*'
-        exclude: '../../../src/ExpenseManagement/Domain/{Entity,UseCase,ValueObject}'
+        exclude: '../../../src/ExpenseManagement/Domain/{Entity,UseCase,ValueObject,Message}'
     ExpenseManagement\Domain\Entity\:
         public: true
         resource: '../../../src/ExpenseManagement/Domain/Entity/*'
+    ExpenseManagement\Domain\Message\:
+        public: true
+        resource: '../../../src/ExpenseManagement/Domain/Message/*'
     ExpenseManagement\Domain\UseCase\:
         public: true
         resource: '../../../src/ExpenseManagement/Domain/UseCase/*'

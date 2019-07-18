@@ -11,7 +11,7 @@ class LastName
         $this->lastName = $lastName;
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->lastName;
     }

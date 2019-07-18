@@ -19,6 +19,7 @@ class UserModification
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -45,7 +46,7 @@ class UserModification
 
     public function __construct(UserId $userId)
     {
-        $this->id = $userId;
+        $this->id = $userId->get();
     }
 
     public function id(): string 
@@ -75,21 +76,21 @@ class UserModification
 
     public function changeFirstName(FirstName $firstName): void
     {
-        $this->firstName = $firstName;
+        $this->firstName = $firstName->get();
     }
 
     public function changeLastName(LastName $lastName): void
     {
-        $this->lastName = $lastName;
+        $this->lastName = $lastName->get();
     }
 
     public function changeEmail(Email $email): void
     {
-        $this->email = $email;
+        $this->email = $email->get();
     }
 
     public function changeStatus(Status $status): void
     {
-        $this->status = $status;
+        $this->status = $status->get();
     }
 }

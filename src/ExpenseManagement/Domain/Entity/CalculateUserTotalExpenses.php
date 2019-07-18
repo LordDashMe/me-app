@@ -15,6 +15,7 @@ class CalculateUserTotalExpenses
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="UserID")
      */
     private $userId;
@@ -26,7 +27,7 @@ class CalculateUserTotalExpenses
 
     public function __construct(UserId $userId) 
     {
-        $this->userId = $userId;
+        $this->userId = $userId->get();
     }
 
     public function userId(): string

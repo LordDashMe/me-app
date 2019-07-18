@@ -15,6 +15,7 @@ class CalculateUserTotalDays
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -28,7 +29,7 @@ class CalculateUserTotalDays
 
     public function __construct(UserId $userId) 
     {
-        $this->userId = $userId;
+        $this->userId = $userId->get();
     }
 
     public function userId(): string

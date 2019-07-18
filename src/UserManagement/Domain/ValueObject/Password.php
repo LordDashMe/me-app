@@ -33,7 +33,7 @@ class Password
         }
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->password;
     }

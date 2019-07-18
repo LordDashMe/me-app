@@ -4,7 +4,7 @@ namespace UserManagement\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 
-use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\Entity\Model\User;
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
 
@@ -15,6 +15,7 @@ use UserManagement\Domain\ValueObject\Password;
 class UserLogin
 {
     /**
+     * @ORM\Id
      * @ORM\Column(type="text", name="UserName")
      */
     private $userName;
@@ -31,8 +32,8 @@ class UserLogin
 
     public function __construct(UserName $userName, Password $password) 
     {
-        $this->userName = $userName;
-        $this->password = $password;
+        $this->userName = $userName->get();
+        $this->password = $password->get();
     }
 
     public function userName(): string

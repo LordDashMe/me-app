@@ -72,13 +72,13 @@ doctrine:
                 is_bundle: false
                 alias: UserManagement
                 prefix: UserManagement\Domain\Entity\
-                dir: "%kernel.project_dir%/src/UserManagement/Domain/Entity/"
+                dir: "%kernel.project_dir%/src/UserManagement/Domain/Entity/Model"
             ExpenseManagement:
                 type: annotation
                 is_bundle: false
                 alias: ExpenseManagement
                 prefix: ExpenseManagement\Domain\Entity\
-                dir: "%kernel.project_dir%/src/ExpenseManagement/Domain/Entity/"
+                dir: "%kernel.project_dir%/src/ExpenseManagement/Domain/Entity/Model"
 
 # Swiftmailer Configuration
 swiftmailer:

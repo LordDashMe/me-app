@@ -24,7 +24,7 @@ class UserName
         }
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->userName;
     }

@@ -19,6 +19,7 @@ class ExpenseDeletion
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -37,8 +38,8 @@ class ExpenseDeletion
 
     public function __construct(ExpenseId $expenseId, UserId $userId) 
     {
-        $this->id = $expenseId;
-        $this->userId = $userId;
+        $this->id = $expenseId->get();
+        $this->userId = $userId->get();
     }
 
     public function id(): string
@@ -58,6 +59,6 @@ class ExpenseDeletion
 
     public function softDelete(CreatedAt $deletedAt): void
     {
-        $this->deletedAt = $deletedAt;
+        $this->deletedAt = $deletedAt->get();
     }
 }

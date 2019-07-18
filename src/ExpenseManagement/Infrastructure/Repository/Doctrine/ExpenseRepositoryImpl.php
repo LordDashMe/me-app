@@ -5,11 +5,10 @@ namespace ExpenseManagement\Infrastructure\Repository\Doctrine;
 use Doctrine\ORM\EntityManagerInterface;
 use DomainCommon\Domain\ValueObject\CreatedAt;
 use UserManagement\Domain\ValueObject\UserId;
-use ExpenseManagement\Domain\Entity\Expense;
+use ExpenseManagement\Domain\Entity\Model\Expense;
 use ExpenseManagement\Domain\ValueObject\ExpenseId;
-use ExpenseManagement\Domain\Repository\ExpenseRepository;
 
-class ExpenseRepositoryImpl implements ExpenseRepository
+class ExpenseRepositoryImpl
 {
     private $entityManager;
 

@@ -11,7 +11,7 @@ class UserId
         $this->userId = $userId;
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->userId;
     }

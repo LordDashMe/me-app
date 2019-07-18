@@ -11,7 +11,7 @@ class Type
         $this->type = $type;
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->type;
     }

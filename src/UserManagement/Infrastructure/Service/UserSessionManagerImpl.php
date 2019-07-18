@@ -16,19 +16,14 @@ class UserSessionManagerImpl implements UserSessionManager
         $this->session = $session;
     }
 
-    public function getUserEntitySessionName(): string
+    public function set($value): void
     {
-        return self::USER_ENTITY_SESSION_NAME;
+        $this->session->set(self::USER_ENTITY_SESSION_NAME, $value);
     }
 
-    public function set(string $attribute, string $value): void
+    public function get()
     {
-        $this->session->set($attribute, $value);
-    }
-
-    public function get($attribute)
-    {
-        return $this->session->get($attribute);
+        return $this->session->get(self::USER_ENTITY_SESSION_NAME);
     }
 
     public function forget(): void
@@ -38,6 +33,6 @@ class UserSessionManagerImpl implements UserSessionManager
 
     public function isUserSessionAvailable(): bool
     {
-        return (! empty($this->get($this->getUserEntitySessionName())));
+        return (! empty($this->get()));
     }
 }

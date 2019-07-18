@@ -23,6 +23,7 @@ class SubmitExpense
     /**
      * @var \Ramsey\Uuid\UuidInterface
      * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -72,12 +73,12 @@ class SubmitExpense
         Date $date,
         CreatedAt $createdAt
     ) {
-        $this->userId = $userId;
-        $this->type = $type;
-        $this->label = $label;
+        $this->userId = $userId->get();
+        $this->type = $type->get();
+        $this->label = $label->get();
         $this->cost = $cost->get();
-        $this->date = $date;
-        $this->createdAt = $createdAt;
+        $this->date = $date->get();
+        $this->createdAt = $createdAt->get();
     }
 
     public function id(): string
@@ -117,6 +118,6 @@ class SubmitExpense
 
     public function provideUniqueId(ExpenseId $expenseId): void
     {
-        $this->id = $expenseId;
+        $this->id = $expenseId->get();
     }
 }

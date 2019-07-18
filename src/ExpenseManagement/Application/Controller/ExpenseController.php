@@ -1,12 +1,8 @@
 <?php
 
-namespace ExpenseManagement\Presentation\Controller;
+namespace ExpenseManagement\Application\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use DomainCommon\Presentation\Controller\Security\AuthenticatedController;
-
-class ExpenseController extends Controller implements AuthenticatedController
+class ExpenseController
 {
     public function __construct()
     {

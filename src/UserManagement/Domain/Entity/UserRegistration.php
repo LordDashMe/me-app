@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 use AppCommon\Domain\ValueObject\CreatedAt;
 
-use UserManagement\Domain\Entity\User;
+use UserManagement\Domain\Entity\Model\User;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
 use UserManagement\Domain\ValueObject\LastName;
@@ -23,7 +23,7 @@ class UserRegistration
 {
     /**
      * @var \Ramsey\Uuid\UuidInterface
-     * 
+     * @ORM\Id
      * @ORM\Column(type="text", name="ID", unique=true)
      */
     private $id;
@@ -76,12 +76,12 @@ class UserRegistration
         Password $password,
         CreatedAt $createdAt
     ) {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->userName = $userName;
-        $this->password = $password;
-        $this->createdAt = $createdAt;
+        $this->firstName = $firstName->get();
+        $this->lastName = $lastName->get();
+        $this->email = $email->get();
+        $this->userName = $userName->get();
+        $this->password = $password->get();
+        $this->createdAt = $createdAt->get();
         
         $this->status = $this->provideDefaultStatus();
     }
@@ -133,7 +133,7 @@ class UserRegistration
 
     public function provideUniqueId(UserId $userId): void
     {
-        $this->id = $userId;
+        $this->id = $userId->get();
     }
 
     public function provideSecuredPassword(string $securedPassword): void

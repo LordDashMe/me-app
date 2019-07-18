@@ -11,7 +11,7 @@ class Date
         $this->date = $date;
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->date;
     }

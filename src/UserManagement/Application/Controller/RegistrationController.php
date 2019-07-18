@@ -6,20 +6,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Common\Application\Controller\Security\UnauthenticatedController;
+use AppCommon\Application\Controller\Security\UnauthenticatedController;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\UseCase\UserRegistration;
-use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 
 class RegistrationController extends Controller implements UnauthenticatedController
 {
-    private $userRepository;
     private $passwordEncoder;
 
-    public function __construct(UserRepository $userRepository, PasswordEncoder $passwordEncoder)
+    public function __construct(PasswordEncoder $passwordEncoder)
     {
-        $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
     }
 

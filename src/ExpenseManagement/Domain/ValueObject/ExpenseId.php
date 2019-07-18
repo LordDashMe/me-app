@@ -11,7 +11,7 @@ class ExpenseId
         $this->expenseId = $expenseId;
     }
 
-    public function __toString()
+    public function get()
     {
         return $this->expenseId;
     }
