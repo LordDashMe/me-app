@@ -7,6 +7,8 @@ use Tests\Integration\IntegrationTestBase;
 use AppCommon\Infrastructure\Service\UniqueIDResolverImpl;
 use AppCommon\Domain\ValueObject\CreatedAt;
 
+use UserManagement\Domain\Entity\Model\User;
+use UserManagement\Domain\Entity\UserDeletion;
 use UserManagement\Domain\Entity\UserRegistration;
 use UserManagement\Domain\ValueObject\UserId;
 use UserManagement\Domain\ValueObject\FirstName;
@@ -14,11 +16,14 @@ use UserManagement\Domain\ValueObject\LastName;
 use UserManagement\Domain\ValueObject\Email;
 use UserManagement\Domain\ValueObject\UserName;
 use UserManagement\Domain\ValueObject\Password;
+use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserDeletionRepositoryImpl;
 use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserRegistrationRepositoryImpl;
 
-class UserRegistrationRepositoryImplTest extends IntegrationTestBase
+class UserDeletionRepositoryImplTest extends IntegrationTestBase
 {
     protected $isPersistenceNeeded = true;
+
+    private $userId;
 
     protected function setUp()
     {
@@ -34,14 +39,11 @@ class UserRegistrationRepositoryImplTest extends IntegrationTestBase
         parent::tearDown();
     }
 
-    protected function getUserRegistrationRepositoryImpl()
+    protected function mockCreateUserEntity()
     {
-        return new UserRegistrationRepositoryImpl($this->entityManager);
-    }
-
-    protected function mockUserRegistrationEntity()
-    {
-        return new UserRegistration(
+        $persistence = new UserRegistrationRepositoryImpl($this->entityManager);
+        
+        $entity = new UserRegistration(
             new FirstName('John'),
             new LastName('Doe'),
             new Email('john.doe@example.com'),
@@ -49,44 +51,41 @@ class UserRegistrationRepositoryImplTest extends IntegrationTestBase
             new Password('P@ssw0rd!'),
             new CreatedAt()
         );
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_validate_if_username_already_persisted()
-    {
-        $persistence = $this->getUserRegistrationRepositoryImpl();
-        
-        $entity = $this->mockUserRegistrationEntity();
-
-        $result = $persistence->isUserNameAlreadyRegistered($entity);
-
-        $this->assertEquals(false, $result);
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_persist_user_registration()
-    {
-        $persistence = $this->getUserRegistrationRepositoryImpl();
-        
-        $entity = $this->mockUserRegistrationEntity();
 
         $uuid = new UniqueIDResolverImpl();
-        $entity->provideUniqueId(new UserId($uuid->generate()));
+        $this->userId = new UserId($uuid->generate());
+        $entity->provideUniqueId($this->userId);
+
+        $persistence->save($entity);
+    }
+
+    protected function getUserDeletionRepositoryImpl()
+    {
+        return new UserDeletionRepositoryImpl($this->entityManager);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_persist_delete_user()
+    {
+        $this->mockCreateUserEntity();
+
+        $persistence = $this->getUserDeletionRepositoryImpl();
+
+        $entity = new UserDeletion($this->userId);
+        $entity->softDelete(new CreatedAt());
 
         $response = $persistence->save($entity);
 
         $criteria = [
             'deletedAt' => '',
-            'userName' => 'johndoe123'
+            'id' => $this->userId->get()
         ];
 
-        $repository = $this->entityManager->getRepository(UserRegistration::class);
+        $repository = $this->entityManager->getRepository(UserDeletion::class);
         $user = $repository->findOneBy($criteria);
 
-        $this->assertEquals($response, new UserName($user->userName()));
+        $this->assertEquals(null, $user);
     }
 }

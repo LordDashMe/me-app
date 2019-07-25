@@ -83,6 +83,6 @@ class UserSessionManagerImplTest extends IntegrationTestBase
     {
         $userSessionManager = $this->getUserSessionManagerImpl(); 
         
-        $this->assertEquals(false, $userSessionManager->get());
+        $this->assertEquals(false, $userSessionManager->isUserSessionAvailable());
     }
 }

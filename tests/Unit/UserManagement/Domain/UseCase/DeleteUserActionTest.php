@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use UserManagement\Domain\Message\DeleteUserData;
 use UserManagement\Domain\Repository\UserDeletionRepository;
 use UserManagement\Domain\UseCase\DeleteUserAction;
+use UserManagement\Domain\ValueObject\UserId;
 
 class DeleteUserActionTest extends TestCase
 {
@@ -32,15 +33,17 @@ class DeleteUserActionTest extends TestCase
     {
         $deleteUserData = new DeleteUserData('UUID001');
 
+        $userId = new UserId($deleteUserData->userId);
+
         $userDeletionRepository = Mockery::mock(UserDeletionRepository::class);
         $userDeletionRepository->shouldReceive('save')
-                               ->andReturn($deleteUserData->userId);
+                               ->andReturn($userId);
 
         $useCase = new DeleteUserAction(
             $deleteUserData, 
             $userDeletionRepository
         );
         
-        $this->assertEquals($deleteUserData->userId, $useCase->perform());
+        $this->assertEquals($userId, $useCase->perform());
     }
 }

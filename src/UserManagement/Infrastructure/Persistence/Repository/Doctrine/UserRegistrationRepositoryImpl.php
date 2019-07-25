@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use UserManagement\Domain\Entity\UserRegistration;
 use UserManagement\Domain\Repository\UserRegistrationRepository;
+use UserManagement\Domain\ValueObject\UserName;
 
 class UserRegistrationRepositoryImpl implements UserRegistrationRepository
 {
@@ -30,9 +31,11 @@ class UserRegistrationRepositoryImpl implements UserRegistrationRepository
         return ($record === null ? false : true);      
     }
 
-    public function save(UserRegistration $userRegistration): void
+    public function save(UserRegistration $userRegistration): UserName
     {
         $this->entityManager->persist($userRegistration);
         $this->entityManager->flush();
+
+        return new UserName($userRegistration->userName());
     }
 }

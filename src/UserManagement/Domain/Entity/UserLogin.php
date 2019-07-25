@@ -30,6 +30,11 @@ class UserLogin
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", name="DeletedAt")
+     */
+    private $deletedAt = '';
+
     public function __construct(UserName $userName, Password $password) 
     {
         $this->userName = $userName->get();

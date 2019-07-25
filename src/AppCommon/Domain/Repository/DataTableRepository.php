@@ -8,11 +8,13 @@ interface DataTableRepository
 
     public function length(int $length): void;
 
-    public function search(string $length): void;
+    public function search(string $search): void;
 
     public function orderColumn(string $orderColumn): void;
 
     public function orderBy(string $orderBy): void;
+
+    public function entityNamespace(): string;
 
     public function get(): array;
 }

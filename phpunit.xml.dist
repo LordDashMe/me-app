@@ -14,10 +14,10 @@
         <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/test.db3"/>
     </php>
     <testsuites>
-        <!-- <testsuite name="Unit Directory">
+        <testsuite name="Unit Directory">
             <directory suffix="Test.php">tests/Unit/UserManagement</directory>
             <directory suffix="Test.php">tests/Unit/ExpenseManagement</directory>
-        </testsuite> -->
+        </testsuite>
         <testsuite name="Integration Directory">
             <directory suffix="Test.php">tests/Integration/</directory>
         </testsuite>

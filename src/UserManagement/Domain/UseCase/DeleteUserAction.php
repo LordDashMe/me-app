@@ -3,6 +3,7 @@
 namespace UserManagement\Domain\UseCase;
 
 use AppCommon\Domain\UseCase\UseCaseInterface;
+use AppCommon\Domain\ValueObject\CreatedAt;
 
 use UserManagement\Domain\Entity\UserDeletion;
 use UserManagement\Domain\Message\DeleteUserData;
@@ -24,8 +25,9 @@ class DeleteUserAction implements UseCaseInterface
 
     public function perform()
     {
-        return $this->userDeletionRepository->save(
-            new UserDeletion(new UserId($this->deleteUserData->userId))
-        );      
+        $entity = new UserDeletion(new UserId($this->deleteUserData->userId));
+        $entity->softDelete(new CreatedAt());
+
+        return $this->userDeletionRepository->save($entity);      
     }
 }

@@ -10,6 +10,7 @@ use UserManagement\Domain\Entity\Model\User;
 use UserManagement\Domain\Message\EditUserData;
 use UserManagement\Domain\Repository\UserModificationRepository;
 use UserManagement\Domain\UseCase\EditUserAction;
+use UserManagement\Domain\ValueObject\UserId;
 
 class EditUserActionTest extends TestCase
 {
@@ -39,12 +40,14 @@ class EditUserActionTest extends TestCase
             User::STATUS_ACTIVE
         );
 
+        $userId = new UserId($editUserData->userId);
+
         $userModificationRepository = Mockery::mock(UserModificationRepository::class);
         $userModificationRepository->shouldReceive('save')
-                                  ->andReturn(null);
+                                  ->andReturn($userId);
 
         $useCase = new EditUserAction($editUserData, $userModificationRepository);
         
-        $this->assertEquals(null, $useCase->perform());
+        $this->assertEquals($userId, $useCase->perform());
     }
 }

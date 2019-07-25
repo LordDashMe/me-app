@@ -16,6 +16,7 @@ use UserManagement\Domain\Message\UserRegistrationData;
 use UserManagement\Domain\Repository\UserRegistrationRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\UseCase\UserRegistrationAction;
+use UserManagement\Domain\ValueObject\UserName;
 
 class UserRegistrationActionTest extends TestCase
 {
@@ -147,11 +148,13 @@ class UserRegistrationActionTest extends TestCase
             'John', 'Doe', 'registered@example.com', 'johndoe123', 'P@ssw0rd!', 'P@ssw0rd!'
         );
 
+        $userName = new UserName($userRegistrationData->userName);
+
         $userRegistrationRepository = Mockery::mock(UserRegistrationRepository::class);
         $userRegistrationRepository->shouldReceive('isUserNameAlreadyRegistered')
                                    ->andReturn(false);
         $userRegistrationRepository->shouldReceive('save')
-                                   ->andReturn(null);
+                                   ->andReturn($userName);
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
         $passwordEncoder->shouldReceive('encodePlainText')
@@ -168,6 +171,6 @@ class UserRegistrationActionTest extends TestCase
             $uniqueIDResolver
         );
 
-        $this->assertEquals(null, $useCase->perform());
+        $this->assertEquals($userName, $useCase->perform());
     }
 }

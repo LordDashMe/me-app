@@ -44,6 +44,11 @@ class UserModification
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", name="DeletedAt")
+     */
+    private $deletedAt = '';
+
     public function __construct(UserId $userId)
     {
         $this->id = $userId->get();

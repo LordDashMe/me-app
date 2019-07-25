@@ -51,7 +51,7 @@ class UserRegistrationAction implements UseCaseInterface
         $this->generateUniqueId();
         $this->generateSecuredPassword();
         
-        $this->persistUserRegistrationEntity();
+        return $this->persistUserRegistrationEntity();
     }
 
     private function prepareUserRegistrationEntity()
@@ -97,6 +97,6 @@ class UserRegistrationAction implements UseCaseInterface
 
     private function persistUserRegistrationEntity()
     {
-        $this->userRegistrationRepository->save($this->userRegistrationEntity);
+        return $this->userRegistrationRepository->save($this->userRegistrationEntity);
     }
 }
