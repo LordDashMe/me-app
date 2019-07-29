@@ -1,6 +1,6 @@
 <?php
 
-namespace ExpenseManagement\Infrastructure\Repository\Doctrine;
+namespace ExpenseManagement\Infrastructure\Persistence\Repository\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use DomainCommon\Domain\ValueObject\CreatedAt;

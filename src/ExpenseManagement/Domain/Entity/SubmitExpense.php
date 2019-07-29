@@ -63,7 +63,7 @@ class SubmitExpense
     /**
      * @ORM\Column(type="string", name="DeletedAt")
      */
-    private $deletedAt;
+    private $deletedAt = '';
 
     public function __construct(
         UserId $userId,
