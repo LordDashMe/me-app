@@ -20,12 +20,12 @@ class CalculateUserTotalExpensesRepositoryImpl implements CalculateUserTotalExpe
     {
         $queryBuilder = $this->entityManager->getRepository(CalculateUserTotalExpenses::class)
                                             ->createQueryBuilder('ue');
-        $queryBuilder->select('SUM(ue.cost) AS totalCost');
+        $queryBuilder->select('SUM(ue.cost)');
         $queryBuilder->where("ue.deletedAt = '' AND ue.userId = :userId");
         $queryBuilder->setParameter('userId', $calculateUserTotalExpenses->userId());
 
-        $sum = $queryBuilder->getQuery()->getSingleScalarResult();
+        $total = $queryBuilder->getQuery()->getSingleScalarResult();
 
-        return $sum;
+        return $total;
     }
 }

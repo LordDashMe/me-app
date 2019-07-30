@@ -6,7 +6,7 @@ class Date
 {
     private $date;
     
-    public function __construct($date)
+    public function __construct(string $date)
     {
         $this->date = $date;
     }

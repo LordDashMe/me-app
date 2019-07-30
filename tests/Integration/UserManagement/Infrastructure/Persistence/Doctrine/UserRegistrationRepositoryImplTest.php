@@ -34,23 +34,6 @@ class UserRegistrationRepositoryImplTest extends IntegrationTestBase
         parent::tearDown();
     }
 
-    protected function getUserRegistrationRepositoryImpl()
-    {
-        return new UserRegistrationRepositoryImpl($this->entityManager);
-    }
-
-    protected function mockUserRegistrationEntity()
-    {
-        return new UserRegistration(
-            new FirstName('John'),
-            new LastName('Doe'),
-            new Email('john.doe@example.com'),
-            new UserName('johndoe123'),
-            new Password('P@ssw0rd!'),
-            new CreatedAt()
-        );
-    }
-
     /**
      * @test
      */
@@ -88,5 +71,22 @@ class UserRegistrationRepositoryImplTest extends IntegrationTestBase
         $user = $repository->findOneBy($criteria);
 
         $this->assertEquals($response, new UserName($user->userName()));
+    }
+
+    private function getUserRegistrationRepositoryImpl()
+    {
+        return new UserRegistrationRepositoryImpl($this->entityManager);
+    }
+
+    private function mockUserRegistrationEntity()
+    {
+        return new UserRegistration(
+            new FirstName('John'),
+            new LastName('Doe'),
+            new Email('john.doe@example.com'),
+            new UserName('johndoe123'),
+            new Password('P@ssw0rd!'),
+            new CreatedAt()
+        );
     }
 }

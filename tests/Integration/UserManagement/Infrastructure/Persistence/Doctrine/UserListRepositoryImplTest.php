@@ -35,7 +35,26 @@ class UserListRepositoryImplTest extends IntegrationTestBase
         parent::tearDown();
     }
 
-    protected function mockCreateUserEntity()
+    /**
+     * @test
+     */
+    public function it_should_load_user_list_datatable()
+    {
+        $this->mockUserRegistration();
+
+        $persistence = new UserListRepositoryImpl($this->entityManager);
+        $persistence->start(0);
+        $persistence->length(10);
+        $persistence->search('');
+        $persistence->orderColumn('id');
+        $persistence->orderBy('DESC');
+
+        $result = $persistence->get();
+
+        $this->assertEquals('John', $result['data'][0]['first_name']);
+    }
+
+    protected function mockUserRegistration()
     {
         $persistence = new UserRegistrationRepositoryImpl($this->entityManager);
         
@@ -53,24 +72,5 @@ class UserListRepositoryImplTest extends IntegrationTestBase
         $entity->provideUniqueId($this->userId);
 
         $persistence->save($entity);
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_load_user_list_datatable()
-    {
-        $this->mockCreateUserEntity();
-
-        $persistence = new UserListRepositoryImpl($this->entityManager);
-        $persistence->start(0);
-        $persistence->length(10);
-        $persistence->search('');
-        $persistence->orderColumn('id');
-        $persistence->orderBy('DESC');
-
-        $result = $persistence->get();
-
-        $this->assertEquals('John', $result['data'][0]['first_name']);
     }
 }

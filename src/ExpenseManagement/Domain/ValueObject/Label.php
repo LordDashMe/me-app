@@ -6,7 +6,7 @@ class Label
 {
     private $label;
     
-    public function __construct($label)
+    public function __construct(string $label)
     {
         $this->label = $label;
     }

@@ -6,7 +6,7 @@ class Cost
 {
     private $cost;
     
-    public function __construct($cost)
+    public function __construct(float $cost)
     {
         $this->cost = $cost;
     }

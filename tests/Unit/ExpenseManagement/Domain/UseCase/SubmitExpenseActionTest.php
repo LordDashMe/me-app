@@ -40,9 +40,11 @@ class SubmitExpenseTest extends TestCase
     {
         $submitExpenseData = new SubmitExpenseData('UUID001', '4', 'Brewed Coffee', 22, '2019-07-01');
 
+        $expenseId = new ExpenseId('UUID001');
+
         $submitExpenseRepository = Mockery::mock(SubmitExpenseRepository::class);
         $submitExpenseRepository->shouldReceive('save')
-                                ->andReturn(true);
+                                ->andReturn($expenseId);
 
         $uniqueIDResolver = Mockery::mock(UniqueIDResolver::class);
         $uniqueIDResolver->shouldReceive('generate')
@@ -54,6 +56,6 @@ class SubmitExpenseTest extends TestCase
             $uniqueIDResolver
         );
         
-        $this->assertEquals(null, $useCase->perform());
+        $this->assertEquals($expenseId, $useCase->perform());
     }
 }

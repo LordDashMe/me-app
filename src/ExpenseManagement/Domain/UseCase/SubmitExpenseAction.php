@@ -48,7 +48,7 @@ class SubmitExpenseAction implements UseCaseInterface
 
         $this->generateUniqueId();
 
-        $this->submitExpenseRepository->save($this->submitExpenseEntity);
+        return $this->submitExpenseRepository->save($this->submitExpenseEntity);
     }
 
     private function generateUniqueId()

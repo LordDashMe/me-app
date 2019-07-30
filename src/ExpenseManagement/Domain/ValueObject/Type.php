@@ -6,7 +6,7 @@ class Type
 {
     private $type;
     
-    public function __construct($type)
+    public function __construct(int $type)
     {
         $this->type = $type;
     }
