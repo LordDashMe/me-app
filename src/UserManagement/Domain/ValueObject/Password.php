@@ -19,11 +19,13 @@ class Password
 
     private $password;
     
-    public function __construct(string $password)
+    public function __construct(string $password, bool $enableValidation = true)
     {
         $this->password = $password;
 
-        $this->validateStandardFormat();
+        if ($enableValidation) {
+            $this->validateStandardFormat();
+        }
     }
 
     private function validateStandardFormat()

@@ -23,8 +23,9 @@ class UserRegistration
 {
     /**
      * @var \Ramsey\Uuid\UuidInterface
+     * 
      * @ORM\Id
-     * @ORM\Column(type="text", name="ID", unique=true)
+     * @ORM\Column(type="string", length=255, name="ID", unique=true)
      */
     private $id;
 

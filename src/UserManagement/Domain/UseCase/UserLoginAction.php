@@ -15,7 +15,9 @@ use UserManagement\Domain\ValueObject\Password;
 use UserManagement\Domain\ValueObject\MatchPassword;
 
 class UserLoginAction implements UseCaseInterface
-{    
+{   
+    const ENABLE_PASSWORD_VALIDATION = false;
+
     private $userLoginData;
     private $userLoginRepository;
     private $passwordEncoder;
@@ -52,7 +54,7 @@ class UserLoginAction implements UseCaseInterface
     {
         $this->userLoginEntity = new UserLogin(
             new UserName($this->userLoginData->userName),
-            new Password($this->userLoginData->password) 
+            new Password($this->userLoginData->password, self::ENABLE_PASSWORD_VALIDATION) 
         );
     }
 

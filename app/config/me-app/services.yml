@@ -4,6 +4,7 @@ services:
         arguments:
             $cost: 8
 
+    
     AppCommon\:
         autowire: true
         public: true
@@ -13,6 +14,7 @@ services:
         public: true
         resource: '../../../src/AppCommon/Domain/ValueObject/*'
 
+    
     UserManagement\:
         autowire: true
         public: true
@@ -30,20 +32,27 @@ services:
     UserManagement\Domain\ValueObject\:
         public: true
         resource: '../../../src/UserManagement/Domain/ValueObject/*'
+    
+    
     UserManagement\Infrastructure\Service\PasswordEncoderImpl:
         bind:
             Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface: '@Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder'
     UserManagement\Infrastructure\Service\UserSessionManagerImpl:
         bind:
             Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
+    
+    
     UserManagement\Application\Controller\HomeController:
         bind:
             UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
+    
+    
     UserManagement\Application\EventSubscriber\AuthenticationSubscriber:
         autowire: true
         bind:
             UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
         tags: [kernel.event_subscriber]
+
 
     ExpenseManagement\:
         autowire: true

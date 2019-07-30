@@ -6,18 +6,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use AppCommon\Application\Controller\Security\UnauthenticatedController;
-use UserManagement\Domain\Service\PasswordEncoder;
-use UserManagement\Domain\UseCase\UserRegistration;
+use AppCommon\Infrastructure\Service\UniqueIDResolverImpl;
+
+use UserManagement\Domain\Message\UserRegistrationData;
+use UserManagement\Domain\UseCase\UserRegistrationAction;
 use UserManagement\Domain\Exception\RegistrationFailedException;
+use UserManagement\Infrastructure\Service\PasswordEncoderImpl;
+use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserRegistrationRepositoryImpl;
 
 class RegistrationController extends Controller implements UnauthenticatedController
 {
-    private $passwordEncoder;
+    private $userRegistrationRepositoryImpl;
+    private $passwordEncoderImpl;
+    private $uniqueIDResolverImpl;
 
-    public function __construct(PasswordEncoder $passwordEncoder)
-    {
-        $this->passwordEncoder = $passwordEncoder;
+    public function __construct(
+        UserRegistrationRepositoryImpl $userRegistrationRepositoryImpl,
+        PasswordEncoderImpl $passwordEncoderImpl,
+        UniqueIDResolverImpl $uniqueIDResolverImpl
+    ) {
+        $this->userRegistrationRepositoryImpl = $userRegistrationRepositoryImpl;
+        $this->passwordEncoderImpl = $passwordEncoderImpl;
+        $this->uniqueIDResolverImpl = $uniqueIDResolverImpl;
     }
 
     public function indexAction(Request $request)
@@ -27,25 +39,25 @@ class RegistrationController extends Controller implements UnauthenticatedContro
 
     public function createAction(Request $request)
     {
-        $userRegistrationData = [
-            'firstName' => $request->get('first_name'),
-            'lastName' => $request->get('last_name'),
-            'email' => $request->get('email'),
-            'username' => $request->get('username'),
-            'password' => $request->get('password'),
-            'confirmPassword' => $request->get('confirm_password')
-        ];
-
         try {
-            
-            $userRegistration = new UserRegistration(
-                $userRegistrationData, 
-                $this->userRepository, 
-                $this->passwordEncoder
+
+            $userRegistrationData = new UserRegistrationData(
+                $request->get('first_name'), 
+                $request->get('last_name'), 
+                $request->get('email'), 
+                $request->get('username'), 
+                $request->get('password'), 
+                $request->get('confirm_password')
             );
 
-            $userRegistration->validate();
-            $userRegistration->perform();
+            $useCase = new UserRegistrationAction(
+                $userRegistrationData, 
+                $this->userRegistrationRepositoryImpl, 
+                $this->passwordEncoderImpl,
+                $this->uniqueIDResolverImpl
+            );
+
+            $useCase->perform();
 
         } catch (RegistrationFailedException $exception) {
             
