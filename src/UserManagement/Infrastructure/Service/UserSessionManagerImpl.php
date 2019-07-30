@@ -3,6 +3,7 @@
 namespace UserManagement\Infrastructure\Service;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use UserManagement\Domain\Service\UserSessionManager;
 
 class UserSessionManagerImpl implements UserSessionManager

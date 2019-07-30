@@ -3,6 +3,7 @@
 namespace UserManagement\Infrastructure\Service;
 
 use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
+
 use UserManagement\Domain\Service\PasswordEncoder;
 
 class PasswordEncoderImpl implements PasswordEncoder
