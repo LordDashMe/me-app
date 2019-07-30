@@ -27,6 +27,11 @@ class CalculateUserTotalDays
      */
     private $userId;
 
+    /**
+     * @ORM\Column(type="string", name="DeletedAt")
+     */
+    private $deletedAt = '';
+
     public function __construct(UserId $userId) 
     {
         $this->userId = $userId->get();

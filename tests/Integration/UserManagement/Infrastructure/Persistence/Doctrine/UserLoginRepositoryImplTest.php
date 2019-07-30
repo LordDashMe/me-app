@@ -27,17 +27,12 @@ class UserLoginRepositoryImplTest extends IntegrationTestBase
         parent::tearDown();
     }
 
-    protected function getUserLoginRepositoryImpl()
-    {
-        return new UserLoginRepositoryImpl($this->entityManager);
-    }
-
     /**
      * @test
      */
     public function it_should_get_persisted_user_via_username()
     {
-        $persistence = $this->getUserLoginRepositoryImpl();
+        $persistence = new UserLoginRepositoryImpl($this->entityManager);
 
         $entity = new UserLogin(
             new UserName('johndoe123'),

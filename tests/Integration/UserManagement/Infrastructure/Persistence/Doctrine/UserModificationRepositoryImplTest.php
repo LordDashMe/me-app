@@ -40,39 +40,14 @@ class UserModificationRepositoryImplTest extends IntegrationTestBase
         parent::tearDown();
     }
 
-    protected function mockCreateUserEntity()
-    {
-        $persistence = new UserRegistrationRepositoryImpl($this->entityManager);
-        
-        $entity = new UserRegistration(
-            new FirstName('John'),
-            new LastName('Doe'),
-            new Email('john.doe@example.com'),
-            new UserName('johndoe123'),
-            new Password('P@ssw0rd!'),
-            new CreatedAt()
-        );
-
-        $uuid = new UniqueIDResolverImpl();
-        $this->userId = new UserId($uuid->generate());
-        $entity->provideUniqueId($this->userId);
-
-        $persistence->save($entity);
-    }
-
-    protected function getUserModificationRepositoryImpl()
-    {
-        return new UserModificationRepositoryImpl($this->entityManager);
-    }
-
     /**
      * @test
      */
     public function it_should_persist_update_user_details()
     {
-        $this->mockCreateUserEntity();
+        $this->mockUserRegistrationEntity();
 
-        $persistence = $this->getUserModificationRepositoryImpl();
+        $persistence = new UserModificationRepositoryImpl($this->entityManager);
 
         $entity = new UserModification($this->userId);
         $entity->changeFirstName(new FirstName('John I'));
@@ -91,5 +66,25 @@ class UserModificationRepositoryImplTest extends IntegrationTestBase
         $user = $repository->findOneBy($criteria);
 
         $this->assertEquals($response, new UserId($user->id()));
+    }
+
+    private function mockUserRegistrationEntity()
+    {
+        $persistence = new UserRegistrationRepositoryImpl($this->entityManager);
+        
+        $entity = new UserRegistration(
+            new FirstName('John'),
+            new LastName('Doe'),
+            new Email('john.doe@example.com'),
+            new UserName('johndoe123'),
+            new Password('P@ssw0rd!'),
+            new CreatedAt()
+        );
+
+        $uuid = new UniqueIDResolverImpl();
+        $this->userId = new UserId($uuid->generate());
+        $entity->provideUniqueId($this->userId);
+
+        $persistence->save($entity);
     }
 }

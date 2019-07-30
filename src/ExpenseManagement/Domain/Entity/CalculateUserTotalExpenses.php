@@ -25,6 +25,11 @@ class CalculateUserTotalExpenses
      */
     private $cost;
 
+    /**
+     * @ORM\Column(type="string", name="DeletedAt")
+     */
+    private $deletedAt = '';
+
     public function __construct(UserId $userId) 
     {
         $this->userId = $userId->get();

@@ -39,7 +39,32 @@ class UserDeletionRepositoryImplTest extends IntegrationTestBase
         parent::tearDown();
     }
 
-    protected function mockCreateUserEntity()
+    /**
+     * @test
+     */
+    public function it_should_persist_delete_user()
+    {
+        $this->mockUserRegistrationEntity();
+
+        $persistence = new UserDeletionRepositoryImpl($this->entityManager);
+
+        $entity = new UserDeletion($this->userId);
+        $entity->softDelete(new CreatedAt());
+
+        $response = $persistence->save($entity);
+
+        $criteria = [
+            'deletedAt' => '',
+            'id' => $this->userId->get()
+        ];
+
+        $repository = $this->entityManager->getRepository(UserDeletion::class);
+        $user = $repository->findOneBy($criteria);
+
+        $this->assertEquals(null, $user);
+    }
+
+    private function mockUserRegistrationEntity()
     {
         $persistence = new UserRegistrationRepositoryImpl($this->entityManager);
         
@@ -57,35 +82,5 @@ class UserDeletionRepositoryImplTest extends IntegrationTestBase
         $entity->provideUniqueId($this->userId);
 
         $persistence->save($entity);
-    }
-
-    protected function getUserDeletionRepositoryImpl()
-    {
-        return new UserDeletionRepositoryImpl($this->entityManager);
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_persist_delete_user()
-    {
-        $this->mockCreateUserEntity();
-
-        $persistence = $this->getUserDeletionRepositoryImpl();
-
-        $entity = new UserDeletion($this->userId);
-        $entity->softDelete(new CreatedAt());
-
-        $response = $persistence->save($entity);
-
-        $criteria = [
-            'deletedAt' => '',
-            'id' => $this->userId->get()
-        ];
-
-        $repository = $this->entityManager->getRepository(UserDeletion::class);
-        $user = $repository->findOneBy($criteria);
-
-        $this->assertEquals(null, $user);
     }
 }

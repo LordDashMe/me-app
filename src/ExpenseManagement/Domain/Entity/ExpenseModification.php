@@ -53,6 +53,11 @@ class ExpenseModification
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="string", name="DeletedAt")
+     */
+    private $deletedAt = '';
+
     public function __construct(ExpenseId $expenseId, UserId $userId) 
     {
         $this->id = $expenseId->get();
