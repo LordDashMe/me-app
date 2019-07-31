@@ -16,19 +16,23 @@ use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\UseCase\UserLoginAction;
 use UserManagement\Infrastructure\Service\PasswordEncoderImpl;
 use UserManagement\Infrastructure\Service\UserSessionManagerImpl;
+use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserRepositoryImpl;
 use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserLoginRepositoryImpl;
 
 class LoginController extends Controller implements UnauthenticatedController
 {
+    private $userRepositoryImpl;
     private $userLoginRepositoryImpl;
     private $passwordEncoderImpl;
     private $userSessionManagerImpl;
 
     public function __construct(
+        UserRepositoryImpl $userRepositoryImpl,
         UserLoginRepositoryImpl $userLoginRepositoryImpl,
         PasswordEncoderImpl $passwordEncoderImpl,
         UserSessionManagerImpl $userSessionManagerImpl
     ) {
+        $this->userRepositoryImpl = $userRepositoryImpl;
         $this->userLoginRepositoryImpl = $userLoginRepositoryImpl;
         $this->passwordEncoderImpl = $passwordEncoderImpl;
         $this->userSessionManagerImpl = $userSessionManagerImpl;
@@ -43,10 +47,14 @@ class LoginController extends Controller implements UnauthenticatedController
     {
         try {
 
-            $userLoginData = new UserLoginData($request->get('username'), $request->get('password'));
+            $userLoginData = new UserLoginData(
+                $request->get('username'), 
+                $request->get('password')
+            );
 
             $useCase = new UserLoginAction(
                 $userLoginData, 
+                $this->userRepositoryImpl,
                 $this->userLoginRepositoryImpl, 
                 $this->passwordEncoderImpl, 
                 $this->userSessionManagerImpl
@@ -54,7 +62,7 @@ class LoginController extends Controller implements UnauthenticatedController
 
             $useCase->perform();
 
-        } catch (LoginFailedException | PasswordException $exception) {
+        } catch (LoginFailedException $exception) {
             
             $this->get('logger')->error($exception->getMessage());
 
@@ -63,6 +71,6 @@ class LoginController extends Controller implements UnauthenticatedController
             ]);
         }
 
-        return $this->redirectToRoute('user_management_home');
+        return $this->redirectToRoute('dashboard_management_home');
     }
 }

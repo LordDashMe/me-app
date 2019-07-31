@@ -65,24 +65,6 @@ class Expense
      */
     private $deletedAt;
 
-    public function __construct(
-        ExpenseId $id,
-        UserId $userId,
-        Type $type,
-        Label $label,
-        Cost $cost,
-        Date $date,
-        CreatedAt $createdAt
-    ) {
-        $this->id = $id->get();
-        $this->userId = $userId->get();
-        $this->type = $type->get();
-        $this->label = $label->get();
-        $this->cost = $cost->get();
-        $this->date = $date->get();
-        $this->createdAt = $createdAt->get();
-    }
-
     public function id(): string
     {
         return $this->id;

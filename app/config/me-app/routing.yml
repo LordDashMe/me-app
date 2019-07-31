@@ -14,13 +14,9 @@ user_management_register_create:
     path: /user/register
     defaults: { _controller: UserManagement\Application\Controller\RegistrationController::createAction }
     methods: [POST]
-user_management_home:
-    path: /home
-    defaults: { _controller: UserManagement\Application\Controller\HomeController::indexAction }
-    methods: [GET, HEAD]
 user_management_logout:
     path: /user/logout
-    defaults: { _controller: UserManagement\Application\Controller\HomeController::logoutAction }
+    defaults: { _controller: UserManagement\Application\Controller\LogoutController::logoutAction }
     methods: [GET, HEAD]
 
 expense_management_create:
@@ -43,3 +39,8 @@ expense_management_soft_delete:
     path: /expense/delete/{expenseId}
     defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::softDeleteAction }
     methods: [POST]
+
+dashboard_management_home:
+    path: /dashboard/home
+    defaults: { _controller: DashboardManagement\Application\Controller\HomeController::indexAction }
+    methods: [GET, HEAD]

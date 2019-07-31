@@ -71,26 +71,6 @@ class User
      */
     private $deletedAt = '';
 
-    public function __construct(
-        UserId $userId,
-        FirstName $firstName,
-        LastName $lastName,
-        Email $email,
-        UserName $userName,
-        Password $password,
-        string $status,
-        CreatedAt $createdAt
-    ) {
-        $this->id = $userId->get();
-        $this->firstName = $firstName->get();
-        $this->lastName = $lastName->get();
-        $this->email = $email->get();
-        $this->userName = $userName->get();
-        $this->password = $password->get();
-        $this->status = $status;
-        $this->createdAt = $createdAt->get();
-    }
-
     public function id(): string
     {
         return $this->id;

@@ -1,6 +1,6 @@
 <?php
 
-namespace UserManagement\Application\EventSubscriber;
+namespace AppCommon\Application\EventSubscriber;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -9,19 +9,18 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use UserManagement\Domain\Service\UserSessionManager;
-use AppCommon\Application\Controller\Security\AuthenticatedController;
-use AppCommon\Application\Controller\Security\UnauthenticatedController;
+
+use UserManagement\Infrastructure\Service\UserSessionManagerImpl;
 
 class AuthenticationSubscriber implements EventSubscriberInterface
 {
     private $container;
-    private $userSessionManager;
+    private $userSessionManagerImpl;
     
-    public function __construct(ContainerInterface $container, UserSessionManager $userSessionManager)
+    public function __construct(ContainerInterface $container, UserSessionManagerImpl $userSessionManagerImpl)
     {
         $this->container = $container;
-        $this->userSessionManager = $userSessionManager;
+        $this->userSessionManagerImpl = $userSessionManagerImpl;
     }
 
     public static function getSubscribedEvents()
@@ -52,11 +51,11 @@ class AuthenticationSubscriber implements EventSubscriberInterface
 
     private function validateAuthenticatedController($controller, $event)
     {
-        if (! $controller[0] instanceof AuthenticatedController) {
+        if ($controller[0] instanceof \AppCommon\Application\Controller\Security\UnauthenticatedController) {
             return;
         }
 
-        if (! $this->userSessionManager->isUserSessionAvailable()) {
+        if (! $this->userSessionManagerImpl->isUserSessionAvailable()) {
             $url = $this->container->get('router')->generate(
                 'user_management_login', [], UrlGeneratorInterface::ABSOLUTE_PATH
             );
@@ -68,13 +67,13 @@ class AuthenticationSubscriber implements EventSubscriberInterface
 
     private function validateUnauthenticatedController($controller, $event)
     {
-        if (! $controller[0] instanceof UnauthenticatedController) {
+        if ($controller[0] instanceof \AppCommon\Application\Controller\Security\AuthenticatedController) {
             return;
         }
 
-        if ($this->userSessionManager->isUserSessionAvailable()) {
+        if ($this->userSessionManagerImpl->isUserSessionAvailable()) {
             $url = $this->container->get('router')->generate(
-                'user_management_home', [], UrlGeneratorInterface::ABSOLUTE_PATH
+                'dashboard_management_home', [], UrlGeneratorInterface::ABSOLUTE_PATH
             );
             $event->setController(function() use ($url) {
                 return new RedirectResponse($url);

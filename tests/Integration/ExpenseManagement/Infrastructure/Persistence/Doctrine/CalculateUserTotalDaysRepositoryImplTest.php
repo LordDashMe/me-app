@@ -50,9 +50,9 @@ class CalculateUserTotalDaysRepositoryImplTest extends IntegrationTestBase
 
         $entity = new CalculateUserTotalDays(new UserId('UUID01'));
 
-        $response = $persistence->get($entity);
+        $result = $persistence->get($entity);
 
-        $this->assertEquals(1, $response);
+        $this->assertEquals(1, $result);
     }
 
     private function mockSubmitExpenseEntity()

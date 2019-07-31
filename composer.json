@@ -20,7 +20,8 @@
             "AppBundle\\": "src/AppBundle",
             "AppCommon\\": "src/AppCommon",
             "UserManagement\\": "src/UserManagement",
-            "ExpenseManagement\\": "src/ExpenseManagement"
+            "ExpenseManagement\\": "src/ExpenseManagement",
+            "DashboardManagement\\": "src/DashboardManagement"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },

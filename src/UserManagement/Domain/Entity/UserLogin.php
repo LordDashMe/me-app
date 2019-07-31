@@ -15,6 +15,14 @@ use UserManagement\Domain\ValueObject\Password;
 class UserLogin
 {
     /**
+     * @var \Ramsey\Uuid\UuidInterface
+     * 
+     * @ORM\Id
+     * @ORM\Column(type="string", length=255, name="ID", unique=true)
+     */
+    private $id;
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="text", name="UserName")
      */
@@ -39,6 +47,11 @@ class UserLogin
     {
         $this->userName = $userName->get();
         $this->password = $password->get();
+    }
+
+    public function id(): string
+    {
+        return $this->id;
     }
 
     public function userName(): string

@@ -8,9 +8,11 @@ use PHPUnit\Framework\TestCase;
 
 use AppCommon\Domain\ValueObject\CreatedAt;
 
+use UserManagement\Domain\Entity\Model\User;
 use UserManagement\Domain\Entity\UserLogin;
 use UserManagement\Domain\Exception\LoginFailedException;
 use UserManagement\Domain\Message\UserLoginData;
+use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\Repository\UserLoginRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Service\UserSessionManager;
@@ -31,7 +33,8 @@ class UserLoginActionTest extends TestCase
     {
         $useCase = new UserLoginAction(
             Mockery::mock(UserLoginData::class), 
-            Mockery::mock(UserLoginRepository::class), 
+            Mockery::mock(UserRepository::class),
+            Mockery::mock(UserLoginRepository::class),
             Mockery::mock(PasswordEncoder::class), 
             Mockery::mock(UserSessionManager::class)
         );
@@ -55,7 +58,8 @@ class UserLoginActionTest extends TestCase
 
         $useCase = new UserLoginAction(
             $userLoginData, 
-            $userLoginRepository, 
+            Mockery::mock(UserRepository::class),
+            $userLoginRepository,
             Mockery::mock(PasswordEncoder::class), 
             Mockery::mock(UserSessionManager::class)
         );
@@ -86,7 +90,8 @@ class UserLoginActionTest extends TestCase
 
         $useCase = new UserLoginAction(
             $userLoginData, 
-            $userLoginRepository, 
+            Mockery::mock(UserRepository::class),
+            $userLoginRepository,
             $passwordEncoder, 
             Mockery::mock(UserSessionManager::class)
         );
@@ -104,9 +109,16 @@ class UserLoginActionTest extends TestCase
         $mockUserLoginEntity = Mockery::mock($this->mockUserLoginEntity());
         $mockUserLoginEntity->shouldReceive('isApproved')
                             ->andReturn(true);
+        $mockUserLoginEntity->shouldReceive('id')
+                            ->andReturn('UUID001');
+        
         $userLoginRepository = Mockery::mock(UserLoginRepository::class);
         $userLoginRepository->shouldReceive('get')
                             ->andReturn($mockUserLoginEntity);
+
+        $userRepository = Mockery::mock(UserRepository::class);
+        $userRepository->shouldReceive('getById')
+                       ->andReturn($this->mockUserEntity());
 
         $passwordEncoder = Mockery::mock(PasswordEncoder::class);
         $passwordEncoder->shouldReceive('verifyEncodedText')
@@ -120,7 +132,8 @@ class UserLoginActionTest extends TestCase
 
         $useCase = new UserLoginAction(
             $userLoginData, 
-            $userLoginRepository, 
+            $userRepository,
+            $userLoginRepository,
             $passwordEncoder, 
             $userSessionManager
         );
@@ -134,5 +147,14 @@ class UserLoginActionTest extends TestCase
             new UserName('johndoe123'),
             new Password('P@ssw0rd!')
         );
+    }
+
+    private function mockUserEntity()
+    {
+        $userEntity = Mockery::mock(User::class);
+        $userEntity->shouldReceive('id')
+                   ->andReturn('UUID001');
+
+        return $userEntity;
     }
 }

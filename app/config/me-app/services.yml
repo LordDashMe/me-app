@@ -14,7 +14,7 @@ services:
         public: true
         resource: '../../../src/AppCommon/Domain/ValueObject/*'
 
-    
+
     UserManagement\:
         autowire: true
         public: true
@@ -40,18 +40,6 @@ services:
     UserManagement\Infrastructure\Service\UserSessionManagerImpl:
         bind:
             Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
-    
-    
-    UserManagement\Application\Controller\HomeController:
-        bind:
-            UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
-    
-    
-    UserManagement\Application\EventSubscriber\AuthenticationSubscriber:
-        autowire: true
-        bind:
-            UserManagement\Domain\Service\UserSessionManager: '@UserManagement\Infrastructure\Service\UserSessionManagerImpl'
-        tags: [kernel.event_subscriber]
 
 
     ExpenseManagement\:
@@ -71,4 +59,18 @@ services:
     ExpenseManagement\Domain\ValueObject\:
         public: true
         resource: '../../../src/ExpenseManagement/Domain/ValueObject/*'
+
+
+    DashboardManagement\:
+        autowire: true
+        public: true
+        resource: '../../../src/DashboardManagement/*'
+
+
+    # The Event Subscriber must be at the buttom list of other
+    # bundle service registration to make sure all loaded before subscribing
+    # to the event handler of symfony.
+    AppCommon\Application\EventSubscriber\AuthenticationSubscriber:
+        autowire: true
+        tags: [kernel.event_subscriber]
 

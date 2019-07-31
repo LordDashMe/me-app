@@ -56,8 +56,8 @@ class SubmitExpenseRepositoryImplTest extends IntegrationTestBase
         
         $entity->provideUniqueId($expenseId);
         
-        $response = $persistence->save($entity);
+        $result = $persistence->save($entity);
 
-        $this->assertEquals($response, $expenseId);
+        $this->assertEquals($expenseId, $result);
     }
 }

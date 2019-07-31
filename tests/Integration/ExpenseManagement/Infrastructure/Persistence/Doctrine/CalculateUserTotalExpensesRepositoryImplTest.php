@@ -50,9 +50,9 @@ class CalculateUserTotalExpensesRepositoryImplTest extends IntegrationTestBase
 
         $entity = new CalculateUserTotalExpenses(new UserId('UUID01'));
 
-        $response = $persistence->get($entity);
+        $result = $persistence->get($entity);
 
-        $this->assertEquals(120, $response);
+        $this->assertEquals(120, $result);
     }
 
     private function mockSubmitExpenseEntity()
