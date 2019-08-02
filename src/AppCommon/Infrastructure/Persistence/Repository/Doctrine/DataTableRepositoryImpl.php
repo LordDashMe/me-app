@@ -97,6 +97,8 @@ class DataTableRepositoryImpl
         $totalQueryBuilder = $this->entityManager->getRepository($this->entityNamespace())->createQueryBuilder('u');
         $totalQueryBuilder->select('COUNT(u.id)');
         $totalQueryBuilder->where("u.deletedAt = ''");
+
+        $totalQueryBuilder = $this->customCondition($totalQueryBuilder);
         
         $totalSearchString = '';
         foreach ($this->tableDefinition as $definition) {
