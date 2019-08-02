@@ -47,6 +47,7 @@ class ExpenseListRepositoryImplTest extends IntegrationTestBase
         $this->mockSubmitExpenseEntity();
 
         $persistence = new ExpenseListRepositoryImpl($this->entityManager);
+        $persistence->setUserId(new UserId('UUID01'));
         $persistence->start(0);
         $persistence->length(10);
         $persistence->search('');

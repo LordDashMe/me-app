@@ -19,28 +19,51 @@ user_management_logout:
     defaults: { _controller: UserManagement\Application\Controller\LogoutController::logoutAction }
     methods: [GET, HEAD]
 
-expense_management_create:
-    path: /expense
-    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::createAction }
-    methods: [POST]
-expense_management_update:
-    path: /expense/{expenseId}
-    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::updateAction }
-    methods: [POST]
-expense_management_find:
-    path: /expense/{expenseId}
-    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::findAction }
+
+user_management:
+    path: /user/
+    defaults: { _controller: UserManagement\Application\Controller\UserController::indexAction }
     methods: [GET, HEAD]
-expense_management_datatable:
-    path: /expense/datatable
-    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::getDatatableAction }
+user_management_get_list:
+    path: /user/get-list
+    defaults: { _controller: UserManagement\Application\Controller\UserController::getListAction }
     methods: [GET, HEAD]
-expense_management_soft_delete:
-    path: /expense/delete/{expenseId}
-    defaults: { _controller: ExpenseManagement\Presentation\Controller\ExpenseController::softDeleteAction }
+user_management_delete:
+    path: /user/delete
+    defaults: { _controller: UserManagement\Application\Controller\UserController::deleteAction }
+    methods: [POST]
+user_management_edit:
+    path: /user/edit
+    defaults: { _controller: UserManagement\Application\Controller\UserController::editAction }
     methods: [POST]
 
-dashboard_management_home:
-    path: /dashboard/home
-    defaults: { _controller: DashboardManagement\Application\Controller\HomeController::indexAction }
+
+expense_management:
+    path: /expense/
+    defaults: { _controller: ExpenseManagement\Application\Controller\ExpenseController::indexAction }
     methods: [GET, HEAD]
+expense_management_get_list:
+    path: /expense/get-list
+    defaults: { _controller: ExpenseManagement\Application\Controller\ExpenseController::getListAction }
+    methods: [GET, HEAD]
+expense_management_delete:
+    path: /expense/delete
+    defaults: { _controller: ExpenseManagement\Application\Controller\ExpenseController::deleteAction }
+    methods: [POST]
+expense_management_edit:
+    path: /expense/edit
+    defaults: { _controller: ExpenseManagement\Application\Controller\ExpenseController::editAction }
+    methods: [POST]
+expense_management_add:
+    path: /expense/add
+    defaults: { _controller: ExpenseManagement\Application\Controller\ExpenseController::addAction }
+    methods: [POST]
+expense_management_get_total_expenses:
+    path: /expense/get-total-expenses
+    defaults: { _controller: ExpenseManagement\Application\Controller\ExpenseController::getTotalExpensesAction }
+    methods: [GET, HEAD]
+expense_management_get_total_days:
+    path: /expense/get-total-days
+    defaults: { _controller: ExpenseManagement\Application\Controller\ExpenseController::getTotalDaysAction }
+    methods: [GET, HEAD]
+

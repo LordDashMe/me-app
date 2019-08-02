@@ -6,21 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppCommon\Application\Controller\Security\AuthenticatedController;
 
+use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\UseCase\UserLogoutAction;
-use UserManagement\Infrastructure\Service\UserSessionManagerImpl;
 
 class LogoutController extends Controller implements AuthenticatedController
 {
-    private $userSessionManagerImpl;
+    private $userSessionManager;
 
-    public function __construct(UserSessionManagerImpl $userSessionManagerImpl)
+    public function __construct(UserSessionManager $userSessionManager)
     {
-        $this->userSessionManagerImpl = $userSessionManagerImpl;
+        $this->userSessionManager = $userSessionManager;
     }
 
     public function logoutAction()
     {
-        $useCase = new UserLogoutAction($this->userSessionManagerImpl);
+        $useCase = new UserLogoutAction($this->userSessionManager);
         $useCase->perform();
         
         return $this->redirectToRoute('user_management_login');

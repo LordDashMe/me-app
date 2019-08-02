@@ -31,7 +31,7 @@ class GetUserListActionTest extends TestCase
      */
     public function it_should_perform_get_user_list()
     {
-        $dataTable = new DataTable(0, 10, 'id', 'DESC');
+        $dataTable = new DataTable(0, 10, '', 'id', 'DESC');
 
         $userListRepository = Mockery::mock(UserListRepository::class);
         $userListRepository->shouldReceive('start');

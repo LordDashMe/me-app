@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new AppCommon\AppCommon(),
             new UserManagement\UserManagement(),
             new ExpenseManagement\ExpenseManagement(),
-            new DashboardManagement\DashboardManagement(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

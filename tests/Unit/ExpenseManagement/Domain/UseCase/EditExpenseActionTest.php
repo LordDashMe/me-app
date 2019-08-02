@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use ExpenseManagement\Domain\Message\EditExpenseData;
 use ExpenseManagement\Domain\Repository\ExpenseModificationRepository;
 use ExpenseManagement\Domain\UseCase\EditExpenseAction;
+use ExpenseManagement\Domain\ValueObject\ExpenseId;
 
 class EditExpenseActionTest extends TestCase
 {
@@ -30,8 +31,10 @@ class EditExpenseActionTest extends TestCase
      */
     public function it_should_perform_edit_expense()
     {
+        $expenseId = new ExpenseId('E-UUID001');
+
         $editExpenseData = new EditExpenseData(
-            'E-UUID001',
+            $expenseId->get(),
             'UUID001', 
             '4', 
             'Brewed Coffee with Cream', 
@@ -41,10 +44,10 @@ class EditExpenseActionTest extends TestCase
 
         $expenseModificationRepository = Mockery::mock(ExpenseModificationRepository::class);
         $expenseModificationRepository->shouldReceive('save')
-                                      ->andReturn(null);
+                                      ->andReturn($expenseId);
 
         $useCase = new EditExpenseAction($editExpenseData, $expenseModificationRepository);
         
-        $this->assertEquals(null, $useCase->perform());
+        $this->assertEquals($expenseId, $useCase->perform());
     }
 }

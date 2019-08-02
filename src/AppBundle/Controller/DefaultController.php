@@ -18,6 +18,6 @@ class DefaultController extends Controller
         //     'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         // ]);
 
-        return $this->redirectToRoute('dashboard_management_home');
+        return $this->redirectToRoute('expense_management');
     }
 }

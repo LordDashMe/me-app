@@ -10,7 +10,7 @@ class RegistrationFailedException extends Exception
 
     public static function userNameAlreadyRegistered(): RegistrationFailedException
     {
-        $message = 'The username already registered.';
+        $message = 'Something happen when saving, please try again.';
         $code = self::USERNAME_ALREADY_REGISTERED;
 
         return new self($message, $code, null);

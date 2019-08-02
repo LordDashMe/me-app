@@ -61,12 +61,6 @@ services:
         resource: '../../../src/ExpenseManagement/Domain/ValueObject/*'
 
 
-    DashboardManagement\:
-        autowire: true
-        public: true
-        resource: '../../../src/DashboardManagement/*'
-
-
     # The Event Subscriber must be at the buttom list of other
     # bundle service registration to make sure all loaded before subscribing
     # to the event handler of symfony.

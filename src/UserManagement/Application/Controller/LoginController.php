@@ -12,30 +12,29 @@ use AppCommon\Application\Controller\Security\UnauthenticatedController;
 use UserManagement\Domain\Message\UserLoginData;
 use UserManagement\Domain\Exception\LoginFailedException;
 use UserManagement\Domain\Exception\PasswordException;
+use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\Repository\UserLoginRepository;
+use UserManagement\Domain\Service\PasswordEncoder;
 use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\UseCase\UserLoginAction;
-use UserManagement\Infrastructure\Service\PasswordEncoderImpl;
-use UserManagement\Infrastructure\Service\UserSessionManagerImpl;
-use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserRepositoryImpl;
-use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserLoginRepositoryImpl;
 
 class LoginController extends Controller implements UnauthenticatedController
 {
-    private $userRepositoryImpl;
-    private $userLoginRepositoryImpl;
-    private $passwordEncoderImpl;
-    private $userSessionManagerImpl;
+    private $userRepository;
+    private $userLoginRepository;
+    private $passwordEncoder;
+    private $userSessionManager;
 
     public function __construct(
-        UserRepositoryImpl $userRepositoryImpl,
-        UserLoginRepositoryImpl $userLoginRepositoryImpl,
-        PasswordEncoderImpl $passwordEncoderImpl,
-        UserSessionManagerImpl $userSessionManagerImpl
+        UserRepository $userRepository,
+        UserLoginRepository $userLoginRepository,
+        PasswordEncoder $passwordEncoder,
+        UserSessionManager $userSessionManager
     ) {
-        $this->userRepositoryImpl = $userRepositoryImpl;
-        $this->userLoginRepositoryImpl = $userLoginRepositoryImpl;
-        $this->passwordEncoderImpl = $passwordEncoderImpl;
-        $this->userSessionManagerImpl = $userSessionManagerImpl;
+        $this->userRepository = $userRepository;
+        $this->userLoginRepository = $userLoginRepository;
+        $this->passwordEncoder = $passwordEncoder;
+        $this->userSessionManager = $userSessionManager;
     }
 
     public function indexAction(Request $request)
@@ -54,10 +53,10 @@ class LoginController extends Controller implements UnauthenticatedController
 
             $useCase = new UserLoginAction(
                 $userLoginData, 
-                $this->userRepositoryImpl,
-                $this->userLoginRepositoryImpl, 
-                $this->passwordEncoderImpl, 
-                $this->userSessionManagerImpl
+                $this->userRepository,
+                $this->userLoginRepository, 
+                $this->passwordEncoder, 
+                $this->userSessionManager
             );
 
             $useCase->perform();
@@ -71,6 +70,6 @@ class LoginController extends Controller implements UnauthenticatedController
             ]);
         }
 
-        return $this->redirectToRoute('dashboard_management_home');
+        return $this->redirectToRoute('expense_management');
     }
 }

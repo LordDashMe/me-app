@@ -26,6 +26,6 @@ class CalculateUserTotalDaysRepositoryImpl implements CalculateUserTotalDaysRepo
 
         $total = $queryBuilder->getQuery()->getSingleScalarResult();
 
-        return $total;
+        return ($total ? $total : 0);
     }
 }

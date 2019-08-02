@@ -41,6 +41,6 @@ class EditExpenseAction implements UseCaseInterface
         $expenseModificationEntity->changeCost(new Cost($this->editExpenseData->cost));
         $expenseModificationEntity->changeDate(new Date($this->editExpenseData->date));
 
-        $this->expenseModificationRepository->save($expenseModificationEntity);
+        return $this->expenseModificationRepository->save($expenseModificationEntity);
     }
 }

@@ -4,13 +4,13 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width">
         <title>{% block title %}{% endblock %}</title>
-        {% include '@domain_common_resources/header.html.twig' %}
+        {% include '@app_common_resources/header.html.twig' %}
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% include '@domain_common_resources/footer.html.twig' %}
+        {% include '@app_common_resources/footer.html.twig' %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

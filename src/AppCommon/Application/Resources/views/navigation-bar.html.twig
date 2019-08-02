@@ -7,16 +7,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ path('dashboard_management_home') }}"><b>Me App</b> | <small>John Doe</small></a>
+            <a class="navbar-brand" href="{{ path('expense_management') }}"><b>Me App</b> | <small>{{ firstName }} {{ lastName }}</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="{{ app.request.attributes.get('_route') == 'dashboard_management_home' ? 'active' : '' }}">
-                    <a href="{{ path('dashboard_management_home') }}">Home</a>
+                <li class="{{ app.request.attributes.get('_route') == 'expense_management' ? 'active' : '' }}">
+                    <a href="{{ path('expense_management') }}">Expense List</a>
                 </li>
-                <li class="{{ app.request.attributes.get('_route') == 'user_management_suggestion' ? 'active' : '' }}">
+                {% if userName == 'admin' %}
+                    <li class="{{ app.request.attributes.get('_route') == 'user_management' ? 'active' : '' }}">
+                        <a href="{{ path('user_management') }}">User List</a>
+                    </li>
+                {% endif %}
+                {# <li class="{{ app.request.attributes.get('_route') == 'user_management_suggestion' ? 'active' : '' }}">
                     <a href="#">Suggestion</a>
-                </li>
+                </li> #}
                 {# <li><a href="#contact">Contact</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>

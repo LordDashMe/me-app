@@ -2,7 +2,6 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     paths: 
-        '%kernel.project_dir%/src/AppCommon/Application/Resources/views': domain_common_resources
+        '%kernel.project_dir%/src/AppCommon/Application/Resources/views': app_common_resources
         '%kernel.project_dir%/src/UserManagement/Application/Resources/views': user_management_resources
         '%kernel.project_dir%/src/ExpenseManagement/Application/Resources/views': expense_management_resources
-        '%kernel.project_dir%/src/DashboardManagement/Application/Resources/views': dashboard_management_resources

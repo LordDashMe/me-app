@@ -1,0 +1,38 @@
+{% extends '@app_common_resources/index.html.twig' %}
+
+{% block title %} Me App | User List {% endblock %}
+
+{% block body %}
+    {% include '@app_common_resources/navigation-bar.html.twig' with userData %}
+    {% include '@user_management_resources/user-form.html.twig' %}
+
+    <div id="wrapper">
+        <div id="container">
+            <div class="user-list-wrapper">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><b>User List</b></div>
+                    <div class="panel-body">
+                        <table id="datatable" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/user-management/user-list.js') }}"></script>
+{% endblock %}

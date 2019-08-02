@@ -8,28 +8,28 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppCommon\Application\Controller\Security\UnauthenticatedController;
-use AppCommon\Infrastructure\Service\UniqueIDResolverImpl;
+use AppCommon\Domain\Service\UniqueIDResolver;
 
 use UserManagement\Domain\Message\UserRegistrationData;
-use UserManagement\Domain\UseCase\UserRegistrationAction;
 use UserManagement\Domain\Exception\RegistrationFailedException;
-use UserManagement\Infrastructure\Service\PasswordEncoderImpl;
-use UserManagement\Infrastructure\Persistence\Repository\Doctrine\UserRegistrationRepositoryImpl;
+use UserManagement\Domain\Repository\UserRegistrationRepository;
+use UserManagement\Domain\Service\PasswordEncoder;
+use UserManagement\Domain\UseCase\UserRegistrationAction;
 
 class RegistrationController extends Controller implements UnauthenticatedController
 {
-    private $userRegistrationRepositoryImpl;
-    private $passwordEncoderImpl;
-    private $uniqueIDResolverImpl;
+    private $userRegistrationRepository;
+    private $passwordEncoder;
+    private $uniqueIDResolver;
 
     public function __construct(
-        UserRegistrationRepositoryImpl $userRegistrationRepositoryImpl,
-        PasswordEncoderImpl $passwordEncoderImpl,
-        UniqueIDResolverImpl $uniqueIDResolverImpl
+        UserRegistrationRepository $userRegistrationRepository,
+        PasswordEncoder $passwordEncoder,
+        UniqueIDResolver $uniqueIDResolver
     ) {
-        $this->userRegistrationRepositoryImpl = $userRegistrationRepositoryImpl;
-        $this->passwordEncoderImpl = $passwordEncoderImpl;
-        $this->uniqueIDResolverImpl = $uniqueIDResolverImpl;
+        $this->userRegistrationRepository = $userRegistrationRepository;
+        $this->passwordEncoder = $passwordEncoder;
+        $this->uniqueIDResolver = $uniqueIDResolver;
     }
 
     public function indexAction(Request $request)
@@ -52,9 +52,9 @@ class RegistrationController extends Controller implements UnauthenticatedContro
 
             $useCase = new UserRegistrationAction(
                 $userRegistrationData, 
-                $this->userRegistrationRepositoryImpl, 
-                $this->passwordEncoderImpl,
-                $this->uniqueIDResolverImpl
+                $this->userRegistrationRepository, 
+                $this->passwordEncoder,
+                $this->uniqueIDResolver
             );
 
             $useCase->perform();

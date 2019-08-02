@@ -14,6 +14,11 @@ class UserListRepositoryImpl extends DataTableRepositoryImpl implements UserList
     protected $tableDefinition = [
         [
             'db_name' => 'id',
+            'app_name' => 'action',
+            'search' => false
+        ],
+        [
+            'db_name' => 'id',
             'app_name' => 'id',
             'search' => false
         ],
@@ -28,9 +33,14 @@ class UserListRepositoryImpl extends DataTableRepositoryImpl implements UserList
             'search' => true
         ],
         [
-            'db_name' => 'id',
-            'app_name' => 'action',
-            'search' => false
+            'db_name' => 'email',
+            'app_name' => 'email',
+            'search' => true
+        ],
+        [
+            'db_name' => 'status',
+            'app_name' => 'status',
+            'search' => true
         ]
     ];
 
