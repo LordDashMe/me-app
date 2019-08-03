@@ -19,7 +19,7 @@ class LoginFailedException extends Exception
 
     public static function userStatusIsNotActive(): LoginFailedException
     {
-        $message = 'The account status is inactived.';
+        $message = 'The account status is inactive.';
         $code = self::USER_STATUS_IS_NOT_ACTIVE;
 
         return new self($message, $code, null);

@@ -12,71 +12,10 @@ h1, h4, p, table {
     color: #000;
 }
 
-#wrapper {
+#me-app {
     padding: 20px;
 }
+
 #container {
     margin-top: 50px;
-}
-
-.login-wrapper {
-    margin: 50px auto;
-    width: 340px;
-}
-.registration-wrapper {
-    margin: 50px auto;
-    width: 340px;
-}
-
-.navbar-default .navbar-brand {
-    color: #000;
-}
-.navbar-default .navbar-nav>.active>a, 
-.navbar-default .navbar-nav>.active>a:focus, 
-.navbar-default .navbar-nav>.active>a:hover {
-    color: #000;
-}
-.navbar-default .navbar-nav>li>a {
-    color: #000;
-}
-
-.expense-list-pagination>.pagination {
-    margin: 0px 0;
-}
-.expense-list-pagination>.pagination>li>a {
-    color: #000;
-}
-.expense-list-pagination>.pagination>.active>a {
-    background-color: #777;
-    border-color: #ccc;
-    color: #fff;
-}
-
-.mfp-content {
-    width: auto;
-    max-width: 500px;
-}
-
-/* Extra small devices (phones, 600px and down) */
-@media screen and (max-width: 600px) {
-    .login-wrapper {
-        margin: 40px auto;
-        width: 100%;
-    }
-} 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media screen and (min-width: 600px) {
-
-} 
-/* Medium devices (landscape tablets, 768px and up) */
-@media screen and (min-width: 768px) {
-
-} 
-/* Large devices (laptops/desktops, 992px and up) */
-@media screen and (min-width: 992px) {
-
-} 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media screen and (min-width: 1200px) {
-
 }

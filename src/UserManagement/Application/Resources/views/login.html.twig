@@ -1,10 +1,18 @@
 {% extends '@app_common_resources/index.html.twig' %}
 
-{% block title %} Me App | User login {% endblock %}
+{% block title %} Me App | Login {% endblock %}
+    
+{% block stylesheets %}
+    <link href="{{ asset('assets/css/user-management/login.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-<div id="wrapper">
     <div id="container">
+        <video autoplay muted loop id="login-video">
+            <source src="{{ asset('assets/video/ocean-overview.mp4') }}" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="video-overlay"></div>
         <div class="login-wrapper">
 
             {% if exception is defined %}
@@ -15,7 +23,7 @@
             {% endif %}
 
             <div class="panel panel-default">
-                <div class="panel-heading">Who are you? Give your details below:</div>
+                <div class="panel-heading"><h4>Login | <b>Me App</b></h4></div>
                 <div class="panel-body">
                     <form method="POST" action="{{ path('user_management_login_submit') }}">
                         <div class="form-group">
@@ -25,7 +33,7 @@
                                 id="username" 
                                 name="username"
                                 class="form-control" 
-                                placeholder="johndoe123"
+                                placeholder=""
                                 required
                             >
                         </div>
@@ -36,7 +44,7 @@
                                 id="password" 
                                 name="password"
                                 class="form-control" 
-                                placeholder="********"
+                                placeholder=""
                                 required
                             >
                         </div>
@@ -54,6 +62,5 @@
                 </div>
             </div>
         </div>
-	</div>
-</div>
+    </div>
 {% endblock %}

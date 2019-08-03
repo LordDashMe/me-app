@@ -1,9 +1,12 @@
 {% extends '@app_common_resources/index.html.twig' %}
 
-{% block title %} Me App | User Registration {% endblock %}
+{% block title %} Me App | Registration {% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/css/user-management/registration.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-<div id="wrapper">
     <div id="container">
         <div class="registration-wrapper">
 
@@ -113,6 +116,5 @@
                 </div>
             </div>
         </div>
-	</div>
-</div>
+    </div>
 {% endblock %}

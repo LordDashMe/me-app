@@ -9,7 +9,9 @@
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div id="me-app">
+            {% block body %}{% endblock %}
+        </div>
         {% include '@app_common_resources/footer.html.twig' %}
         {% block javascripts %}{% endblock %}
     </body>

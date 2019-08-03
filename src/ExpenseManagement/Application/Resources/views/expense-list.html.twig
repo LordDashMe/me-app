@@ -2,47 +2,49 @@
 
 {% block title %} Me App | Expense List {% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('assets/css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/jquery-datatable.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
     {% include '@app_common_resources/navigation-bar.html.twig' with userData %}
-    {% include '@expense_management_resources/expense-form.html.twig' %}
+    <div id="container">
+        <div class="expense-list-wrapper">
 
-    <div id="wrapper">
-        <div id="container">
-            <div class="expense-list-wrapper">
-
-                <h4>Total Expense(s): <b><span id="total-expenses">0</span></b></h4>
-                <h5>Total Day(s): <b><span id="total-days">0</span></b></h5>
-                <br>
-                <a class="btn btn-default btn-sm action-add-expense-entry">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Expense
-                </a>
-                <br>
-                <br>
-                <div class="panel panel-default">
-                    <div class="panel-heading"><b>Expense List</b></div>
-                    <div class="panel-body">
-                        <table id="datatable" class="display nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Action</th>
-                                    <th>ID</th>
-                                    <th>Type</th>
-                                    <th>Label</th>
-                                    <th>Cost</th>
-                                    <th>Date</th>
-                                    <th>Created At</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+            <h5>Total Expense(s): <b><span id="total-expenses">0</span></b></h5>
+            <h5>Total Day(s): <b><span id="total-days">0</span></b></h5>
+            <br>
+            <a class="btn btn-default btn-sm action-add-expense-entry">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Expense
+            </a>
+            <br>
+            <br>
+            <div class="panel panel-default">
+                <div class="panel-heading">Expense List</div>
+                <div class="panel-body">
+                    <table id="datatable" class="display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Label</th>
+                                <th>Cost</th>
+                                <th>Date</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
-
             </div>
+
         </div>
     </div>
-
+    {% include '@expense_management_resources/expense-form.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('assets/js/expense-management/expense-list.js') }}"></script>
+    <script src="{{ asset('assets/js/helper.js') }}"></script>
+    <script src="{{ asset('assets/js/expense-management/main.js') }}"></script>
 {% endblock %}

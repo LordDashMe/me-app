@@ -1,0 +1,49 @@
+.login-wrapper {
+    margin: 50px auto;
+    width: 340px;
+}
+
+#login-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -1;
+}
+
+.panel {
+    border-radius: 0;
+    box-shadow: 0 0 0;
+    background-color: rgb(255, 255, 255, 0.8);
+}
+
+.panel-default>.panel-heading {
+    background: none;
+    background-color: rgb(0, 0, 0, 0.1);
+    border-radius: 0;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 600px) {
+    .login-wrapper {
+        margin: 40px auto;
+        width: 100%;
+    }
+} 
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media screen and (min-width: 600px) {
+
+} 
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+
+} 
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+
+} 
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+
+}

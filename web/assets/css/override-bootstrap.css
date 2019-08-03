@@ -1,0 +1,26 @@
+.panel {
+    border-radius: 0;
+    box-shadow: 0 0 0;
+}
+
+.panel-default>.panel-heading {
+    border-radius: 0;
+    background: #efefef;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.alert-danger {
+    border-radius: 0;
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
+    outline: 0;
+    box-shadow: none;
+    border-radius: 0;
+}

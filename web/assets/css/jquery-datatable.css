@@ -1,0 +1,23 @@
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:focus,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:active {
+    background: #efefef;
+    border: 1px dashed #ccc;
+    background-image: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #000 !important;
+    border: 1px dashed #ccc;
+    background: #efefef;
+    background-image: none;
+    outline: 0;
+    box-shadow: none;
+}
