@@ -67,7 +67,7 @@
         "compile": [
             "php bin/console doctrine:migrations:status",
             "php bin/console doctrine:migrations:diff",
-            "php bin/console doctrine:migrations:migrate next"
+            "php bin/console doctrine:migrations:migrate latest"
         ]
     },
     "config": {
