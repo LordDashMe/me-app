@@ -17,7 +17,7 @@ user_management_register_create:
 user_management_enable_admin:
     path: /user/enable-admin
     defaults: { _controller: UserManagement\Application\Controller\RegistrationController::enableAdminAction }
-    methods: [POST]
+    methods: [GET, HEAD]
 user_management_logout:
     path: /user/logout
     defaults: { _controller: UserManagement\Application\Controller\LogoutController::logoutAction }

@@ -10,24 +10,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppCommon\Application\Controller\Security\UnauthenticatedController;
 use AppCommon\Domain\Service\UniqueIDResolver;
 
+use UserManagement\Domain\Message\EditUserData;
 use UserManagement\Domain\Message\UserRegistrationData;
 use UserManagement\Domain\Exception\RegistrationFailedException;
 use UserManagement\Domain\Repository\UserRegistrationRepository;
+use UserManagement\Domain\Repository\UserRepository;
+use UserManagement\Domain\Repository\UserModificationRepository;
 use UserManagement\Domain\Service\PasswordEncoder;
+use UserManagement\Domain\UseCase\EditUserAction;
 use UserManagement\Domain\UseCase\UserRegistrationAction;
+use UserManagement\Domain\ValueObject\UserName;
 
 class RegistrationController extends Controller implements UnauthenticatedController
 {
     private $userRegistrationRepository;
+    private $userRepository;
     private $passwordEncoder;
     private $uniqueIDResolver;
 
     public function __construct(
         UserRegistrationRepository $userRegistrationRepository,
+        UserRepository $userRepository,
+        UserModificationRepository $userModificationRepository,
         PasswordEncoder $passwordEncoder,
         UniqueIDResolver $uniqueIDResolver
     ) {
         $this->userRegistrationRepository = $userRegistrationRepository;
+        $this->useRepository = $userRepository;
+        $this->userModificationRepository = $userModificationRepository;
         $this->passwordEncoder = $passwordEncoder;
         $this->uniqueIDResolver = $uniqueIDResolver;
     }
@@ -76,7 +86,7 @@ class RegistrationController extends Controller implements UnauthenticatedContro
 
     public function enableAdminAction()
     {
-        $record = $this->useRepository->getByUserName('admin');
+        $record = $this->useRepository->getByUserName(new UserName('admin'));
 
         $editUserData = new EditUserData(
             $record->id(),

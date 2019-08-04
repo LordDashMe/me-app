@@ -14,7 +14,6 @@ use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Repository\UserListRepository;
 use UserManagement\Domain\Repository\UserDeletionRepository;
 use UserManagement\Domain\Repository\UserModificationRepository;
-use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\UseCase\GetUserListAction;
 use UserManagement\Domain\UseCase\DeleteUserAction;
 use UserManagement\Domain\UseCase\EditUserAction;
@@ -24,7 +23,6 @@ class UserController extends Controller implements AuthenticatedController
     private $userListRepository;
     private $userDeletionRepository;
     private $userModificationRepository;
-    private $userRepository;
     private $userSessionManager;
 
     private $userEntity;
@@ -33,13 +31,11 @@ class UserController extends Controller implements AuthenticatedController
         UserListRepository $userListRepository,
         UserDeletionRepository $userDeletionRepository,
         UserModificationRepository $userModificationRepository,
-        UserRepository $userRepository,
         UserSessionManager $userSessionManager
     ) {
         $this->userListRepository = $userListRepository;
         $this->userDeletionRepository = $userDeletionRepository;
         $this->userModificationRepository = $userModificationRepository;
-        $this->useRepository = $userRepository;
         $this->userSessionManager = $userSessionManager;
 
         $this->userEntity = $this->userSessionManager->get();
