@@ -39,7 +39,7 @@ class ExpenseListRepositoryImpl extends DataTableRepositoryImpl implements Expen
         [
             'db_name' => 'cost',
             'app_name' => 'cost',
-            'search' => true
+            'search' => false
         ],
         [
             'db_name' => 'date',
