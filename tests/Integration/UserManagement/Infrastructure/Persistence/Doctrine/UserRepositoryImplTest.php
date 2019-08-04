@@ -53,6 +53,22 @@ class UserRepositoryImplTest extends IntegrationTestBase
         $this->assertEquals('John', $result->firstName());
     }
 
+    /**
+     * @test
+     */
+    public function it_should_get_persisted_user_via_user_name()
+    {
+        $this->mockUserRegistrationEntity();
+
+        $persistence = new UserRepositoryImpl($this->entityManager);
+
+        $entity = new User();
+
+        $result = $persistence->getByUserName(new UserName('johndoe123'));
+
+        $this->assertEquals('John', $result->firstName());
+    }
+
     private function mockUserRegistrationEntity()
     {
         $persistence = new UserRegistrationRepositoryImpl($this->entityManager);

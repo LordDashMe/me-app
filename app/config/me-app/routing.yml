@@ -36,6 +36,10 @@ user_management_edit:
     path: /user/edit
     defaults: { _controller: UserManagement\Application\Controller\UserController::editAction }
     methods: [POST]
+user_management_enable_admin:
+    path: /user/enable-admin
+    defaults: { _controller: UserManagement\Application\Controller\UserController::enableAdminAction }
+    methods: [POST]
 
 
 expense_management:

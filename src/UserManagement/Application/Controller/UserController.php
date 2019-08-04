@@ -14,6 +14,7 @@ use UserManagement\Domain\Service\UserSessionManager;
 use UserManagement\Domain\Repository\UserListRepository;
 use UserManagement\Domain\Repository\UserDeletionRepository;
 use UserManagement\Domain\Repository\UserModificationRepository;
+use UserManagement\Domain\Repository\UserRepository;
 use UserManagement\Domain\UseCase\GetUserListAction;
 use UserManagement\Domain\UseCase\DeleteUserAction;
 use UserManagement\Domain\UseCase\EditUserAction;
@@ -23,6 +24,7 @@ class UserController extends Controller implements AuthenticatedController
     private $userListRepository;
     private $userDeletionRepository;
     private $userModificationRepository;
+    private $userRepository;
     private $userSessionManager;
 
     private $userEntity;
@@ -31,11 +33,13 @@ class UserController extends Controller implements AuthenticatedController
         UserListRepository $userListRepository,
         UserDeletionRepository $userDeletionRepository,
         UserModificationRepository $userModificationRepository,
+        UserRepository $userRepository,
         UserSessionManager $userSessionManager
     ) {
         $this->userListRepository = $userListRepository;
         $this->userDeletionRepository = $userDeletionRepository;
         $this->userModificationRepository = $userModificationRepository;
+        $this->useRepository = $userRepository;
         $this->userSessionManager = $userSessionManager;
 
         $this->userEntity = $this->userSessionManager->get();
@@ -123,6 +127,27 @@ class UserController extends Controller implements AuthenticatedController
         $useCase = new EditUserAction($editUserData, $this->userModificationRepository);
 
         return $this->json(['id' => $useCase->perform()->get()]);
+    }
+
+    public function enableAdminAction()
+    {
+        $record = $this->useRepository->getByUserName('admin');
+
+        $editUserData = new EditUserData(
+            $record->id(),
+            $record->firstName(),
+            $record->lastName(),
+            $record->email(),
+            '1'
+        );
+
+        $useCase = new EditUserAction($editUserData, $this->userModificationRepository);
+    
+        if ($useCase->perform()->get()) {
+            return $this->json(['message' => 'the admin account successfully enabled.']);
+        }
+
+        return $this->json(['message' => 'failed enabling admin account.']);
     }
 
     // TODO: Refactor this to generic class or helper.
