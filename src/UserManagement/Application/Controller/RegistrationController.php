@@ -99,7 +99,7 @@ class RegistrationController extends Controller implements UnauthenticatedContro
         $useCase = new EditUserAction($editUserData, $this->userModificationRepository);
     
         if ($useCase->perform()->get()) {
-            return $this->json(['message' => 'the admin account successfully enabled.']);
+            return $this->json(['message' => 'admin account successfully enabled.']);
         }
 
         return $this->json(['message' => 'failed enabling admin account.']);
