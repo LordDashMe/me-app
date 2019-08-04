@@ -40,7 +40,7 @@ class UserListRepositoryImpl extends DataTableRepositoryImpl implements UserList
         [
             'db_name' => 'status',
             'app_name' => 'status',
-            'search' => true
+            'search' => false
         ]
     ];
 
