@@ -73,4 +73,25 @@ class RegistrationController extends Controller implements UnauthenticatedContro
             'message' => 'Request for account has been sent! Please wait for the Admin to approve the request.'
         ]);
     }
+
+    public function enableAdminAction()
+    {
+        $record = $this->useRepository->getByUserName('admin');
+
+        $editUserData = new EditUserData(
+            $record->id(),
+            $record->firstName(),
+            $record->lastName(),
+            $record->email(),
+            '1'
+        );
+
+        $useCase = new EditUserAction($editUserData, $this->userModificationRepository);
+    
+        if ($useCase->perform()->get()) {
+            return $this->json(['message' => 'the admin account successfully enabled.']);
+        }
+
+        return $this->json(['message' => 'failed enabling admin account.']);
+    }
 }
