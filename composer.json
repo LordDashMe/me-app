@@ -65,6 +65,8 @@
             "@symfony-scripts"
         ],
         "compile": [
+            "php bin/console doctrine:migrations:status",
+            "php bin/console doctrine:migrations:dump-schema",
             "php bin/console doctrine:migrations:migrate"
         ]
     },
