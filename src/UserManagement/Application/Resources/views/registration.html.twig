@@ -35,7 +35,7 @@
                     <form method="POST" action="{{ path('user_management_register_create') }}">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         <div class="form-group">
-                            <p>First Name:</p>
+                            <label class="control-label">First Name: <span class="required">*</span></label>
                             <input 
                                 type="text" 
                                 id="first_name" 
@@ -44,10 +44,11 @@
                                 placeholder="John" 
                                 value="{{ (old['first_name'] is defined) ? old['first_name'] : '' }}"
                                 required
+                                autocomplete="off"
                             >
                         </div>
                         <div class="form-group">
-                            <p>Last Name:</p>
+                            <label class="control-label">Last Name: <span class="required">*</span></label>
                             <input 
                                 type="text" 
                                 id="last_name" 
@@ -56,10 +57,11 @@
                                 placeholder="Doe" 
                                 value="{{ old['last_name'] is defined ? old['last_name'] : '' }}"
                                 required
+                                autocomplete="off"
                             >
                         </div>
                         <div class="form-group">
-                            <p>Email:</p>
+                            <label class="control-label">Email: <span class="required">*</span></label>
                             <input 
                                 type="email" 
                                 id="email" 
@@ -68,10 +70,11 @@
                                 placeholder="example@provider.com" 
                                 value="{{ old['email'] is defined ? old['email'] : '' }}"
                                 required
+                                autocomplete="off"
                             >
                         </div>
                         <div class="form-group">
-                            <p>Username:</p>
+                            <label class="control-label">Username: <span class="required">*</span></label>
                             <input 
                                 type="text" 
                                 id="username" 
@@ -80,10 +83,11 @@
                                 placeholder="johndoe123" 
                                 value="{{ old['username'] is defined ? old['username'] : '' }}"
                                 required
+                                autocomplete="off"
                             >
                         </div>
                         <div class="form-group">
-                            <p>Password:</p>
+                            <label class="control-label">Password: <span class="required">*</span></label>
                             <input 
                                 type="password" 
                                 id="password" 
@@ -91,18 +95,20 @@
                                 class="form-control" 
                                 placeholder="P@ssw0rd!"
                                 required
+                                autocomplete="off"
                             >
                             <small>Password must contain a minimum of 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.</small>
                         </div>
                         <div class="form-group">
-                            <p>Confirm Password:</p>
+                            <label class="control-label">Confirm Password: <span class="required">*</span></label>
                             <input 
                                 type="password" 
                                 id="confirm_password" 
                                 name="confirm_password" 
                                 class="form-control" 
-                                placeholder="P@ssw0rd!"
+                                placeholder=""
                                 required
+                                autocomplete="off"
                             >
                         </div>
                         <div class="form-group">

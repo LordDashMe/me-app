@@ -12,11 +12,11 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="{{ app.request.attributes.get('_route') == 'expense_management' ? 'active' : '' }}">
-                    <a href="{{ path('expense_management') }}">Expense List</a>
+                    <a href="{{ path('expense_management') }}">Expenses</a>
                 </li>
                 {% if userName == 'admin' %}
                     <li class="{{ app.request.attributes.get('_route') == 'user_management' ? 'active' : '' }}">
-                        <a href="{{ path('user_management') }}">User List</a>
+                        <a href="{{ path('user_management') }}">Users</a>
                     </li>
                 {% endif %}
                 {# <li class="{{ app.request.attributes.get('_route') == 'user_management_suggestion' ? 'active' : '' }}">

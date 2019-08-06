@@ -46,13 +46,17 @@
                         return html;
                     }
                 },
+                { "data": "created_at", "name": "createdAt" },
             ],
-            "columnDefs": [{
-                targets: 1,
-                render: function (data, type, row) {
-                    return data.substr(0, 10);
+            "order": [[ 6, "DESC" ]],
+            "columnDefs": [
+                {
+                    targets: 1,
+                    render: function (data, type, row) {
+                        return data.substr(0, 10);
+                    }
                 }
-            }],
+            ],
             "drawCallback": function (settings) {
                 deleteAction();
                 editAction();

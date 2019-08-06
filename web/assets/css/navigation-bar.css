@@ -10,4 +10,14 @@
 
 .navbar-default .navbar-nav>li>a {
     color: #000;
+    background-image: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+.navbar-default .navbar-nav>.active>a {
+    background: #efefef;
+    background-image: none;
+    outline: 0;
+    box-shadow: none;
 }

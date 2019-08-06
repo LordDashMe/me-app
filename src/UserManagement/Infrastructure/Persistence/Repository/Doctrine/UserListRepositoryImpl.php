@@ -41,6 +41,11 @@ class UserListRepositoryImpl extends DataTableRepositoryImpl implements UserList
             'db_name' => 'status',
             'app_name' => 'status',
             'search' => false
+        ],
+        [
+            'db_name' => 'createdAt',
+            'app_name' => 'created_at',
+            'search' => false
         ]
     ];
 

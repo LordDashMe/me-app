@@ -12,6 +12,14 @@
     border-radius: 0;
 }
 
+input[type="text"].form-control, 
+input[type="password"].form-control,
+input[type="email"].form-control,
+input[type="number"].form-control,
+select.form-control {
+    color: #000;
+}
+
 .alert-danger {
     border-radius: 0;
 }
@@ -23,4 +31,61 @@
     outline: 0;
     box-shadow: none;
     border-radius: 0;
+    background-image: none;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    outline: 0;
+    box-shadow: none;
+    border-radius: 0;
+    background-image: none;
+    border: none;
+}
+
+label {
+    font-weight: normal;
+}
+
+span.label {
+    display: inline-block;
+    width: 120px;
+    line-height: unset;
+    font-size: 0.79em;
+    border-radius: .35em;
+    font-weight: 700;
+}
+
+.control-label span.required {
+    color: red;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 600px) {
+    span.label {
+        width: 110px;
+        font-size: 75%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media screen and (min-width: 600px) {
+
+} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+
 }

@@ -1,23 +1,86 @@
+.dataTables_wrapper {
+    font-size: 0.99em;
+}
+
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     border-radius: 0;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
-.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
-.dataTables_wrapper .dataTables_paginate .paginate_button.current:focus,
-.dataTables_wrapper .dataTables_paginate .paginate_button.current:active {
-    background: #efefef;
-    border: 1px dashed #ccc;
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:focus,
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    color: #000 !important;
+    border: 1px solid #939393;
+    background: #e0e0e0;
     background-image: none;
     outline: 0;
     box-shadow: none;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    color: #000 !important;
-    border: 1px dashed #ccc;
-    background: #efefef;
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:focus,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:active {
     background-image: none;
     outline: 0;
-    box-shadow: none;
+    box-shadow: none;  
+}
+
+.dataTables_wrapper input[type="search"] {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    font-weight: normal;
+    height: 28px;
+}
+
+table.dataTable thead th {
+    border-bottom: 1px solid #dddddd;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #dddddd;
+}
+
+.dataTables_wrapper span.dtr-data {
+    display: inline-block;
+    white-space: initial;
+    word-wrap: break-word;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 600px) {
+    .dataTables_wrapper {
+        font-size: 0.9em;
+    }
+
+    .dataTables_wrapper span.dtr-data {
+        width: 155px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media screen and (min-width: 600px) {
+    .dataTables_wrapper span.dtr-data {
+        width: 300px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+
 }

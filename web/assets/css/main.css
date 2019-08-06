@@ -1,15 +1,11 @@
 html,
 body {
+    font-family: "Montserrat", sans-serif;
+    color: #000;
     width: 100%;
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
-}
-body {
-    font-family: "Montserrat", sans-serif;
-}
-h1, h4, p, table {
-    color: #000;
 }
 
 #me-app {
@@ -18,4 +14,13 @@ h1, h4, p, table {
 
 #container {
     margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+}
+
+@media screen and (max-width: 1280px) {
+    #container {
+        width: 100%;
+    }
 }

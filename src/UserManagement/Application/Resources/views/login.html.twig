@@ -23,11 +23,11 @@
             {% endif %}
 
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Login | <b>Me App</b></h4></div>
+                <div class="panel-heading"><h4><b>Me App</b> | Login</h4></div>
                 <div class="panel-body">
                     <form method="POST" action="{{ path('user_management_login_submit') }}">
                         <div class="form-group">
-                            <p>Username:</p>
+                            <label class="control-label">Username: </label>
                             <input 
                                 type="text" 
                                 id="username" 
@@ -35,10 +35,11 @@
                                 class="form-control" 
                                 placeholder=""
                                 required
+                                autocomplete="off"
                             >
                         </div>
                         <div class="form-group">
-                            <p>Password:</p>
+                            <label class="control-label">Password: </label>
                             <input 
                                 type="password" 
                                 id="password" 
@@ -46,6 +47,7 @@
                                 class="form-control" 
                                 placeholder=""
                                 required
+                                autocomplete="off"
                             >
                         </div>
                         <div class="form-group">
