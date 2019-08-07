@@ -103,6 +103,7 @@
     function editAction() {
         $('.action-edit-inline').on('click', function () { 
             $.magnificPopup.open({
+                closeOnBgClick: false,
                 items: {
                   src: $('#action-popup'),
                   type: 'inline'

@@ -3,25 +3,24 @@
     width: 340px;
 }
 
-#login-video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%; 
-    min-height: 100%;
-    z-index: -1;
-}
-
 .panel {
     border-radius: 0;
     box-shadow: 0 0 0;
-    background-color: rgb(255, 255, 255, 0.8);
 }
 
 .panel-default>.panel-heading {
-    background: none;
-    background-color: rgb(0, 0, 0, 0.1);
     border-radius: 0;
+}
+
+.sign-up-text {
+    text-align: center;
+    font-size: 0.9em;
+    color: #5f5f5f;
+}
+
+.copyright-text {
+    text-align: center;
+    color: #5f5f5f;
 }
 
 /* Extra small devices (phones, 600px and down) */

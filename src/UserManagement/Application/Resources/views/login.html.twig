@@ -1,6 +1,6 @@
 {% extends '@app_common_resources/index.html.twig' %}
 
-{% block title %} Me App | Login {% endblock %}
+{% block title %} Login | Me App {% endblock %}
     
 {% block stylesheets %}
     <link href="{{ asset('assets/css/user-management/login.css') }}" rel="stylesheet">
@@ -8,11 +8,12 @@
 
 {% block body %}
     <div id="container">
-        <video autoplay muted loop id="login-video">
+        {# <video autoplay muted loop id="login-video">
             <source src="{{ asset('assets/video/ocean-overview.mp4') }}" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
-        <div class="video-overlay"></div>
+        <div class="video-overlay"></div> #}
+        <div class="login-bg"></div>
         <div class="login-wrapper">
 
             {% if exception is defined %}
@@ -23,11 +24,11 @@
             {% endif %}
 
             <div class="panel panel-default">
-                <div class="panel-heading"><h4><b>Me App</b> | Login</h4></div>
+                <div class="panel-heading"><h4>Log in to <b>Me App</b> </h4></div>
                 <div class="panel-body">
                     <form method="POST" action="{{ path('user_management_login_submit') }}">
                         <div class="form-group">
-                            <label class="control-label">Username: </label>
+                            <label class="control-label">Username </label>
                             <input 
                                 type="text" 
                                 id="username" 
@@ -39,7 +40,7 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Password: </label>
+                            <label class="control-label">Password </label>
                             <input 
                                 type="password" 
                                 id="password" 
@@ -51,18 +52,24 @@
                             >
                         </div>
                         <div class="form-group">
-                            Don't have an account yet? <a href="{{ path('user_management_register') }}">Register</a>
-                        </div>
-                        <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Submit">
+                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Log In">
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="sign-up-text">Don't have an account yet? <a href="{{ path('user_management_register') }}">Create an account</a></p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <p class="copyright-text">
+                                <small>© 2019 <a href="https://lorddashme.github.io/" target="_blank">LordDashMe</a></small>
+                            </p>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
+        </div>  
     </div>
 {% endblock %}
