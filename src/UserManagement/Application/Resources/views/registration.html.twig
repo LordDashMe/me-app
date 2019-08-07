@@ -1,6 +1,7 @@
 {% extends '@app_common_resources/index.html.twig' %}
 
-{% block title %} Me App | Registration {% endblock %}
+{% block title %} Registration | Me App {% endblock %}
+{% block description %} Get started with your account. {% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('assets/css/user-management/registration.css') }}" rel="stylesheet">
@@ -26,16 +27,18 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Upon registration, your request will be process by the Admin, then after that you're allowed to access all the features of the site.
-                    <br>
-                    <br>
-                    I don't want to register, go back to <a href="{{ path('user_management_login') }}">Login</a>
+                    <h1>Get started with your account</h1>
+                    <div class="registration-details">
+                        <p>Upon registration, your request for an account will be process by the <b>Admin</b>.</p>
+                        <p>You can only allow to access the site when your account is approved.</p>
+                        <p>I don't want to create an account right now, go back to <a href="{{ path('user_management_login') }}">Log In</a>.</p>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <form method="POST" action="{{ path('user_management_register_create') }}">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         <div class="form-group">
-                            <label class="control-label">First Name: <span class="required">*</span></label>
+                            <label class="control-label">First name<span class="required">*</span></label>
                             <input 
                                 type="text" 
                                 id="first_name" 
@@ -48,7 +51,7 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Last Name: <span class="required">*</span></label>
+                            <label class="control-label">Last name<span class="required">*</span></label>
                             <input 
                                 type="text" 
                                 id="last_name" 
@@ -61,20 +64,20 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Email: <span class="required">*</span></label>
+                            <label class="control-label">Email<span class="required">*</span></label>
                             <input 
                                 type="email" 
                                 id="email" 
                                 name="email" 
                                 class="form-control" 
-                                placeholder="example@provider.com" 
+                                placeholder="john.doe@example.com" 
                                 value="{{ old['email'] is defined ? old['email'] : '' }}"
                                 required
                                 autocomplete="off"
                             >
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Username: <span class="required">*</span></label>
+                            <label class="control-label">Username<span class="required">*</span></label>
                             <input 
                                 type="text" 
                                 id="username" 
@@ -87,7 +90,7 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Password: <span class="required">*</span></label>
+                            <label class="control-label">Password<span class="required">*</span></label>
                             <input 
                                 type="password" 
                                 id="password" 
@@ -97,10 +100,12 @@
                                 required
                                 autocomplete="off"
                             >
-                            <small>Password must contain a minimum of 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.</small>
+                            <p class="password-info-text">
+                                <small>Password must contain a minimum of 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.</small>
+                            </p>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Confirm Password: <span class="required">*</span></label>
+                            <label class="control-label">Confirm password<span class="required">*</span></label>
                             <input 
                                 type="password" 
                                 id="confirm_password" 
@@ -114,7 +119,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-primary" value="Register">
+                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-primary" value="Get Started!">
                                 </div>
                             </div>
                         </div>

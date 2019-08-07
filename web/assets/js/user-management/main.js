@@ -24,10 +24,10 @@
                                         'data-email="' + full.email + '" ' + 
                                         'data-status="' + full.status + '" ' + 
                                     '>' + 
-                                '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' + 
+                                '<i class="material-icons md-18 default-color">edit</i>' + 
                             '</a>&nbsp;';
                             html += '<a class="btn btn-default btn-sm action-delete-inline" data-id="'+ full.id +'">' + 
-                                '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>' + 
+                                '<i class="material-icons md-18 default-color">delete</i>' + 
                             '</a>';
                             html += '</div>';
                         return html;
@@ -115,7 +115,7 @@
                 }
             });
 
-            $('#action-popup .panel-title').html('Edit User');
+            $('#action-popup .panel-title b').html('Edit User');
 
             $('#action-popup input[name="first_name"]').val($(this).data('first_name'));
             $('#action-popup input[name="last_name"]').val($(this).data('last_name'));

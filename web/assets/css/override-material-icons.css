@@ -1,0 +1,12 @@
+.material-icons {
+    line-height: 1.2;
+    vertical-align: middle;
+}
+
+.material-icons.default-color {
+    color: #444444;
+}
+
+.material-icons.md-18 {
+    font-size: 18px;   
+}

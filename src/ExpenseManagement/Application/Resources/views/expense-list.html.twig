@@ -1,27 +1,27 @@
 {% extends '@app_common_resources/index.html.twig' %}
 
-{% block title %} Me App | Expense List {% endblock %}
+{% block title %} Expenses | Me App {% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('assets/css/magnific-popup.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/jquery-datatable.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/expense-management/list.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
     {% include '@app_common_resources/navigation-bar.html.twig' with userData %}
     <div id="container">
         <div class="expense-list-wrapper">
-
-            <h5>Total Day(s): <b><span id="total-days">0</span></b></h5>
-            <h5>Total Expense(s): <b><span id="total-expenses">0</span></b></h5>
+            <h5>Total Days: <b><span id="total-days">0</span></b></h5>
+            <h5>Total Expenses</small>: <b><span id="total-expenses">0</span></b></h5>
             <br>
             <a class="btn btn-default btn-sm action-add-expense-entry">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Expense
+                <i class="material-icons md-18 default-color">add</i> <b>Expense</b>
             </a>
             <br>
             <br>
             <div class="panel panel-default">
-                <div class="panel-heading">Expense List</div>
+                <div class="panel-heading">Expenses</div>
                 <div class="panel-body">
                     <table id="datatable" class="display nowrap" style="width:100%">
                         <thead>
@@ -38,7 +38,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
     {% include '@expense_management_resources/expense-form.html.twig' %}

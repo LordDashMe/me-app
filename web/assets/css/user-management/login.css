@@ -3,6 +3,11 @@
     width: 340px;
 }
 
+.login-wrapper h1 {
+    font-size: 1.7em; 
+}
+
+
 .panel {
     border-radius: 0;
     box-shadow: 0 0 0;

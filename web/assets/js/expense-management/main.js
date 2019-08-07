@@ -29,10 +29,10 @@
                                         'data-cost="' + full.cost + '" ' + 
                                         'data-date="' + full.date + '" ' + 
                                     '>' + 
-                                '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' + 
+                                '<i class="material-icons md-18 default-color">edit</i>' + 
                             '</a>&nbsp;';
                             html += '<a class="btn btn-default btn-sm action-delete-inline" data-id="'+ full.id +'">' + 
-                                '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>' + 
+                                '<i class="material-icons md-18 default-color">delete</i>' + 
                             '</a>';
                             html += '</div>';
                         return html;
@@ -45,11 +45,11 @@
                             case 1:
                                 return '<span class="label label-primary">Communication</span>';
                             case 2:
-                                return '<span class="label label-warning">Transportation</span>';
+                                return '<span class="label label-success">Transportation</span>';
                             case 3:
                                 return '<span class="label label-danger">Representation</span>';
                             case 4:
-                                return '<span class="label label-default">Sundries</span>';
+                                return '<span class="label label-warning">Sundries</span>';
                             default:
                                 return '<span class="label label-default">Unknown</span>';
                         }
@@ -58,7 +58,7 @@
                 { "data": "label", "name": "label" },
                 { "data": "cost", "name": "cost", 
                     render: function (data, type, full, meta) {
-                        return numberFomatter(full.cost, 'comma');
+                        return '<b>' + numberFomatter(full.cost, 'comma') + '</b>';
                     }    
                 },
                 { "data": "date", "name": "date" },
@@ -161,7 +161,7 @@
                 }
             });
 
-            $('#action-popup .panel-title').html('Edit Expense');
+            $('#action-popup .panel-title b').html('Edit Expense');
 
             $('#action-popup select[name="type"]').val($(this).data('type'));
             $('#action-popup input[name="label"]').val($(this).data('label'));
@@ -175,6 +175,7 @@
         
             $('.edit-action-save').on('click', function () {
                 $('#action-popup').magnificPopup('close');
+                Loader.show();
                 var data = {
                     id: id,
                     type: $('#action-popup select[name="type"]').val(),
@@ -215,7 +216,7 @@
                 }
             });
             
-            $('#action-popup .panel-title').html('Add Expense');
+            $('#action-popup .panel-title b').html('Add Expense');
             $('#action-popup select[name="type"]').val('1');
             $('#action-popup input[name="label"]').val('');
             $('#action-popup input[name="cost"]').val('');
@@ -225,6 +226,7 @@
 
             $('.add-action-save').on('click', function () {
                 $('#action-popup').magnificPopup('close');
+                Loader.show();
                 var data = {
                     type: $('#action-popup select[name="type"]').val(),
                     label: $('#action-popup input[name="label"]').val(),
@@ -251,6 +253,7 @@
         renderTotalExpenses();
         renderTotalDays();
         reloadDataTable();
+        Loader.hide();
     }
 
     function reloadDataTable() {

@@ -3,6 +3,18 @@
     width: 340px;
 }
 
+.registration-wrapper h1 {
+    font-size: 2em;  
+}
+
+.registration-details p {
+    font-size: 0.9em;
+}
+
+.password-info-text {
+    color: #5f5f5f;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {
     .registration-wrapper {

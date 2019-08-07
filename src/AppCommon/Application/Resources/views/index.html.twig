@@ -4,11 +4,13 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width">
         <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}"/>
         {% include '@app_common_resources/header.html.twig' %}
         {% block stylesheets %}{% endblock %}
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {% include '@app_common_resources/loader.html.twig' %}
         <div id="me-app">
             {% block body %}{% endblock %}
         </div>
