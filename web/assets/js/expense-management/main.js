@@ -188,7 +188,6 @@
                     url: 'edit',
                     data: data,
                     success: function () {
-                        
                         swal("Success!", "Record successfully edited.", "success");
                         reloadView();
                     },
@@ -252,12 +251,8 @@
     function reloadView() {
         renderTotalExpenses();
         renderTotalDays();
-        reloadDataTable();
-        Loader.hide();
-    }
-
-    function reloadDataTable() {
         $('#datatable').DataTable().ajax.reload();
+        Loader.hide();
     }
     
 })(jQuery);

@@ -133,6 +133,7 @@
         
             $('.edit-action-save').on('click', function () {
                 $('#action-popup').magnificPopup('close');
+                Loader.show();
                 var data = {
                     id: id,
                     first_name: $('#action-popup input[name="first_name"]').val(),
@@ -158,6 +159,7 @@
 
     function reloadView() {
         $('#datatable').DataTable().ajax.reload();
+        Loader.hide();
     }
 
 })(jQuery);
